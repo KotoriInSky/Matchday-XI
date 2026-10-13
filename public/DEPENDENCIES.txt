@@ -1,0 +1,14 @@
+Mediabunny 1.61.4
+Copyright (c) Vanilagy and contributors
+License: Mozilla Public License 2.0 (MPL-2.0)
+License text: MEDIABUNNY-LICENSE.txt
+Unmodified source: https://github.com/Vanilagy/mediabunny/tree/v1.61.4
+Package source: https://www.npmjs.com/package/mediabunny/v/1.61.4
+
+Mediabunny is dynamically loaded for browser MP4 encoding and muxing.
+The Matchday XI source remains MIT licensed; Mediabunny retains MPL-2.0.
+Built-in fonts / 内置字体
+Unmodified WOFF2 fonts are bundled under SIL Open Font License 1.1.
+Original copyright and licence: fonts/<family>/OFL.txt
+Sources and SHA-256 hashes: fonts/manifest.json
+No runtime connection to Google Fonts is required.

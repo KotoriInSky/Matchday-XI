@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="Make an animated matchday lineup for your team, right in your browser." />
+    <meta name="theme-color" content="#0b0f15" />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="/fonts/newsreader/font.css" />
+    <link rel="stylesheet" href="/fonts/noto-serif-sc/font.css" />
+    <link rel="stylesheet" href="/fonts/barlow/font.css" />
+    <link rel="stylesheet" href="/fonts/saira-condensed/font.css" />
+    <link rel="stylesheet" href="/fonts/outfit/font.css" />
+    <title>Matchday XI</title>
+    <script>
+      // Apply the saved theme before the first paint so the page never flashes the wrong colours.
+      (function () {
+        var pref = 'system';
+        try { pref = localStorage.getItem('matchday-xi-theme') || 'system'; } catch (e) {}
+        var dark = pref === 'dark' || (pref === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches);
+        document.documentElement.classList.toggle('dark', dark);
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

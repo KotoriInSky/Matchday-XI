@@ -1,0 +1,41 @@
+import { chromium } from 'playwright';
+import { mkdir, readFile, writeFile } from 'node:fs/promises';
+import assert from 'node:assert/strict';
+import { execFileSync } from 'node:child_process';
+import { fileURLToPath } from 'node:url';
+await mkdir(new URL('../test-results/', import.meta.url), { recursive: true });
+execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'testsrc=size=128x72:rate=30:duration=2', '-pix_fmt', 'yuv420p', fileURLToPath(new URL('../test-results/background.mp4', import.meta.url))]);
+const browser = await chromium.launch({ channel: 'chrome', headless: true });
+try {
+  const page = await browser.newPage();
+  await page.routeWebSocket('**/*', socket => socket.close());
+  await page.addInitScript(() => localStorage.setItem('matchday-xi-lang', 'zh-Hans'));
+  await page.goto('http://127.0.0.1:5173/matchday-xi/');
+  const video = 'data:video/mp4;base64,' + (await readFile(new URL('../test-results/background.mp4', import.meta.url))).toString('base64');
+  await page.evaluate(async (video) => {
+    const { store } = await import(performance.getEntriesByType('resource').find(e => new URL(e.name).pathname.endsWith('/src/lib/store.ts')).name);
+    const { getStage } = await import(performance.getEntriesByType('resource').find(e => new URL(e.name).pathname.endsWith('/src/lib/stage-instance.ts')).name);
+    await store.ready;
+    getStage().setVideo(URL.createObjectURL(await (await fetch(video)).blob()));
+    store.update((s) => { s.bg.mode = 'video'; Object.assign(s.anim, { intro: true, manager: true, per: .4, introLen: 2, mgrLen: 4 }); });
+  }, video);
+  await page.getByRole('tab', { name: '备份', exact: true }).click();
+  await page.getByLabel('分辨率', { exact: true }).selectOption('720');
+  const request = page.waitForRequest(r => r.url().endsWith('/api/export') && r.method() === 'POST');
+  await page.getByRole('button', { name: '导出视频', exact: true }).click();
+  const payload = (await request).postDataJSON();
+  assert.ok(payload.video.startsWith('data:video/'));
+  assert.equal(payload.state.anim.per, .4);
+  await page.getByRole('button', { name: '取消导出' }).waitFor();
+  await page.getByRole('tab', { name: '样式', exact: true }).click();
+  await page.waitForTimeout(1200);
+  await page.getByRole('tab', { name: '备份', exact: true }).click();
+  assert.ok(await page.getByRole('button', { name: '取消导出' }).isVisible());
+  const link = page.getByRole('link', { name: /下载 MP4/ });
+  await link.waitFor({ timeout: 600000 });
+  const url = await link.getAttribute('href');
+  const response = await page.request.get(new URL(url, page.url()).href);
+  assert.ok(response.ok());
+  await writeFile(new URL('../test-results/export-with-background.mp4', import.meta.url), await response.body());
+  console.log('Full scene sequence, background video and export persistence across tab changes passed');
+} finally { await browser.close(); }

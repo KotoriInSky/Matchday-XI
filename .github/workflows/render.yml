@@ -1,0 +1,86 @@
+name: Render project
+
+on:
+  workflow_dispatch:
+    inputs:
+      project:
+        description: 'Project JSON path in this repository'
+        required: true
+        default: 'exports/project.json'
+        type: string
+      kind:
+        description: Output
+        type: choice
+        options: [video, cards]
+        default: video
+      height:
+        description: Video height
+        type: choice
+        options: ['720', '1080', '1440', '2160']
+        default: '1080'
+      fps:
+        description: Video frame rate
+        type: choice
+        options: ['30', '60']
+        default: '30'
+      card_size:
+        description: PNG long edge
+        type: choice
+        options: ['1024', '2048', '4096']
+        default: '2048'
+      card_types:
+        description: 'Card types, comma separated: small,big,key'
+        default: 'big'
+        type: string
+      card_players:
+        description: 'Roster slots (not shirt numbers): all or 1,2,3'
+        default: 'all'
+        type: string
+      language:
+        description: Graphic language
+        type: choice
+        options: [en, zh-Hans, zh-Hant, ja, ko, es]
+        default: en
+      background_video:
+        description: 'Optional background video path in repository'
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manual-render-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: npm run render:project
+        env:
+          PROJECT_FILE: ${{ inputs.project }}
+          EXPORT_KIND: ${{ inputs.kind }}
+          EXPORT_HEIGHT: ${{ inputs.height }}
+          EXPORT_FPS: ${{ inputs.fps }}
+          CARD_SIZE: ${{ inputs.card_size }}
+          CARD_TYPES: ${{ inputs.card_types }}
+          CARD_PLAYERS: ${{ inputs.card_players }}
+          EXPORT_LANG: ${{ inputs.language }}
+          BACKGROUND_VIDEO: ${{ inputs.background_video }}
+      - uses: actions/upload-artifact@v4
+        with:
+          name: matchday-${{ inputs.kind }}-${{ github.run_number }}
+          path: .export-output/
+          if-no-files-found: error
+          retention-days: 3

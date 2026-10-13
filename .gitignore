@@ -1,0 +1,38 @@
+# Dependencies and generated builds
+node_modules/
+dist/
+dist-local/
+*.tsbuildinfo
+
+# Local settings, environment files and logs
+.env
+.env.*
+!.env.example
+*.local
+*.log
+.vscode/
+.idea/
+
+# Test captures, temporary render jobs and local tooling
+test-results/
+.export-output/
+coverage/
+playwright-report/
+__pycache__/
+*.pyc
+
+# Drafts and internal development documents (kept locally)
+README.zh-CN.draft.md
+docs/animation-26-27-plan.md
+docs/hci-and-export-plan.md
+docs/pages-readiness.md
+
+# Unused README screenshots; published demos use the two GIFs
+docs/images/editor.png
+docs/images/classic-lineup.png
+docs/images/season2627-lineup.png
+
+# Operating system files
+.DS_Store
+Thumbs.db
+Desktop.ini

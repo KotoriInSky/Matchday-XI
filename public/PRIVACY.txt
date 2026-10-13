@@ -1,0 +1,161 @@
+Matchday XI — Privacy notice / 隐私说明
+Updated / 更新日期: 2026-10-13
+
+ENGLISH
+
+1. Ordinary editing
+The app has no account system, application analytics, advertising trackers
+or cloud project sync. Files selected in the editor are read in your
+browser. Ordinary editing does not upload project photos, names, badges,
+fonts or settings to a project server. This does not mean that visiting
+the site makes no network requests; hosting and fonts are described below.
+
+2. Browser storage and backups
+The current project, including imported images and custom fonts, is stored
+in IndexedDB (database matchday-xi, object store projects, key current).
+localStorage supports older projects and a storage fallback, using
+matchday-xi-v1 and matchday-xi-storage-fallback. Preferences use
+matchday-xi-theme and matchday-xi-lang; matchday-xi-locales stores legacy
+custom translations. Older starting-xi-builder-v1 and starting-xi-lang
+values may be read for compatibility. The selected tab uses sessionStorage
+under matchday-xi-tab.
+
+Background video files use an in-memory object URL for the current visit;
+the video file is not included in browser project storage or JSON backups.
+JSON backups can include player names, photos, badges and custom font data.
+Treat them as project content when sharing them.
+
+Browser storage is scoped to an origin and browser profile, not a URL path.
+Two projects on the same username.github.io origin may share these keys.
+Localhost, different ports, custom domains and other browsers have separate
+saves. Data remains until replaced, cleared or removed by the browser.
+Private browsing, browser policies and storage quotas can affect persistence.
+
+3. Browser, local and Actions export
+Browser PNG/ZIP and WebCodecs MP4 export run on your device, without
+uploading project assets. Save downloads before refreshing; single-card
+downloads must be saved before closing the card dialog.
+
+When selecting local rendering, video or CLI card export sends the current project snapshot, assets
+and export settings to the same-origin local renderer on your computer.
+Video export also sends the selected background video, when used. The
+renderer runs Chrome/Chromium and, for MP4, FFmpeg. It creates output in the
+operating system's temporary directory. This is a transfer outside the
+browser to your own machine, not a cloud export service.
+
+While running, the service schedules removal of a job and its temporary
+files 30 minutes after processing finishes; cancellation and normal server
+shutdown also attempt cleanup. A crash or forced termination may leave
+temporary files behind. Downloaded MP4, PNG, ZIP and JSON files remain
+where you save them until you delete them. GitHub Pages cannot run this
+renderer, but supports browser PNG/ZIP and compatible WebCodecs MP4 export.
+
+The optional manual Actions workflow uses project files you upload to your
+own GitHub repository. Those files become repository content and history;
+use a private repository for private assets. Outputs are stored as GitHub
+artifacts for three days by default. Removing a file in a new commit does
+not remove historical copies. The website does not trigger this workflow
+or store a GitHub token.
+
+4. Hosting and fonts
+On a GitHub Pages deployment, GitHub receives normal website requests and
+may process technical information such as IP addresses and request details
+under its own privacy policy. Local development serves the site from your
+computer instead.
+
+Built-in interface and graphic fonts are bundled with the website. Their
+stylesheets and WOFF2 files are served by the same host as the page, with
+families and unicode subsets loaded as needed. The app and local renderer
+do not connect to Google Fonts. The host receives normal requests for
+these font assets; they do not intentionally include project names,
+photos or other imported asset data. Uploaded fonts are read locally.
+
+GitHub privacy statement:
+https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
+
+5. Your controls
+Download a project JSON before clearing storage or moving to another origin.
+To remove stored project data and preferences, clear this site's IndexedDB,
+localStorage and sessionStorage using browser site-data settings or developer
+tools, and close its open tabs. Clearing a shared github.io origin can also
+affect other apps on that origin. The editor's reset action replaces the
+current project; it is not a complete site-data deletion control. Delete
+downloaded backups, outputs and any leftover temporary files separately.
+
+6. Scope and questions
+This notice describes the bundled app and local renderer. Third-party forks,
+modified deployments, proxies or a future public render service may have
+different data handling and should provide their own notice. General
+questions can be raised in the project's GitHub repository when available;
+avoid posting private files or personal information in public issues.
+
+简体中文
+
+1. 普通编辑
+应用没有账号系统、应用统计、广告追踪或云端项目同步。编辑器读取你选择
+的文件，并在浏览器内处理。普通编辑不会将项目照片、姓名、队徽、字体或
+设置上传到项目服务器。这并不意味着访问网站没有网络请求；托管与字体
+请求见下文。
+
+2. 浏览器保存与备份
+当前项目，包括导入的图片和自定义字体，保存在 IndexedDB 的 matchday-xi
+数据库、projects 对象存储中，键为 current。localStorage 使用
+matchday-xi-v1 和 matchday-xi-storage-fallback 支持旧项目及存储回退；
+matchday-xi-theme 与 matchday-xi-lang 保存偏好，matchday-xi-locales
+保存旧版自定义翻译。为兼容旧版，可能读取 starting-xi-builder-v1 和
+starting-xi-lang。当前页签保存在 sessionStorage 的 matchday-xi-tab。
+
+背景视频通过当前访问期间的内存对象 URL 使用，不将视频文件写入浏览器
+项目存储或 JSON 备份。JSON 备份可能包含球员姓名、照片、队徽与自定义
+字体数据，分享时请把它视为含有素材的项目文件。
+
+浏览器存储按网站来源和浏览器配置文件隔离，不按网址路径隔离。同一个
+用户名.github.io 来源下的两个项目可能共用这些存储键。本地地址、不同
+端口、自定义域名和其他浏览器各自保存。数据会保留到被替换、清除或由
+浏览器移除；隐私浏览、浏览器策略及容量限制会影响持久保存。
+
+3. 浏览器、本地与 Actions 导出
+浏览器 PNG／ZIP 与 WebCodecs MP4 在设备内生成，不上传项目素材。刷新
+页面前保存成品；单张卡片请在关闭浮窗前下载。
+
+选择本地渲染服务或卡片命令行脚本时，应用会将当前项目快照、素材与导出设置发送到你
+电脑上的同源本地渲染服务。使用背景视频时，视频导出也会发送该视频。
+渲染器运行 Chrome／Chromium，MP4 还使用 FFmpeg，在系统临时目录生成
+成品。这是从浏览器到你本机服务的数据传输，不是云端导出。
+
+服务运行时，会在任务处理结束 30 分钟后安排移除任务与临时文件；取消
+任务和正常关闭服务也会尝试清理。崩溃或强制退出可能留下临时文件。
+下载的 MP4、PNG、ZIP 和 JSON 会保留在你选择的位置，直到你自行删除。
+GitHub Pages 无法运行本地渲染服务，但可使用浏览器 PNG／ZIP 与兼容的
+WebCodecs MP4 导出。
+
+可选的手动 Actions 工作流使用你自行上传至 GitHub 仓库的项目文件。素材
+会进入仓库及提交历史，私人素材请使用私有仓库。成品作为 GitHub artifact
+默认保留三天。后续提交删除文件不会清除旧提交。网页不触发该工作流，
+也不保存 GitHub token。
+
+4. 托管与字体
+GitHub Pages 版本由 GitHub 提供网站文件，GitHub 会收到正常网页请求，
+并可能按其隐私政策处理 IP 地址、请求信息等技术数据。本地开发则从你的
+电脑提供网站文件。
+
+内置界面字体和画面字体随网站提供，样式表与 WOFF2 文件均从页面所在的
+网站加载，并按需请求字体及字符子集。应用和本地渲染器无需连接 Google
+Fonts。网站托管方会收到加载字体资源的正常请求，这些请求不会主动包含
+项目姓名、照片或其他导入素材数据。上传的字体在本机读取。
+
+GitHub 隐私声明：
+https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
+
+5. 你的控制方式
+清理存储或切换网站来源前，请下载 JSON 项目备份。要移除项目和偏好，
+通过浏览器网站数据设置或开发者工具清除本站的 IndexedDB、localStorage
+和 sessionStorage，并关闭打开的页签。清理共享的 github.io 来源也可能
+影响该来源下的其他应用。编辑器的重置操作只替换当前项目，不等于彻底
+清除网站数据。已下载的备份、成品和遗留临时文件须另外删除。
+
+6. 适用范围与咨询
+本说明描述项目自带的应用和本地渲染器。第三方分支、改造后的部署、代理
+或未来的公共渲染服务可能采用不同的数据处理方式，应提供自己的说明。
+一般问题可通过项目公开后的 GitHub 仓库提出，请勿在公开 issue 中分享
+私人文件或个人信息。

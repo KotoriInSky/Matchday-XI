@@ -1,0 +1,102 @@
+Matchday XI — Usage terms / 使用条款
+Updated / 更新日期: 2026-10-13
+
+ENGLISH
+
+1. Scope and source licence
+These terms describe use of the Matchday XI editor and imported content.
+The project source code and original XI mark are licensed under MIT;
+see LICENSE.txt. These terms do not replace MIT or impose additional
+restrictions on rights granted by MIT to use, modify or distribute the code.
+
+2. Your content and exported work
+You retain your rights in content you provide. The project does not claim
+ownership of uploaded assets or exported graphics and videos. You choose
+whether and where to publish your work. Ordinary editing is performed in
+your browser; local export sends a project snapshot to a renderer running
+on your computer. See PRIVACY.txt for the data flows.
+
+3. Permission to use assets
+Use photos, badges, logos, fonts, tags and videos that you own or have
+permission to use for your intended purpose. Respect applicable copyright,
+trademark, privacy, likeness and other rights, including any required
+permissions from people depicted. Check whether licences cover commercial
+publication, font embedding, redistribution and your intended output.
+An export does not grant rights in someone else's assets. Third-party
+materials remain subject to their own licences; the project's MIT licence
+does not license club badges, player portraits or other imported materials.
+
+4. Independent project
+Matchday XI is an independent tool. Club names, palette names, template
+names and visual styles do not imply an official relationship, sponsorship
+or endorsement by a club, league, competition, broadcaster or other rights
+holder. Do not present your work as officially approved without permission.
+
+5. Storage and export availability
+Projects are saved in browser storage, not a cloud account. Storage may be
+cleared, become unavailable or reach a quota. Download project backups.
+Background video files are session-only and must be kept separately.
+GitHub Pages supports editing, preview and project JSON import/export;
+PNG/ZIP exports run in the browser, and MP4 requires browser H.264 encoding
+support or the optional local renderer. Manual Actions rendering uploads
+project files to your repository; its artifacts are retained for three days.
+Save browser downloads before refreshing or closing their card dialog.
+Local renderer downloads expire after 30 minutes while the service runs.
+Closing the service can make them unavailable sooner.
+
+6. Warranty and liability
+The software is supplied "AS IS" under MIT, without warranties of fitness,
+availability, accuracy or noninfringement. Its maintainers do not warrant
+that every asset is cleared for your intended use or that saved work can
+always be recovered. The MIT warranty disclaimer and limitation of
+liability apply subject to applicable law; these terms do not exclude
+rights or liability that cannot lawfully be excluded.
+
+7. Changes and questions
+The date above identifies this version. Material changes should be reflected
+in these terms and the privacy notice. For general questions or corrections,
+use the project's GitHub repository when available. Do not attach private
+project files or personal information to public issues.
+
+简体中文
+
+1. 适用范围与代码许可证
+本条款说明 Matchday XI 编辑器及导入内容的使用。项目源代码和原创 XI 标志
+采用 MIT 许可证，详见 LICENSE.txt。本条款不替代 MIT，也不额外限制 MIT
+授予的使用、修改和分发代码的权利。
+
+2. 你的内容与导出作品
+你保留所提供内容的相关权利，项目不主张取得上传素材、导出画面或视频的
+所有权。是否发布及发布到哪里由你决定。普通编辑在浏览器内进行；本地
+导出会将项目快照发送到你电脑上的渲染服务。数据流向详见 PRIVACY.txt。
+
+3. 素材使用许可
+请使用自己拥有或已获得相应用途许可的照片、队徽、标志、字体、标签和
+视频，尊重版权、商标、隐私、肖像等适用权利，包括取得画面中人物所需的
+许可。核对素材许可是否覆盖商业发布、字体嵌入、再分发及预期的成品用途。
+导出文件不会自动授予他人素材的使用权。第三方素材遵循各自许可；项目的
+MIT 许可证不授予球队队徽、球员照片或其他导入素材的权利。
+
+4. 独立项目声明
+Matchday XI 是独立工具。球队名称、配色名称、模板名称和视觉风格不表示
+与球队、联赛、赛事、广播机构或其他权利人有官方合作、赞助或认可关系。
+未经许可，请勿将作品表述为获得官方认可。
+
+5. 保存与导出可用性
+项目保存在浏览器存储中，不是云端账号。数据可能被清除、无法访问或达到
+容量限制，请下载项目备份。背景视频文件只在当前会话使用，须单独保留。
+GitHub Pages 支持浏览器 PNG／ZIP；MP4 需要浏览器支持 H.264 编码或使用
+本地渲染服务。手动 Actions 会使用上传到仓库的素材，成品默认保留三天。
+浏览器导出在刷新页面或关闭卡片浮窗前保存。本地服务的下载保留 30 分钟；
+关闭服务可能使下载提前失效。
+
+6. 保证与责任
+软件依 MIT 按“现状”提供，不保证适用性、可用性、准确性或不侵权。
+维护者不保证素材已满足你的用途许可要求，也不保证保存的数据总能恢复。
+MIT 的保证免责声明与责任限制受适用法律约束；本条款不排除依法不得
+排除的权利或责任。
+
+7. 更新与咨询
+上方日期标识本版本，重要变更应同步到本条款与隐私说明。一般问题或修正
+可通过项目公开后的 GitHub 仓库提出。不要在公开 issue 中附上私人项目
+文件或个人信息。

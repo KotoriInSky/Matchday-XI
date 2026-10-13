@@ -1,0 +1,9 @@
+* text=auto eol=lf
+
+*.gif binary
+*.png binary
+*.woff2 binary
+
+# Preserve upstream licence bytes and their recorded hashes.
+public/fonts/**/OFL.txt -text -whitespace
+public/MEDIABUNNY-LICENSE.txt -text -whitespace
