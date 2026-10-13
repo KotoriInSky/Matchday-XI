@@ -124,7 +124,7 @@ export function season2627HTML(s: LineupState, videoURL: string | null) {
         <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 8 }, (_, i) => `<span data-title-row="${i}">${ab}</span>`).join('')}</div></div>
         <div class="s26-solid">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
       </div>` : ''}
-      ${plan.groups.map((g, gi) => `<div class="s26-role${/[぀-ヿ㐀-鿿가-힯]/.test(s.text[`grp${g.role}`]) ? ' s26-cjk' : ''}" data-role="${gi}"><span>${esc(s.text[`grp${g.role}`])}</span></div>`).join('')}
+      <div class="s26-role-window">${plan.groups.map((g, gi) => `<div class="s26-role${/[぀-ヿ㐀-鿿가-힯]/.test(s.text[`grp${g.role}`]) ? ' s26-cjk' : ''}" data-role="${gi}"><span>${esc(s.text[`grp${g.role}`])}</span></div>`).join('')}</div>
       ${s.look.crest ? `<div class="s26-crest"><div class="s26-crest-y">${crestHTML(s)}</div></div>` : ''}
     </div>
     <div class="s26-final">
@@ -186,24 +186,32 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
   const initialEdge = plan.manager ? 29 : plan.groups.length ? 90 : 36;
   const firstGroup = plan.groups[0]?.start ?? plan.final.start;
   const openingEdge = plan.manager && !reduced ? 0 : initialEdge;
-  const points: { t: number; edge: number; y: number }[] = [{ t: 0, edge: openingEdge, y: plan.manager ? 28.125 : 7 }];
+  const edgePoints = [{ t: 0, value: openingEdge }];
+  const crestPoints = [{ t: 0, value: plan.manager || !plan.groups.length ? 28.125 : 7 }];
   if (plan.manager) {
     // Reveal the scene from left to right while the shared panel boundary moves into place.
-    points.push({ t: opening, edge: openingEdge, y: 28.125 }, { t: opening + .55, edge: initialEdge, y: 28.125 });
+    edgePoints.push({ t: opening, value: openingEdge }, { t: opening + .55, value: initialEdge });
     add(q('.s26'), [
       { clipPath: reduced ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)', easing: ease },
       { clipPath: 'inset(0 0% 0 0)' },
     ], opening, reduced ? .01 : .55);
   }
-  if (plan.manager && plan.groups.length) points.push({ t: firstGroup - .1, edge: 29, y: 28.125 }, { t: firstGroup + .85, edge: 90, y: 7 });
-  points.push({ t: plan.final.start, edge: plan.groups.length ? 90 : initialEdge, y: plan.groups.length ? 7 : 28.125 }, { t: plan.final.ready, edge: 36, y: 28.125 }, { t: plan.total, edge: 36, y: 28.125 });
-  const keyframes = (axis: 'edge' | 'y') => points.map((point) => ({
-    transform: axis === 'edge' ? `translateX(${point.edge}cqw)` : `translateY(${point.y - 4.25}cqw)`,
+  if (plan.manager && plan.groups.length) {
+    edgePoints.push({ t: firstGroup - .1, value: 29 }, { t: firstGroup + .45, value: 90 });
+    // Orientation: the crest rises after the rail narrows, then descends before it expands.
+    crestPoints.push({ t: firstGroup + .25, value: 28.125 }, { t: firstGroup + .8, value: 7 });
+  }
+  edgePoints.push({ t: plan.final.start + (plan.groups.length ? .35 : 0), value: plan.groups.length ? 90 : initialEdge },
+    { t: plan.final.ready, value: 36 }, { t: plan.total, value: 36 });
+  if (plan.groups.length) crestPoints.push({ t: plan.final.start - .15, value: 7 }, { t: plan.final.start + .35, value: 28.125 });
+  crestPoints.push({ t: plan.total, value: 28.125 });
+  const keyframes = (points: typeof edgePoints, axis: 'edge' | 'y') => points.map((point) => ({
+    transform: axis === 'edge' ? `translateX(${point.value}cqw)` : `translateY(${point.value - 4.25}cqw)`,
     offset: point.t / plan.total, easing: reduced ? 'steps(1,end)' : ease,
   }));
-  add(rail, keyframes('edge'), 0, plan.total);
-  add(q('.s26-crest-y'), keyframes('y'), 0, plan.total);
-  add(q('.s26-pitch-reveal'), points.map((point) => ({ clipPath: `inset(0 0 0 ${point.edge}%)`, offset: point.t / plan.total, easing: reduced ? 'steps(1,end)' : ease })), 0, plan.total);
+  add(rail, keyframes(edgePoints, 'edge'), 0, plan.total);
+  add(q('.s26-crest-y'), keyframes(crestPoints, 'y'), 0, plan.total);
+  add(q('.s26-pitch-reveal'), edgePoints.map((point) => ({ clipPath: `inset(0 0 0 ${point.value}%)`, offset: point.t / plan.total, easing: reduced ? 'steps(1,end)' : ease })), 0, plan.total);
   add(rail, [{ opacity: 0 }, { opacity: 1 }], opening, plan.manager && !reduced ? .12 : .55);
 
   if (plan.manager) {
@@ -299,8 +307,16 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
     if (gi && plan.groups[gi - 1].role === group.role) return;
     let last = gi;
     while (last + 1 < plan.groups.length && plan.groups[last + 1].role === group.role) last++;
-    show(roleEls[gi], group.start, plan.groups[last].end);
-    life(roleEls[gi], group.start, group.start + .6, plan.groups[last].leave, plan.groups[last].end);
+    const at = group.start + (gi === 0 && plan.manager ? .2 : 0);
+    const { leave, end } = plan.groups[last], duration = end - at;
+    show(roleEls[gi], at, end);
+    // Orientation: fixed-size labels enter from the top and leave through the bottom of the rail.
+    add(roleEls[gi], [
+      { opacity: reduced ? 0 : 1, transform: `translateY(${reduced ? 0 : -56.25}cqw)`, offset: 0, easing: ease },
+      { opacity: 1, transform: 'translateY(0)', offset: .6 / duration },
+      { opacity: 1, transform: 'translateY(0)', offset: (leave - at) / duration, easing: 'cubic-bezier(.4,0,1,1)' },
+      { opacity: reduced ? 0 : 1, transform: `translateY(${reduced ? 0 : 56.25}cqw)`, offset: 1 },
+    ], at, duration);
   });
 
   show(q('.s26-final'), plan.final.start, plan.total + .01);

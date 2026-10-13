@@ -138,6 +138,55 @@ try {
     evidence.push({ managerLength: mgrLen, title: 'rightward opening, unfolding outline trail, temporary centre outline, final filled centre, opaque slide without overlap, deterministic backward seek' });
   }
   plan = await page.evaluate(async () => { window.motionState.anim.mgrLen = 6; return window.motionInit(); });
+  // Position labels pass down the rail, stay opaque and keep one label across adjacent midfield rows.
+  const sidebarState = async time => {
+    await page.evaluate(time => window.exportRenderer.frame(time), time);
+    return page.evaluate(() => {
+      const panel = document.querySelector('[class*="s26-panel_"]').getBoundingClientRect();
+      const crest = document.querySelector('[class*="s26-crest-y_"]').getBoundingClientRect();
+      const roleWindow = document.querySelector('[class*="s26-role-window_"]');
+      const rows = [...document.querySelectorAll('[data-role]')].map(row => {
+        const rect = row.querySelector('span').getBoundingClientRect(), css = getComputedStyle(row);
+        return { y: rect.y, bottom: rect.bottom, x: rect.x, opacity: css.opacity, visible: css.visibility };
+      });
+      return { panelX: panel.x, crestX: crest.x + crest.width / 2, crestY: crest.y + crest.height / 2,
+        clipped: !!roleWindow && getComputedStyle(roleWindow).overflow === 'hidden', rows };
+    });
+  };
+  const firstNarrow = await sidebarState(plan.groups[0].start + .15);
+  const firstRise = await sidebarState(plan.groups[0].start + .55);
+  assert.ok(firstRise.panelX > firstNarrow.panelX && firstRise.crestY < firstNarrow.crestY, 'Opening sidebar did not narrow before the crest rose');
+  assert.equal(firstNarrow.rows[0].visible, 'hidden', 'Position label appeared before the opening sidebar narrowed');
+  for (let gi = 1; gi < plan.groups.length; gi++) {
+    if (plan.groups[gi - 1].role === plan.groups[gi].role) continue;
+    let previous = gi - 1;
+    while (previous && plan.groups[previous - 1].role === plan.groups[previous].role) previous--;
+    const group = plan.groups[gi], states = [];
+    for (const offset of [0, .1, .2, .3]) states.push(await sidebarState(group.start + offset));
+    assert.ok(states.every(state => state.clipped), 'Position labels need a clipped rail window');
+    assert.ok(states.every(state => state.rows[previous].opacity === '1' && state.rows[gi].opacity === '1'), 'Position labels faded during the handoff');
+    assert.ok(states[0].rows[previous].y < states[1].rows[previous].y && states[1].rows[previous].y < states[2].rows[previous].y, 'Outgoing position label did not slide down');
+    assert.ok(states[0].rows[gi].y < states[1].rows[gi].y && states[1].rows[gi].y < states[2].rows[gi].y, 'Incoming position label did not descend from the top');
+    for (const state of states) {
+      assert.ok(state.rows[gi].bottom <= state.rows[previous].y + 1, 'Position labels overlapped during the handoff');
+      assert.ok(Math.abs(state.crestX - state.panelX) < .1, 'Sidebar movement detached the crest from the panel');
+    }
+    assert.deepEqual(await sidebarState(group.start + .1), states[1], 'Backward seek changed the sidebar handoff');
+  }
+  const midfield = plan.groups.findIndex((group, gi) => gi && group.role === plan.groups[gi - 1].role);
+  assert.ok(midfield > 0, 'Missing adjacent midfield fixture');
+  const midfieldBefore = await sidebarState(plan.groups[midfield].start - .15);
+  const midfieldAfter = await sidebarState(plan.groups[midfield].start + .3);
+  assert.deepEqual(midfieldBefore.rows[midfield - 1], midfieldAfter.rows[midfield - 1], 'Adjacent midfield rows restarted their position label');
+  assert.equal(midfieldAfter.rows[midfield].visible, 'hidden', 'Duplicate midfield label became visible');
+  const finalBefore = await sidebarState(plan.final.start - .2);
+  const finalDrop = await sidebarState(plan.final.start + .2);
+  const finalExpand = await sidebarState(plan.final.start + .6);
+  assert.ok(finalDrop.crestY > finalBefore.crestY, 'Crest did not descend before the final panel expansion');
+  assert.ok(Math.abs(finalDrop.panelX - finalBefore.panelX) < .1, 'Panel expanded before the crest descended');
+  assert.ok(finalExpand.panelX < finalDrop.panelX, 'Final sidebar did not expand after the crest descended');
+  assert.equal(finalExpand.rows.at(-1).visible, 'hidden', 'Position label remained on the final panel');
+  evidence.push({ sidebar: 'opaque downward label handoff, clipped window, uninterrupted midfield, crest descends before final expansion, deterministic backward seek' });
   for (const [name, time] of [
     ['title-rolling', plan.manager.rollStart + .45], ['title-settled', plan.manager.rollEnd + .1], ['title-name', plan.manager.nameReady + .1],
     ['entry-early', plan.groups[1].start + .22], ['entry-late', plan.groups[1].start + .56],
@@ -242,7 +291,19 @@ try {
       await page.evaluate(() => {
         document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = 'hidden'; });
       });
-      assert.ok(withPhotos.equals(await page.screenshot({ clip })), `Photo escaped its column (${full ? 'opaque' : 'cut-out'}, ${time})`);
+      const withoutPhotos = await page.screenshot({ clip });
+      if (!withPhotos.equals(withoutPhotos)) {
+        await writeFile(`${output}/clip-with.png`, withPhotos);
+        await writeFile(`${output}/clip-without.png`, withoutPhotos);
+        await writeFile(`${output}/clip-diagnostic.json`, JSON.stringify(await page.evaluate(({ full, time, clip }) => ({
+          full, time, clip,
+          animations: document.getAnimations().map(animation => ({
+            time: animation.currentTime, state: animation.playState,
+            target: animation.effect?.target?.className,
+          })),
+        }), { full, time, clip }), null, 2));
+      }
+      assert.ok(withPhotos.equals(withoutPhotos), `Photo escaped its column (${full ? 'opaque' : 'cut-out'}, ${time})`);
       await page.evaluate(() => {
         document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = ''; });
       });
@@ -294,10 +355,11 @@ try {
     const reduced = await page.evaluate(() => ({
       light: [...document.querySelectorAll('[class*="s26-entry-light_"]')].every((el) => getComputedStyle(el).opacity === '0'),
       turns: [...document.querySelectorAll('[class*="cflip_"]')].every((el) => getComputedStyle(el).transform === 'none'),
+      labels: [...document.querySelectorAll('[data-role]')].every(el => getComputedStyle(el).visibility === 'hidden' || getComputedStyle(el).transform === 'matrix(1, 0, 0, 1, 0, 0)'),
     }));
-    assert.ok(reduced.light); assert.ok(reduced.turns);
+    assert.ok(reduced.light); assert.ok(reduced.turns); assert.ok(reduced.labels, 'Reduced motion still scrolls sidebar labels');
   }
   assert.deepEqual(errors, []);
   await writeFile(`${output}/checks.json`, JSON.stringify({ evidence, errors }, null, 2));
-  console.log('26/27 motion: rightward opening, unfolding outline trail and temporary centre outline, clipped cut-out/opaque portraits, visible adjacent-card shadow, deterministic reflection, 1–7 columns, all card shapes and reduced motion passed.');
+  console.log('26/27 motion: rightward opening, unfolding outline trail and temporary centre outline, downward sidebar handoff and staged crest movement, clipped cut-out/opaque portraits, visible adjacent-card shadow, deterministic reflection, 1–7 columns, all card shapes and reduced motion passed.');
 } finally { await browser.close(); }
