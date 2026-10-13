@@ -19,8 +19,8 @@ try {
     Object.assign(s.players[0], { photo: c.toDataURL(), cut: true, tag1: '', tag2: '', captain: false, key: false });
     return s;
   }, base);
-  for (const template of ['classic', 'season2627']) for (const method of ['browser', 'local']) {
-    state.anim.template = template;
+  for (const template of ['classic', 'season2627']) for (const method of ['browser', 'local']) for (const shape of ['rounded', 'angled']) {
+    state.anim.template = template; state.look.shape = shape;
     const samples = [];
     for (const zoom of [1, 1.8]) {
       let localURL;
@@ -56,7 +56,7 @@ try {
         const bytes = [...new Uint8Array(await (await fetch(result.url)).arrayBuffer())]; URL.revokeObjectURL(result.url);
         return { width: img.width, height: img.height, cardWidth, green, edge, firstGreenWidth, maxGreenWidth, bytes };
       }, { base, state: structuredClone(state), zoom, localURL });
-      await writeFile(`test-results/card-sizing/${template}-${method}-zoom-${zoom}.png`, Buffer.from(result.bytes));
+      await writeFile(`test-results/card-sizing/${template}-${method}-${shape}-zoom-${zoom}.png`, Buffer.from(result.bytes));
       const { bytes, ...stats } = result; samples.push(stats);
       assert.equal(stats.edge, 0, 'Portraits and shadows must have a transparent border');
       assert.ok(stats.green > 1000, 'The exported PNG must contain the portrait');
@@ -66,6 +66,6 @@ try {
     const expectedWidth = template === 'classic' ? 1024 * 29 / 44.5 : 1024 * 384 / 636;
     assert.ok(samples.every(sample => Math.abs(sample.cardWidth - expectedWidth) <= 2), 'The exported frame must match the selected long edge');
     assert.ok(samples[1].height > samples[0].height, 'More portrait overflow must extend the canvas');
-    console.log(`${template} ${method}: complete portrait, fixed frame and expanded canvas.`, samples);
+    console.log(`${template} ${method} ${shape}: complete portrait, fixed frame and expanded canvas.`, samples);
   }
 } finally { await browser.close(); }

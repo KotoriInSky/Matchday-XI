@@ -269,6 +269,11 @@
 .rc-in.cutout :is(.stripes-bg,.rc-metal,.rc-holo,.sheen,.rc-flash,.rc-shade){border-radius:inherit;clip-path:inset(0 round 1.6cqw)}
 .rc-in.cutout .rc-photo{height:42cqw;clip-path:inset(-45% 0 0)}
 .inspector .rc-in.cutout .rc-photo,.inspector .rc-kphoto:not(.full),.inspector .sm-por.cutout .ph img.pp{clip-path:none}
+/* Shape the frame backing, so the portrait can extend outside an angled card. */
+.inspector[data-shape="angled"] .rc-in.cutout{clip-path:none;background:none;box-shadow:none}
+.inspector[data-shape="angled"] .rc-in.cutout::before{content:"";position:absolute;inset:0;background:linear-gradient(170deg,var(--c1l),var(--c1) 55%,var(--c1d));clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
+.inspector[data-shape="angled"] .rc-in.cutout :is(.stripes-bg,.rc-metal,.rc-holo,.sheen,.rc-flash){border-radius:0;clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
+.inspector[data-shape="angled"] .rc-in.cutout .rc-shade{border-radius:0;clip-path:none}
 .stage .sm-por.cutout{overflow:visible;clip-path:none}
 .sm-por.cutout .ph{overflow:visible;background:none}
 .sm-por.cutout .ph::before{content:"";position:absolute;inset:0;background:var(--pat) center/cover}
