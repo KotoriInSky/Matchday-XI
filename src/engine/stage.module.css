@@ -187,10 +187,13 @@
 .rc-kphoto.full{clip-path:inset(0 round 1.6cqw)}
 .rc-kphoto.full img{width:100%;height:100%;max-width:none;margin:0;object-fit:cover;object-position:50% 15%;filter:none}
 .rc-flash{position:absolute;inset:0;z-index:4;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 42%,#fff,rgba(255,255,255,.9) 35%,rgba(225,232,238,.55))}
-.sm-cap{position:absolute;right:-.85cqw;top:46%;z-index:3;height:1.45cqw;min-width:1.7cqw;box-sizing:border-box;display:grid;place-items:center;background:var(--c3);color:var(--c1d);font-family:var(--fd);font-weight:800;font-size:1cqw;border-radius:.2cqw;box-shadow:inset 0 .2cqw 0 var(--c1d),inset 0 -.2cqw 0 var(--c1d),0 .1cqw .4cqw rgba(0,0,0,.4)}
+.sm-cap{position:absolute;right:-.25cqw;top:46%;z-index:6;height:1.45cqw;min-width:1.7cqw;box-sizing:border-box;display:grid;place-items:center;background:var(--c3);color:var(--c1d);font-family:var(--fd);font-weight:800;font-size:1cqw;border-radius:.2cqw;box-shadow:inset 0 .2cqw 0 var(--c1d),inset 0 -.2cqw 0 var(--c1d),0 .1cqw .4cqw rgba(0,0,0,.4)}
+.sm-tags{position:absolute;left:-.25cqw;top:46%;z-index:6;display:flex;flex-direction:column;gap:.2cqw}
+.sm-tags .tpic{height:calc(.6552cqw * var(--tgz,1));width:calc(.9828cqw * var(--tgz,1))}
+.sm-tags .tpic.square{width:calc(.6552cqw * var(--tgz,1))}
 .sm-num{position:absolute;inset:0;z-index:2;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--pat) center/cover}
 .sm-num b{font-family:var(--fd);font-weight:800;font-size:3.3cqw;line-height:1;margin-top:-1.4cqw;font-variant-numeric:tabular-nums}
-.sm-num small{position:absolute;left:0;right:0;bottom:0;background:var(--c1d);font-size:.72cqw;font-weight:700;text-align:center;padding:.35cqw .2cqw;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sm-num small{position:absolute;left:0;right:0;bottom:0;background:var(--c1d);font-size:.72cqw;font-weight:700;text-align:center;padding:.35cqw .2cqw;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.08}
 .board.noreveal .sm-num{display:none}
 .stage[data-shape="rounded"] :is(.sm-por,.sm-num){border-radius:.7cqw}
 .stage[data-shape="angled"] :is(.sm-por,.sm-num){clip-path:polygon(0 0,76% 0,100% 13%,100% 100%,0 100%)}
