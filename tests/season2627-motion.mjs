@@ -37,7 +37,7 @@ try {
   }, base);
 
   let plan = await page.evaluate(() => window.motionInit());
-  // The outline stack stays fixed while the filled abbreviation loops down into its central gap.
+  // The filled lettering reveals an outline trail, including the centre, before settling there.
   for (const mgrLen of [4, 6, 10]) {
     plan = await page.evaluate(async (length) => {
       window.motionState.anim.mgrLen = length;
@@ -56,32 +56,56 @@ try {
     assert.ok(openingPositions[0].x < openingPositions[1].x && openingPositions[1].x < openingPositions[2].x, 'Opening panel must move right as it appears');
     for (const position of openingPositions) assert.ok(Math.abs(position.crest - position.x) < .1, 'Opening crest detached from panel');
     assert.ok(Math.abs(openingPositions[2].x - openingPositions[2].width * .29) < .1, 'Opening panel did not settle at the manager boundary');
-    const rollPositions = [], outlinePositions = [];
+    const outlinePositions = [];
     for (const time of [manager.rollStart, manager.rollStart + (manager.rollEnd - manager.rollStart) * .4, manager.rollEnd]) {
       await page.evaluate((time) => window.exportRenderer.frame(time), time);
       const phase = await page.evaluate(() => {
-        const solid = document.querySelector('[class*="s26-solid_"]'), gap = document.querySelector('[class*="s26-outline-gap_"]');
+        const solid = document.querySelector('[class*="s26-solid_"]'), gap = document.querySelector('[data-title-row="3"]');
         const name = document.querySelector('[class*="s26-team_"]');
         return { delta: Math.abs(solid.getBoundingClientRect().y - gap.getBoundingClientRect().y), y: solid.getBoundingClientRect().y, outlineY: gap.getBoundingClientRect().y, name: getComputedStyle(name).opacity };
       });
-      if (time === manager.rollEnd) assert.ok(phase.delta < .1, 'Filled abbreviation did not settle into the central outline gap');
+      assert.ok(phase.delta < .1, 'Central lettering moved instead of switching fixed letter states');
       assert.equal(phase.name, '0', 'Full name appeared during the abbreviation roll');
-      rollPositions.push(phase.y);
       outlinePositions.push(phase.outlineY);
     }
     assert.ok(outlinePositions.every(y => Math.abs(y - outlinePositions[0]) < .1), 'Outline background moved during the filled abbreviation roll');
-    assert.ok(rollPositions[0] < rollPositions[1] && rollPositions[1] < rollPositions[2], 'Abbreviation must roll down, wrap around and settle without reversing');
-    const loop = [];
-    for (const fraction of [.25, .42, .85]) {
+    const letterState = async fraction => {
       await page.evaluate(time => window.exportRenderer.frame(time), manager.rollStart + (manager.rollEnd - manager.rollStart) * fraction);
-      loop.push(await page.evaluate(() => {
-        const solids = [...document.querySelectorAll('[class*="s26-solid_"]')];
-        return { main: solids[0].getBoundingClientRect().y, copy: solids[1]?.getBoundingClientRect().y, height: innerHeight };
-      }));
+      return page.evaluate(() => {
+        const rows = [...document.querySelectorAll('[class*="s26-outline_"] span')];
+        const solid = document.querySelector('[class*="s26-solid_"]');
+        const visible = row => Number(getComputedStyle(row).opacity) > .5 && getComputedStyle(row).visibility !== 'hidden';
+        const filled = rows.flatMap((row, index) => visible(row) && getComputedStyle(row).color !== 'rgba(0, 0, 0, 0)' ? [index] : []);
+        const outlined = rows.flatMap((row, index) => visible(row) && getComputedStyle(row).color === 'rgba(0, 0, 0, 0)' ? [index] : []);
+        if (Number(getComputedStyle(solid).opacity) > .5) filled.push(3);
+        return { filled, outlined, positions: rows.map(row => row.getBoundingClientRect().y), centre: solid.getBoundingClientRect().y };
+      });
+    };
+    const beforeLetters = await letterState(-.02);
+    assert.deepEqual(beforeLetters.filled, [], 'Filled letters appeared before the letter sequence');
+    assert.deepEqual(beforeLetters.outlined, [], 'Outline placeholders appeared before the filled letters revealed them');
+    const phases = [];
+    // Native m4s frames: mostly two-frame holds, with a shorter first-pass row and longer final approach.
+    const beats = [0, 2, 3, 5, 7, 9, 11, 13, 15, 17, 20].map(frame => frame / 20);
+    for (let phase = 0; phase < beats.length - 1; phase++) {
+      const span = beats[phase + 1] - beats[phase];
+      const held = await letterState(beats[phase] + span * .25);
+      assert.equal(held.filled.length, 1, 'Exactly one fixed letter row must be filled');
+      assert.deepEqual(await letterState(beats[phase] + span * .75), held, 'Letter states drifted between frame-like changes');
+      if (phases.length) {
+        assert.deepEqual(held.positions, phases[0].positions, 'Outline letters moved between state changes');
+        assert.equal(held.centre, phases[0].centre, 'Centre lettering moved between state changes');
+      }
+      phases.push(held);
     }
-    assert.ok(loop[0].copy >= 0 && loop[0].copy < loop[0].height / 2, 'First solid row must enter from the top');
-    assert.ok(loop[1].copy > loop[1].height / 2, 'First solid row never reached the bottom');
-    assert.ok(loop[2].main > 0 && loop[2].main < loop[2].height / 2, 'Next solid row did not return from the top');
+    assert.deepEqual(phases.map(phase => phase.filled[0]), [0, 1, 2, 3, 4, 5, 6, 0, 1, 2], 'Filled letter states must advance down the fixed rows and wrap once');
+    assert.deepEqual(phases.map(phase => phase.outlined), [
+      [], [0], [0, 1], [0, 1, 2], [0, 1, 2, 3], [0, 1, 2, 3, 4], [0, 1, 2, 3, 4, 5],
+      [1, 2, 3, 4, 5, 6], [0, 2, 3, 4, 5, 6], [0, 1, 3, 4, 5, 6],
+    ], 'Outline trail must unfold after the filled letters, retaining the centre outline on the second pass');
+    const finalLetters = await letterState(1);
+    assert.deepEqual(finalLetters.filled, [3], 'Final letter state must hold at the centre');
+    assert.deepEqual(finalLetters.outlined, [0, 1, 2, 4, 5, 6], 'Final filled centre did not replace its temporary outline');
     const handoff = [];
     for (let fraction = 0; fraction <= 1; fraction += .05) {
       const time = manager.nameStart + (manager.nameReady - manager.nameStart) * fraction;
@@ -98,18 +122,20 @@ try {
         assert.ok(frame.name.right <= frame.solid.left + 1, 'Full name overlaps the departing abbreviation');
       }
     }
-    await page.evaluate(time => window.exportRenderer.frame(time), manager.rollEnd);
-    const beforeSeek = await page.screenshot();
-    await page.evaluate(time => window.exportRenderer.frame(time), manager.nameReady);
-    await page.evaluate(time => window.exportRenderer.frame(time), manager.rollEnd);
-    assert.ok(beforeSeek.equals(await page.screenshot()), 'Backward seek changed the settled title');
+    for (const time of [manager.rollStart + (manager.rollEnd - manager.rollStart) * .45, manager.rollEnd]) {
+      await page.evaluate(time => window.exportRenderer.frame(time), time);
+      const beforeSeek = await page.screenshot();
+      await page.evaluate(time => window.exportRenderer.frame(time), manager.nameReady);
+      await page.evaluate(time => window.exportRenderer.frame(time), time);
+      assert.ok(beforeSeek.equals(await page.screenshot()), 'Backward seek changed a held letter state');
+    }
     await page.evaluate((time) => window.exportRenderer.frame(time), manager.nameReady + .01);
     const namePhase = await page.evaluate(() => ({
       solid: getComputedStyle(document.querySelector('[class*="s26-solid_"]')).opacity,
       name: getComputedStyle(document.querySelector('[class*="s26-team_"]')).opacity,
     }));
     assert.deepEqual(namePhase, { solid: '0', name: '1' });
-    evidence.push({ managerLength: mgrLen, title: 'rightward opening, stationary outlines, filled downward full loop, centre hold, opaque slide without overlap, deterministic backward seek' });
+    evidence.push({ managerLength: mgrLen, title: 'rightward opening, unfolding outline trail, temporary centre outline, final filled centre, opaque slide without overlap, deterministic backward seek' });
   }
   plan = await page.evaluate(async () => { window.motionState.anim.mgrLen = 6; return window.motionInit(); });
   for (const [name, time] of [
@@ -259,6 +285,10 @@ try {
   plan = await page.evaluate(() => window.motionInit());
   await page.evaluate(time => window.exportRenderer.frame(time), plan.manager.start + .2);
   assert.ok(await page.evaluate(() => Math.abs(document.querySelector('[class*="s26-panel_"]').getBoundingClientRect().left - innerWidth * .29) < .1), 'Reduced motion still slides the opening panel');
+  assert.ok(await page.evaluate(() =>
+    [...document.querySelectorAll('[class*="s26-outline_"] span')].every(row => getComputedStyle(row).color === 'rgba(0, 0, 0, 0)') &&
+    getComputedStyle(document.querySelector('[class*="s26-solid_"]')).opacity === '1'
+  ), 'Reduced motion still cycles the filled letter rows');
   for (const time of [plan.groups[1].start + .3, plan.final.start + .5]) {
     await page.evaluate((time) => window.exportRenderer.frame(time), time);
     const reduced = await page.evaluate(() => ({
@@ -269,5 +299,5 @@ try {
   }
   assert.deepEqual(errors, []);
   await writeFile(`${output}/checks.json`, JSON.stringify({ evidence, errors }, null, 2));
-  console.log('26/27 motion: rightward opening, stationary outlines with filled title roll, clipped cut-out/opaque portraits, visible adjacent-card shadow, deterministic reflection, 1–7 columns, all card shapes and reduced motion passed.');
+  console.log('26/27 motion: rightward opening, unfolding outline trail and temporary centre outline, clipped cut-out/opaque portraits, visible adjacent-card shadow, deterministic reflection, 1–7 columns, all card shapes and reduced motion passed.');
 } finally { await browser.close(); }

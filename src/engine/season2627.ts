@@ -29,8 +29,8 @@ const MIN_HIGHLIGHT_HOLD = 3.5;
 /** One timing plan for markup, preview and frame-by-frame export. No timers or frame-rate assumptions. */
 export function planSeason2627(s: LineupState): SeasonPlan {
   const lead = s.anim.intro ? s.anim.introLen : .35;
-  const rollStart = lead + .16, rollEnd = rollStart + Math.min(.78, s.anim.mgrLen * .2);
-  const manager = s.anim.manager ? { start: lead, end: lead + s.anim.mgrLen, rollStart, rollEnd, nameStart: rollEnd + .22, nameReady: rollEnd + 1.34 } : null;
+  const rollStart = lead + .23, rollEnd = rollStart + Math.min(.67, s.anim.mgrLen * .2);
+  const manager = s.anim.manager ? { start: lead, end: lead + s.anim.mgrLen, rollStart, rollEnd, nameStart: rollEnd + .4, nameReady: rollEnd + .9 } : null;
   const marks: SeasonPlan['marks'] = [];
   if (s.anim.intro) marks.push({ t: 0, scene: 'intro' });
   if (manager) marks.push({ t: manager.start, scene: 'manager' });
@@ -121,8 +121,8 @@ export function season2627HTML(s: LineupState, videoURL: string | null) {
     <div class="s26-panel-track">
       <div class="s26-panel"></div>
       ${plan.manager ? `<div class="s26-title">
-        <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 16 }, (_, i) => `<span${i === 3 || i === 9 ? ' class="s26-outline-gap"' : ''}>${ab}</span>`).join('')}</div></div>
-        <div class="s26-solid">${ab}</div><div class="s26-solid s26-solid-loop" aria-hidden="true">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
+        <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 8 }, (_, i) => `<span data-title-row="${i}">${ab}</span>`).join('')}</div></div>
+        <div class="s26-solid">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
       </div>` : ''}
       ${plan.groups.map((g, gi) => `<div class="s26-role${/[぀-ヿ㐀-鿿가-힯]/.test(s.text[`grp${g.role}`]) ? ' s26-cjk' : ''}" data-role="${gi}"><span>${esc(s.text[`grp${g.role}`])}</span></div>`).join('')}
       ${s.look.crest ? `<div class="s26-crest"><div class="s26-crest-y">${crestHTML(s)}</div></div>` : ''}
@@ -214,20 +214,30 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
     revealName(q('.s26-coach-name'), start + .2, .45);
     show(q('.s26-title'), start, end + .4);
     life(q('.s26-title'), start, start + .6, end - .15, end + .3);
-    // Only the filled abbreviation loops down past the bottom and returns from the top,
-    // then decelerates into the central gap in the stationary outline background.
-    const roll = [
-      { y: -91.175, offset: 0, easing: 'cubic-bezier(.3,0,.7,1)' },
-      { y: -37.4, offset: .44, easing: 'cubic-bezier(.16,1,.3,1)' },
-      { y: 0, offset: 1, easing: 'linear' },
+    // The filled row leaves an outline behind; future rows stay blank on the first pass.
+    // The centre also becomes an outline until the second pass fills it for the final hold.
+    const letterBeats = [
+      { row: 0, offset: 0 }, { row: 1, offset: .1 }, { row: 2, offset: .15 },
+      { row: 3, offset: .25 }, { row: 4, offset: .35 }, { row: 5, offset: .45 },
+      { row: 6, offset: .55 }, { row: 0, offset: .65 }, { row: 1, offset: .75 },
+      { row: 2, offset: .85 }, { row: 3, offset: 1 },
     ];
+    qa('.s26-outline span').forEach((letters, index) => add(letters,
+      letterBeats.map(({ row, offset }, beat) => ({
+        opacity: index === 3 ? (!reduced && beat > 3 && beat < 10 ? 1 : 0) : (index < 7 && (reduced || beat >= index) ? 1 : 0),
+        color: !reduced && row === index && index !== 3 ? 'var(--s26-panel-ink)' : 'transparent',
+        offset, easing: 'steps(1,end)',
+      })), rollStart, reduced ? .01 : rollEnd - rollStart, reduced ? 'both' : 'forwards'));
     const solidDuration = nameStart + .36 - rollStart;
-    qa('.s26-solid').forEach((solid) => add(solid, [
-      ...roll.map(({ y, offset, easing }) => ({ opacity: 1, transform: `translate(0,${reduced ? 0 : y}cqw)`, offset: offset * (rollEnd - rollStart) / solidDuration, easing })),
+    add(q('.s26-solid'), [
+      ...letterBeats.map(({ row, offset }) => ({
+        opacity: reduced || row === 3 ? 1 : 0, transform: 'translate(0,0)',
+        offset: offset * (rollEnd - rollStart) / solidDuration, easing: 'steps(1,end)',
+      })),
       { opacity: 1, transform: 'translate(0,0)', offset: (nameStart - rollStart) / solidDuration, easing: 'cubic-bezier(.6,0,.4,1)' },
       { opacity: 1, transform: `translate(${reduced ? 0 : 70}cqw,0)`, offset: 1 - .000001, easing: 'steps(1,end)' },
       { opacity: 0, transform: `translate(${reduced ? 0 : 70}cqw,0)`, offset: 1 },
-    ], rollStart, solidDuration));
+    ], rollStart, solidDuration);
     add(q('.s26-team'), [
       { opacity: 0, transform: reduced ? 'translate(0,-50%)' : 'translate(calc(-100% - 13cqw),-50%)', offset: 0, easing: 'steps(1,end)' },
       { opacity: 1, transform: reduced ? 'translate(0,-50%)' : 'translate(calc(-100% - 13cqw),-50%)', offset: .000001, easing: 'cubic-bezier(.16,1,.3,1)' },
