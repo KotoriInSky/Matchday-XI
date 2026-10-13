@@ -1,6 +1,8 @@
 # <img src="public/favicon.svg" width="32" height="32" alt="Matchday XI icon"> Matchday XI
 
-[Open the editor](https://kotoriinsky.github.io/Matchday-XI/) · [简体中文](README.zh-CN.md) · [Report an issue](https://github.com/KotoriInSky/Matchday-XI/issues)
+🌐 **[Open the online editor](https://kotoriinsky.github.io/Matchday-XI/)**
+
+[简体中文](README.zh-CN.md) · [Report an issue](https://github.com/KotoriInSky/Matchday-XI/issues)
 
 ## About
 
@@ -12,11 +14,11 @@ Choose a formation, add your players, then set the club colours, badge and photo
 
 Classic: player reveals by position, followed by the starting lineup and substitutes.
 
-![Classic lineup animation](docs/images/classic-demo.gif)
+![Classic lineup animation](docs/demos/classic-demo.gif)
 
 26/27: split-panel player reveals, with manager, captain and key-player highlights.
 
-![26/27 lineup animation](docs/images/season2627-demo.gif)
+![26/27 lineup animation](docs/demos/season2627-demo.gif)
 
 Both demos use the sample lineup and original placeholder artwork, played at 2.5× speed. You can supply your own images and frame the pitch, player and highlight cards separately. Template names describe styles and do not imply official affiliation.
 
@@ -30,7 +32,7 @@ Both demos use the sample lineup and original placeholder artwork, played at 2.5
 | Club styling | Set badges, colours, kit patterns, card shapes, and background images or video. |
 | Fonts and tags | Choose bundled fonts or upload your own, and add flags or custom image tags. |
 | Preview | Play, pause, scrub the timeline or jump between scenes, with undo and redo. |
-| Card export | Generate transparent PNGs in the browser, individually or in a ZIP, with a 1024, 2048 or 4096 px long edge. |
+| Card export | Generate transparent PNGs in the browser, individually or in a ZIP, with a 1024, 2048 or 4096 px card frame long edge. Overflow extends the transparent canvas while the frame size stays consistent. |
 | Video export | Export silent H.264 MP4 at 720p, 1080p, 1440p or 2160p, at 30 or 60 fps. |
 | Project files | Autosave in the current browser and download or import JSON backups. |
 | Interface | Light and dark themes, with English, Simplified Chinese, Traditional Chinese, Japanese, Korean and Spanish. |

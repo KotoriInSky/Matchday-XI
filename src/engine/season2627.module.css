@@ -89,6 +89,8 @@
 .s26-substitutes i{min-width:2.5cqw;color:inherit;font-size:.83em;font-weight:400}
 .s26-preview{position:absolute;inset:0;--s26-tag-h:calc(1.365cqw * var(--tgz,1));--s26-tag-w:calc(2.0475cqw * var(--tgz,1))}
 .s26-preview-column{left:18cqw;right:18cqw;top:0;bottom:0}
+.s26-preview .s26-column{overflow:visible}
+.s26-preview .s26-full-photo{overflow:hidden}
 .s26-preview .s26-photo{top:1cqw}
 .s26-preview .s26-info{left:3cqw;right:3cqw;bottom:5cqw}
 .s26-preview .s26-name span{font-size:calc(3cqw * var(--name-scale-1,1))}

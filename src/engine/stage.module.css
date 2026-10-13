@@ -268,6 +268,7 @@
 .rc-in.cutout{overflow:visible}
 .rc-in.cutout :is(.stripes-bg,.rc-metal,.rc-holo,.sheen,.rc-flash,.rc-shade){border-radius:inherit;clip-path:inset(0 round 1.6cqw)}
 .rc-in.cutout .rc-photo{height:42cqw;clip-path:inset(-45% 0 0)}
+.inspector .rc-in.cutout .rc-photo,.inspector .rc-kphoto:not(.full),.inspector .sm-por.cutout .ph img.pp{clip-path:none}
 .stage .sm-por.cutout{overflow:visible;clip-path:none}
 .sm-por.cutout .ph{overflow:visible;background:none}
 .sm-por.cutout .ph::before{content:"";position:absolute;inset:0;background:var(--pat) center/cover}

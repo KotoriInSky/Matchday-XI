@@ -10,7 +10,7 @@ declare global {
   interface Window {
     cardRenderer: {
       init(input: unknown, lang: string): Promise<void>;
-      show(index: number, kind: CardKind): Promise<{ x: number; y: number; width: number; height: number; padding: number }>;
+      show(index: number, kind: CardKind): Promise<{ x: number; y: number; width: number; height: number; padding: number; frameWidth: number; frameHeight: number }>;
       place(width: number, x: number, y: number): Promise<void>;
       capture(width: number, height: number): Promise<HTMLCanvasElement>;
     };
@@ -73,6 +73,10 @@ export function mountCardRenderer() {
         }
       }
       await settle();
+      const frame = stage.querySelector<HTMLElement>(kind === 'small' ? `.${styles['sm-por']}`
+        : state.anim.template === 'season2627' ? `.${seasonStyles['s26-preview-column']}` : `.${styles.rc}`);
+      if (!frame) throw new Error('Missing card frame');
+      const frameBox = frame.getBoundingClientRect();
       // Include overflowing portraits, labels and tags. Clip only where the artwork clips.
       let left = Infinity, top = Infinity, right = -Infinity, bottom = -Infinity;
       for (const node of stage.querySelectorAll<HTMLElement>('*')) {
@@ -97,7 +101,8 @@ export function mountCardRenderer() {
       }
       if (!Number.isFinite(left)) throw new Error('Empty card');
       // Shadows are paint overflow rather than DOM bounds; reserve 12% of design width.
-      return { x: left, y: top, width: right - left, height: bottom - top, padding: 72 };
+      return { x: left, y: top, width: right - left, height: bottom - top, padding: 72,
+        frameWidth: frameBox.width, frameHeight: frameBox.height };
     },
     async place(width, x, y) {
       canvas.style.width = `${width}px`; canvas.style.left = `${x}px`; canvas.style.top = `${y}px`;

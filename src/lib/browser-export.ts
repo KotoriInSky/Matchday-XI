@@ -50,7 +50,8 @@ export async function browserCards(options: { state: LineupState; lang: string; 
     for (const [i, card] of cards.entries()) {
       signal.throwIfAborted();
       const bounds = await abortable(api.show(card.index, card.kind), signal);
-      const factor = size / Math.max(bounds.width + bounds.padding * 2, bounds.height + bounds.padding * 2);
+      // Scale the frame consistently; portraits extend the transparent canvas.
+      const factor = size / Math.max(bounds.frameWidth, bounds.frameHeight);
       const width = Math.round((bounds.width + bounds.padding * 2) * factor), height = Math.round((bounds.height + bounds.padding * 2) * factor);
       view.frame.style.width = `${width}px`; view.frame.style.height = `${height}px`;
       await abortable(api.place(600 * factor, (bounds.padding - bounds.x) * factor, (bounds.padding - bounds.y) * factor), signal);

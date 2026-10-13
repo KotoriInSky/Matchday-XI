@@ -36,7 +36,7 @@ async function render(payload) {
 async function checkPNG(bytes, size, softEdge = true) {
   assert.equal(bytes.subarray(1, 4).toString(), 'PNG');
   const width = bytes.readUInt32BE(16), height = bytes.readUInt32BE(20);
-  assert.equal(Math.max(width, height), size);
+  assert.ok(Math.max(width, height) > size, 'Canvas includes the selected frame size plus transparent overflow margins');
   const pixels = await page.evaluate(async data => {
     const image = new Image(); image.src = data; await image.decode();
     const canvas = document.createElement('canvas'); canvas.width = image.width; canvas.height = image.height;
@@ -105,7 +105,7 @@ try {
   await page.getByRole('tab', { name: '阵容', exact: true }).click();
   await page.locator('.player-index-row').first().click();
   await page.getByRole('dialog').getByRole('button', { name: '导出卡片 PNG', exact: true }).scrollIntoViewIfNeeded();
-  await page.getByRole('dialog').getByLabel('PNG 长边', { exact: true }).selectOption('1024');
+  await page.getByRole('dialog').getByLabel('卡框长边', { exact: true }).selectOption('1024');
   await page.getByRole('dialog').getByRole('button', { name: '导出卡片 PNG', exact: true }).click();
   await page.getByRole('link', { name: '下载 PNG', exact: true }).waitFor({ timeout: 90000 });
   const download = page.waitForEvent('download');
@@ -119,7 +119,7 @@ try {
   assert.ok(await panel.getByRole('button', { name: '导出卡片 ZIP', exact: true }).isDisabled());
   await panel.getByRole('checkbox').first().check();
   assert.ok(await panel.getByRole('button', { name: '导出卡片 ZIP', exact: true }).isEnabled());
-  await panel.getByLabel('PNG 长边', { exact: true }).selectOption('1024');
+  await panel.getByLabel('卡框长边', { exact: true }).selectOption('1024');
   await panel.getByRole('button', { name: '导出卡片 ZIP', exact: true }).click();
   await page.getByRole('tab', { name: '球队', exact: true }).click();
   await page.getByRole('tab', { name: '备份', exact: true }).click();

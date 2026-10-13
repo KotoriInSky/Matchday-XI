@@ -39,12 +39,12 @@ try {
   await page.getByRole('tab', { name: '阵容', exact: true }).click();
   await page.locator('.player-index-row').first().click();
   const modal = page.getByRole('dialog');
-  await modal.getByLabel('PNG 长边', { exact: true }).selectOption('1024');
+  await modal.getByLabel('卡框长边', { exact: true }).selectOption('1024');
   await modal.getByRole('button', { name: '导出卡片 PNG', exact: true }).click();
   await modal.getByRole('link', { name: '下载 PNG', exact: true }).waitFor({ timeout: 90000 });
   download = page.waitForEvent('download'); await modal.getByRole('link', { name: '下载 PNG', exact: true }).click();
   await (await download).saveAs('test-results/static-export/card.png');
-  const png = await readFile('test-results/static-export/card.png'); assert.equal(Math.max(png.readUInt32BE(16), png.readUInt32BE(20)), 1024);
+  const png = await readFile('test-results/static-export/card.png'); assert.ok(Math.max(png.readUInt32BE(16), png.readUInt32BE(20)) > 1024);
   await page.keyboard.press('Escape'); await page.getByRole('tab', { name: '备份', exact: true }).click();
   await page.getByLabel('分辨率', { exact: true }).selectOption('720');
   assert.equal(await page.getByLabel('导出方式', { exact: true }).inputValue(), 'browser');

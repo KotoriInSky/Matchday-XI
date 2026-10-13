@@ -7,6 +7,8 @@ No user project is included by default.
 Run **Actions → Render project → Run workflow** in your own repository.
 Choose `video` for MP4 or `cards` for transparent PNGs in a ZIP. Card players are
 one-based roster slots, not shirt numbers. `small,big,key` exports all three types.
+Card size sets the frame long edge; portrait overflow extends the transparent
+canvas without shrinking the frame.
 Download the artifact from the finished workflow run; retention is three days.
 
 Project JSON embeds photos and custom fonts. Uploading it makes those assets part

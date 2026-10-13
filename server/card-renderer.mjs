@@ -18,7 +18,7 @@ export async function renderCards(page, job, payload) {
   for (const [position, card] of payload.cards.entries()) {
     if (job.cancelled) return;
     const bounds = await page.evaluate(({ index, kind }) => window.cardRenderer.show(index, kind), card);
-    const factor = payload.size / Math.max(bounds.width + bounds.padding * 2, bounds.height + bounds.padding * 2);
+    const factor = payload.size / Math.max(bounds.frameWidth, bounds.frameHeight);
     const width = Math.max(1, Math.round((bounds.width + bounds.padding * 2) * factor));
     const height = Math.max(1, Math.round((bounds.height + bounds.padding * 2) * factor));
     await page.setViewportSize({ width, height });

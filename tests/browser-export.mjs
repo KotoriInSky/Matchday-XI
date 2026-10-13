@@ -56,7 +56,7 @@ try {
   await cutout.evaluate(state => window.cardRenderer.init(state, 'en'), { ...state, anim: { ...state.anim, template: 'classic' } });
   for (const kind of ['small', 'big', 'key']) {
     const bounds = await cutout.evaluate(kind => window.cardRenderer.show(0, kind), kind);
-    const factor = 1024 / Math.max(bounds.width + 144, bounds.height + 144);
+    const factor = 1024 / Math.max(bounds.frameWidth, bounds.frameHeight);
     const width = Math.round((bounds.width + 144) * factor), height = Math.round((bounds.height + 144) * factor);
     await cutout.setViewportSize({ width, height });
     const protruding = await cutout.evaluate(async ({ kind, factor, bounds, width, height }) => {
@@ -87,7 +87,7 @@ try {
   for (const [kind, size] of [['small', 1024], ['big', 2048], ['key', 4096]]) {
     const r = await cards('classic', [{ index: 0, kind }], size);
     const png = Buffer.from(r.bytes);
-    assert.equal(Math.max(png.readUInt32BE(16), png.readUInt32BE(20)), size);
+    assert.ok(Math.max(png.readUInt32BE(16), png.readUInt32BE(20)) > size);
     const stats = await page.evaluate(async url => {
       const img = new Image(); img.src = url; await img.decode();
       const canvas = document.createElement('canvas'); canvas.width = img.width; canvas.height = img.height;

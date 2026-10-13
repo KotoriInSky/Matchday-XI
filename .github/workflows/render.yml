@@ -24,7 +24,7 @@ on:
         options: ['30', '60']
         default: '30'
       card_size:
-        description: PNG long edge
+        description: Card frame long edge (overflow extends the canvas)
         type: choice
         options: ['1024', '2048', '4096']
         default: '2048'

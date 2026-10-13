@@ -260,3 +260,9 @@ input, textarea { caret-color: var(--primary); }
 .how-to p{line-height:1.75;max-width:68ch}
 .editor-column .font-mono{font-size:12px;font-variant-numeric:tabular-nums}
 @media(max-width:639px){.editor-section-title,.card-dialog-header h2{font-size:20px}}
+
+/* Native popups need their own opaque theme surface on Windows. */
+.app-header select, .app-header option {
+  color: var(--foreground);
+  background-color: var(--card);
+}

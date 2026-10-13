@@ -19,7 +19,9 @@
     "test:export-media": "node tests/export-media.mjs",
     "render:project": "node scripts/render-project.mjs",
     "test:browser-export": "node tests/browser-export.mjs",
-    "test:static-export": "node tests/static-export.mjs"
+    "test:static-export": "node tests/static-export.mjs",
+    "test:card-sizing": "node tests/card-sizing.mjs",
+    "test:header-theme": "node tests/header-theme.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

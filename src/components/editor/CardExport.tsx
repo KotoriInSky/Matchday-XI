@@ -36,7 +36,7 @@ export function CardExport({ playerIndex, kind = 'big' }: { playerIndex?: number
         onProgress: value => { if (mounted.current) setProgress(value); } });
       if (mounted.current) {
         URL.revokeObjectURL(download.current); download.current = file.url;
-        setResult({ ...file, description: `${description} · ${file.dimensions ? `${file.dimensions.width} × ${file.dimensions.height}` : size} px` });
+        setResult({ ...file, description: `${description} · ${file.dimensions ? `${file.dimensions.width} × ${file.dimensions.height} px` : text(`卡框长边 ${size} px`, `Card frame long edge ${size} px`)}` });
       } else URL.revokeObjectURL(file.url);
     } catch (error) {
       if (mounted.current && !ctrl.signal.aborted) setError(error instanceof Error && error.message === 'busy'
@@ -53,8 +53,9 @@ export function CardExport({ playerIndex, kind = 'big' }: { playerIndex?: number
       </fieldset>
       <fieldset disabled={busy} className="space-y-2"><legend className="text-sm font-medium">{text('卡片类型', 'Card types')}</legend><div className="flex flex-wrap gap-x-4">{kinds.map(value => <label key={value} className="flex min-h-11 items-center gap-2"><input type="checkbox" className="size-4 accent-primary" checked={types.includes(value)} onChange={event => setTypes(values => event.target.checked ? [...values, value] : values.filter(item => item !== value))} />{labels[value]}</label>)}</div></fieldset>
     </>}
-    <Field label={text('PNG 长边', 'PNG long edge')}>{({ id }) => <Select id={id} value={size} disabled={busy} onChange={event => setSize(event.target.value)}>{[1024, 2048, 4096].map(value => <option key={value} value={value}>{value} px</option>)}</Select>}</Field>
+    <Field label={text('卡框长边', 'Card frame long edge')}>{({ id }) => <Select id={id} value={size} disabled={busy} onChange={event => setSize(event.target.value)}>{[1024, 2048, 4096].map(value => <option key={value} value={value}>{value} px</option>)}</Select>}</Field>
     <p className="text-xs text-muted-foreground">{batch ? `${count} PNG` : labels[kind]} · {text('透明背景', 'Transparent background')}</p>
+    <p className="text-xs text-muted-foreground">{text('同类卡框尺寸一致，出框人物、标签和阴影会扩展透明画布；PNG 实际尺寸可能超过所选长边。', 'Frames of the same type keep a consistent size. Portraits, tags and shadows extend the transparent canvas, so the PNG may exceed the selected frame size.')}</p>
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     {busy ? <div role="status" className="space-y-3"><p className="text-sm">{progress ? text('生成卡片', 'Rendering cards') : text('准备素材', 'Preparing assets')} · {progress}%</p><progress className="w-full accent-primary" max={100} value={progress} />{!batch && <p className="text-xs text-muted-foreground">{text('关闭窗口将取消本次导出。', 'Closing this window cancels this export.')}</p>}<Button variant="outline" onClick={() => controller.current?.abort()}>{text('取消卡片导出', 'Cancel card export')}</Button></div>
       : <Button disabled={!count} onClick={start}><ImageDown />{batch ? text('导出卡片 ZIP', 'Export cards ZIP') : text('导出卡片 PNG', 'Export card PNG')}</Button>}

@@ -1,6 +1,8 @@
 # <img src="public/favicon.svg" width="32" height="32" alt="Matchday XI icon"> Matchday XI
 
-[在线使用](https://kotoriinsky.github.io/Matchday-XI/) · [English](README.md) · [提交 Issue](https://github.com/KotoriInSky/Matchday-XI/issues)
+🌐 **[在线使用](https://kotoriinsky.github.io/Matchday-XI/)**
+
+[English](README.md) · [提交 Issue](https://github.com/KotoriInSky/Matchday-XI/issues)
 
 ## 项目介绍
 
@@ -12,11 +14,11 @@ Matchday XI 是一个在浏览器里制作足球阵容画面和比赛日动画�
 
 Classic：按位置分组展示球员，最后呈现首发与替补名单。
 
-![Classic 模板的阵容出场动画](docs/images/classic-demo.gif)
+![Classic 模板的阵容出场动画](docs/demos/classic-demo.gif)
 
 26/27：分栏出场动画，包含主教练、队长和核心球员展示。
 
-![26/27 模板的阵容出场动画](docs/images/season2627-demo.gif)
+![26/27 模板的阵容出场动画](docs/demos/season2627-demo.gif)
 
 两段动图使用示例阵容和项目自带的人物占位图，以 2.5 倍速播放。你可以上传自己的素材，分别调整小卡、大卡和 Highlight 的构图。模板名称用于区分样式，不代表赛事或转播机构的官方授权。
 
@@ -30,7 +32,7 @@ Classic：按位置分组展示球员，最后呈现首发与替补名单。
 | 球队样式 | 更换队徽、配色、球衣纹理、卡片外形和背景图片或视频。 |
 | 字体与标签 | 选择内置字体或上传字体，给球员添加国旗、自定义图片标签。 |
 | 预览与修改 | 播放、暂停、拖动时间轴或跳转片段，支持撤销和重做。 |
-| 卡片导出 | 在浏览器中生成透明背景 PNG，支持单张下载和批量 ZIP，长边可选 1024、2048 或 4096 px。 |
+| 卡片导出 | 在浏览器中生成透明背景 PNG，支持单张下载和批量 ZIP，卡框长边可选 1024、2048 或 4096 px。同类卡框尺寸一致，出框内容向外扩展透明画布。 |
 | 视频导出 | 导出无音轨的 H.264 MP4，可选 720p、1080p、1440p 或 2160p，以及 30／60 fps。 |
 | 项目保存 | 自动保存到当前浏览器，下载或导入 JSON 项目文件，方便备份和继续编辑。 |
 | 界面 | 支持深浅主题，以及英语、简体中文、繁体中文、日语、韩语和西班牙语。 |
