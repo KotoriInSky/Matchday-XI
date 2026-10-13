@@ -49,7 +49,7 @@ export function normalize(input: unknown): LineupState {
   d.players = ps;
   d.tags = (Array.isArray(d.tags) ? d.tags : [])
     .filter((t): t is Tag => isObj(t) && !!t.id)
-    .map((t) => ({ id: String(t.id), label: String(t.label ?? ''), img: typeof t.img === 'string' ? t.img : null, shape: t.shape === 'square' ? 'square' : 'wide', fit: okFit(t.fit) }));
+    .map((t) => ({ id: String(t.id), ...(typeof t.fifaCode === 'string' && /^[A-Z]{3}$/.test(t.fifaCode) ? { fifaCode: t.fifaCode } : {}), label: String(t.label ?? ''), img: typeof t.img === 'string' ? t.img : null, shape: t.shape === 'square' ? 'square' : 'wide', fit: okFit(t.fit) }));
   ps.forEach((p) => {
     p.tagFits = isObj(p.tagFits) ? Object.fromEntries(Object.entries(p.tagFits)
       .filter(([id, fit]) => d.tags.some((tag) => tag.id === id) && isObj(fit))

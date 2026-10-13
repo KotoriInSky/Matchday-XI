@@ -70,6 +70,12 @@ do not connect to Google Fonts. The host receives normal requests for
 these font assets; they do not intentionally include project names,
 photos or other imported asset data. Uploaded fonts are read locally.
 
+The FIFA member catalog and flag images are bundled with the site. Flag
+requests go to the same host as the page, rather than FIFA, IOC or Wikimedia.
+Search queries are processed locally and are not sent to these organizations
+or included in flag URLs. Selected SVG images are embedded in browser saves
+and project JSON, so sharing a backup also shares the selected flags.
+
 GitHub privacy statement:
 https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement
 
@@ -143,6 +149,11 @@ GitHub Pages 版本由 GitHub 提供网站文件，GitHub 会收到正常网页�
 网站加载，并按需请求字体及字符子集。应用和本地渲染器无需连接 Google
 Fonts。网站托管方会收到加载字体资源的正常请求，这些请求不会主动包含
 项目姓名、照片或其他导入素材数据。上传的字体在本机读取。
+
+FIFA 会籍目录和旗帜随网站提供，图片从页面所在的网站加载，无需连接
+FIFA、IOC 或 Wikimedia。搜索词在本机处理，不发送给这些组织，也不写入
+图片请求地址。选中的 SVG 图片会存入浏览器项目和 JSON 备份，分享备份
+也会分享已选择的旗帜。
 
 GitHub 隐私声明：
 https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement

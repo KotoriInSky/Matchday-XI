@@ -30,7 +30,7 @@ Both demos use the sample lineup and original placeholder artwork, played at 2.5
 | Player cards | Edit pitch, player and highlight cards with separate photos, image framing and name layouts. |
 | Animation | Use Classic or 26/27, with a manager introduction, player reveal order and scene timing. |
 | Club styling | Set badges, colours, kit patterns, card shapes, and background images or video. |
-| Fonts and tags | Choose bundled fonts or upload your own, and add flags or custom image tags. |
+| Fonts and tags | Choose bundled fonts or upload your own. Search 211 FIFA member-association flags by Chinese / English name or FIFA / IOC code, or add custom image tags. |
 | Preview | Play, pause, scrub the timeline or jump between scenes, with undo and redo. |
 | Card export | Generate transparent PNGs in the browser, individually or in a ZIP, with a 1024, 2048 or 4096 px card frame long edge. Overflow extends the transparent canvas while the frame size stays consistent. |
 | Video export | Export silent H.264 MP4 at 720p, 1080p, 1440p or 2160p, at 30 or 60 fps. |
@@ -101,6 +101,8 @@ Export methods handle data as follows:
 
 Built-in fonts are served with the website, without connecting to Google Fonts. The host still receives normal requests for pages, fonts and other resources. Browser export does not upload project assets.
 
+FIFA association search runs locally; flags are served with the website and selected images are included in project backups. The catalog uses the 211 members checked on 2026-10-13. IOC codes are search aliases; Matchday XI is independent of FIFA and IOC. See the [flag library guide](docs/fifa-flags.md).
+
 Read the full [usage terms](public/TERMS.txt) and [privacy notice](public/PRIVACY.txt).
 
 ## Licence and acknowledgements
@@ -116,6 +118,7 @@ Thanks to the following open-source projects:
 | [TypeScript](https://github.com/microsoft/TypeScript) | Type checking | Apache-2.0 |
 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) / Vite plugin | Interface styling | MIT |
 | [Lucide](https://github.com/lucide-icons/lucide) | Interface icons | ISC |
+| [flag-icons](https://github.com/lipis/flag-icons) | FIFA-filtered flag artwork | MIT |
 | [class-variance-authority](https://github.com/joe-bell/cva) | Component variants | Apache-2.0 |
 | [clsx](https://github.com/lukeed/clsx) | CSS class composition | MIT |
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Tailwind class merging | MIT |
@@ -127,5 +130,7 @@ Thanks to the following open-source projects:
 | [FFmpeg](https://ffmpeg.org/legal.html) | Local and Actions video encoding | LGPL/GPL, depending on the build |
 
 Bundled fonts are sourced from Google Fonts and use SIL Open Font License 1.1. Original copyright and licence files are included under `public/fonts/`; see [font sources](docs/font-sources.md).
+
+The FIFA flag library contains 210 MIT SVGs based on flag-icons, plus a Chinese Taipei representative flag listed as public domain by Wikimedia Commons. Artwork keeps its original copyright and licence status; see [flag sources and notices](public/flags/FIFA-FLAGS-SOURCES.txt) and the [asset manifest](public/flags/manifest.json).
 
 See [third-party notices](THIRD_PARTY_NOTICES.md) for more details. Mediabunny's [MPL-2.0 licence](public/MEDIABUNNY-LICENSE.txt) and [source information](public/DEPENDENCIES.txt) are also distributed with the site.

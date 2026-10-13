@@ -26,11 +26,19 @@ An export does not grant rights in someone else's assets. Third-party
 materials remain subject to their own licences; the project's MIT licence
 does not license club badges, player portraits or other imported materials.
 
+Built-in FIFA association flags retain their own artwork licences/status:
+210 SVGs based on flag-icons use MIT, and the Chinese Taipei representative
+flag is listed as public domain by Wikimedia Commons. Copyright status does
+not waive trademark or insignia rights. Source and copyright notices are in
+flags/FIFA-FLAGS-SOURCES.txt and flags/FLAG-ICONS-LICENSE.txt.
+The 211-entry catalog reflects sports membership, not political sovereignty;
+IOC codes are search aliases. The membership snapshot is dated 2026-10-13.
+
 4. Independent project
 Matchday XI is an independent tool. Club names, palette names, template
 names and visual styles do not imply an official relationship, sponsorship
 or endorsement by a club, league, competition, broadcaster or other rights
-holder. Do not present your work as officially approved without permission.
+holder, including FIFA and IOC. Do not present your work as officially approved without permission.
 
 5. Storage and export availability
 Projects are saved in browser storage, not a cloud account. Storage may be
@@ -77,9 +85,15 @@ project files or personal information to public issues.
 导出文件不会自动授予他人素材的使用权。第三方素材遵循各自许可；项目的
 MIT 许可证不授予球队队徽、球员照片或其他导入素材的权利。
 
+内置 FIFA 会籍旗帜保留各自许可或版权状态：210 个基于 flag-icons 的
+SVG 采用 MIT，中华台北代表队旗帜在 Wikimedia Commons 标为公有领域。
+版权状态不免除商标或标识权利。来源与声明见 flags/FIFA-FLAGS-SOURCES.txt
+和 flags/FLAG-ICONS-LICENSE.txt。名单按 2026-10-13 核对，只按 211 个
+体育协会会籍编排，不作为主权分类；IOC 代码仅供搜索。
+
 4. 独立项目声明
 Matchday XI 是独立工具。球队名称、配色名称、模板名称和视觉风格不表示
-与球队、联赛、赛事、广播机构或其他权利人有官方合作、赞助或认可关系。
+与球队、联赛、赛事、广播机构、FIFA、IOC 或其他权利人有官方合作、赞助或认可关系。
 未经许可，请勿将作品表述为获得官方认可。
 
 5. 保存与导出可用性

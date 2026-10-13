@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="flag-icons-cl" viewBox="0 0 640 480">
+<!--
+The MIT License (MIT)
+
+Copyright (c) 2013 Panayiotis Lipiridis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the "Software"), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+-->
+
+  <defs>
+    <clipPath id="cl-a">
+      <path fill-opacity=".7" d="M0 0h682.7v512H0z"/>
+    </clipPath>
+  </defs>
+  <g fill-rule="evenodd" clip-path="url(#cl-a)" transform="scale(.9375)">
+    <path fill="#fff" d="M256 0h512v256H256z"/>
+    <path fill="#0039a6" d="M0 0h256v256H0z"/>
+    <path fill="#fff" d="M167.8 191.7 128.2 162l-39.5 30 14.7-48.8L64 113.1l48.7-.5L127.8 64l15.5 48.5 48.7.1-39.2 30.4z"/>
+    <path fill="#d52b1e" d="M0 256h768v256H0z"/>
+  </g>
+</svg>

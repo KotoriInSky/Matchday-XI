@@ -13,6 +13,7 @@
     "test:hci": "node tests/hci.mjs",
     "test:cards": "node tests/card-export.mjs",
     "test:storage": "node tests/storage.mjs",
+    "test:fifa-flags": "node tests/fifa-flags.mjs",
     "test:season2627": "node tests/season2627.mjs",
     "test:season2627-motion": "node tests/season2627-motion.mjs",
     "test:export": "node tests/export.mjs",

@@ -1,0 +1,3652 @@
+[
+  {
+    "code": "AFG",
+    "name": "Afghanistan",
+    "confederation": "AFC",
+    "flag": "AFG.svg",
+    "names": {
+      "zh-Hans": "阿富汗",
+      "zh-Hant": "阿富汗",
+      "ja": "アフガニスタン",
+      "ko": "아프가니스탄",
+      "es": "Afganistán"
+    },
+    "iocCode": "AFG",
+    "aliases": [
+      "Afghanistan"
+    ]
+  },
+  {
+    "code": "ALB",
+    "name": "Albania",
+    "confederation": "UEFA",
+    "flag": "ALB.svg",
+    "names": {
+      "zh-Hans": "阿尔巴尼亚",
+      "zh-Hant": "阿爾巴尼亞",
+      "ja": "アルバニア",
+      "ko": "알바니아",
+      "es": "Albania"
+    },
+    "iocCode": "ALB",
+    "aliases": [
+      "Albania"
+    ]
+  },
+  {
+    "code": "ALG",
+    "name": "Algeria",
+    "confederation": "CAF",
+    "flag": "ALG.svg",
+    "names": {
+      "zh-Hans": "阿尔及利亚",
+      "zh-Hant": "阿爾及利亞",
+      "ja": "アルジェリア",
+      "ko": "알제리",
+      "es": "Argelia"
+    },
+    "iocCode": "ALG",
+    "aliases": [
+      "Algeria"
+    ]
+  },
+  {
+    "code": "ASA",
+    "name": "American Samoa",
+    "confederation": "OFC",
+    "flag": "ASA.svg",
+    "names": {
+      "zh-Hans": "美属萨摩亚",
+      "zh-Hant": "美屬薩摩亞",
+      "ja": "米領サモア",
+      "ko": "아메리칸 사모아",
+      "es": "Samoa Americana"
+    },
+    "iocCode": "ASA",
+    "aliases": [
+      "American Samoa"
+    ]
+  },
+  {
+    "code": "AND",
+    "name": "Andorra",
+    "confederation": "UEFA",
+    "flag": "AND.svg",
+    "names": {
+      "zh-Hans": "安道尔",
+      "zh-Hant": "安道爾",
+      "ja": "アンドラ",
+      "ko": "안도라",
+      "es": "Andorra"
+    },
+    "iocCode": "AND",
+    "aliases": [
+      "Andorra"
+    ]
+  },
+  {
+    "code": "ANG",
+    "name": "Angola",
+    "confederation": "CAF",
+    "flag": "ANG.svg",
+    "names": {
+      "zh-Hans": "安哥拉",
+      "zh-Hant": "安哥拉",
+      "ja": "アンゴラ",
+      "ko": "앙골라",
+      "es": "Angola"
+    },
+    "iocCode": "ANG",
+    "aliases": [
+      "Angola"
+    ]
+  },
+  {
+    "code": "AIA",
+    "name": "Anguilla",
+    "confederation": "CONCACAF",
+    "flag": "AIA.svg",
+    "names": {
+      "zh-Hans": "安圭拉",
+      "zh-Hant": "安奎拉",
+      "ja": "アンギラ",
+      "ko": "앵귈라",
+      "es": "Anguila"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Anguilla"
+    ]
+  },
+  {
+    "code": "ATG",
+    "name": "Antigua and Barbuda",
+    "confederation": "CONCACAF",
+    "flag": "ATG.svg",
+    "names": {
+      "zh-Hans": "安提瓜和巴布达",
+      "zh-Hant": "安地卡及巴布達",
+      "ja": "アンティグア・バーブーダ",
+      "ko": "앤티가 바부다",
+      "es": "Antigua y Barbuda"
+    },
+    "iocCode": "ANT",
+    "aliases": [
+      "Antigua and Barbuda"
+    ]
+  },
+  {
+    "code": "ARG",
+    "name": "Argentina",
+    "confederation": "CONMEBOL",
+    "flag": "ARG.svg",
+    "names": {
+      "zh-Hans": "阿根廷",
+      "zh-Hant": "阿根廷",
+      "ja": "アルゼンチン",
+      "ko": "아르헨티나",
+      "es": "Argentina"
+    },
+    "iocCode": "ARG",
+    "aliases": [
+      "Argentina"
+    ]
+  },
+  {
+    "code": "ARM",
+    "name": "Armenia",
+    "confederation": "UEFA",
+    "flag": "ARM.svg",
+    "names": {
+      "zh-Hans": "亚美尼亚",
+      "zh-Hant": "亞美尼亞",
+      "ja": "アルメニア",
+      "ko": "아르메니아",
+      "es": "Armenia"
+    },
+    "iocCode": "ARM",
+    "aliases": [
+      "Armenia"
+    ]
+  },
+  {
+    "code": "ARU",
+    "name": "Aruba",
+    "confederation": "CONCACAF",
+    "flag": "ARU.svg",
+    "names": {
+      "zh-Hans": "阿鲁巴",
+      "zh-Hant": "荷屬阿魯巴",
+      "ja": "アルバ",
+      "ko": "아루바",
+      "es": "Aruba"
+    },
+    "iocCode": "ARU",
+    "aliases": [
+      "Aruba"
+    ]
+  },
+  {
+    "code": "AUS",
+    "name": "Australia",
+    "confederation": "AFC",
+    "flag": "AUS.svg",
+    "names": {
+      "zh-Hans": "澳大利亚",
+      "zh-Hant": "澳洲",
+      "ja": "オーストラリア",
+      "ko": "오스트레일리아",
+      "es": "Australia"
+    },
+    "iocCode": "AUS",
+    "aliases": [
+      "Australia"
+    ]
+  },
+  {
+    "code": "AUT",
+    "name": "Austria",
+    "confederation": "UEFA",
+    "flag": "AUT.svg",
+    "names": {
+      "zh-Hans": "奥地利",
+      "zh-Hant": "奧地利",
+      "ja": "オーストリア",
+      "ko": "오스트리아",
+      "es": "Austria"
+    },
+    "iocCode": "AUT",
+    "aliases": [
+      "Austria"
+    ]
+  },
+  {
+    "code": "AZE",
+    "name": "Azerbaijan",
+    "confederation": "UEFA",
+    "flag": "AZE.svg",
+    "names": {
+      "zh-Hans": "阿塞拜疆",
+      "zh-Hant": "亞塞拜然",
+      "ja": "アゼルバイジャン",
+      "ko": "아제르바이잔",
+      "es": "Azerbaiyán"
+    },
+    "iocCode": "AZE",
+    "aliases": [
+      "Azerbaijan"
+    ]
+  },
+  {
+    "code": "BAH",
+    "name": "Bahamas",
+    "confederation": "CONCACAF",
+    "flag": "BAH.svg",
+    "names": {
+      "zh-Hans": "巴哈马",
+      "zh-Hant": "巴哈馬",
+      "ja": "バハマ",
+      "ko": "바하마",
+      "es": "Bahamas"
+    },
+    "iocCode": "BAH",
+    "aliases": [
+      "Bahamas"
+    ]
+  },
+  {
+    "code": "BHR",
+    "name": "Bahrain",
+    "confederation": "AFC",
+    "flag": "BHR.svg",
+    "names": {
+      "zh-Hans": "巴林",
+      "zh-Hant": "巴林",
+      "ja": "バーレーン",
+      "ko": "바레인",
+      "es": "Baréin"
+    },
+    "iocCode": "BRN",
+    "aliases": [
+      "Bahrain"
+    ]
+  },
+  {
+    "code": "BAN",
+    "name": "Bangladesh",
+    "confederation": "AFC",
+    "flag": "BAN.svg",
+    "names": {
+      "zh-Hans": "孟加拉国",
+      "zh-Hant": "孟加拉",
+      "ja": "バングラデシュ",
+      "ko": "방글라데시",
+      "es": "Bangladés"
+    },
+    "iocCode": "BAN",
+    "aliases": [
+      "Bangladesh"
+    ]
+  },
+  {
+    "code": "BRB",
+    "name": "Barbados",
+    "confederation": "CONCACAF",
+    "flag": "BRB.svg",
+    "names": {
+      "zh-Hans": "巴巴多斯",
+      "zh-Hant": "巴貝多",
+      "ja": "バルバドス",
+      "ko": "바베이도스",
+      "es": "Barbados"
+    },
+    "iocCode": "BAR",
+    "aliases": [
+      "Barbados"
+    ]
+  },
+  {
+    "code": "BLR",
+    "name": "Belarus",
+    "confederation": "UEFA",
+    "flag": "BLR.svg",
+    "names": {
+      "zh-Hans": "白俄罗斯",
+      "zh-Hant": "白俄羅斯",
+      "ja": "ベラルーシ",
+      "ko": "벨라루스",
+      "es": "Bielorrusia"
+    },
+    "iocCode": "BLR",
+    "aliases": [
+      "Belarus"
+    ]
+  },
+  {
+    "code": "BEL",
+    "name": "Belgium",
+    "confederation": "UEFA",
+    "flag": "BEL.svg",
+    "names": {
+      "zh-Hans": "比利时",
+      "zh-Hant": "比利時",
+      "ja": "ベルギー",
+      "ko": "벨기에",
+      "es": "Bélgica"
+    },
+    "iocCode": "BEL",
+    "aliases": [
+      "Belgium"
+    ]
+  },
+  {
+    "code": "BLZ",
+    "name": "Belize",
+    "confederation": "CONCACAF",
+    "flag": "BLZ.svg",
+    "names": {
+      "zh-Hans": "伯利兹",
+      "zh-Hant": "貝里斯",
+      "ja": "ベリーズ",
+      "ko": "벨리즈",
+      "es": "Belice"
+    },
+    "iocCode": "BIZ",
+    "aliases": [
+      "Belize"
+    ]
+  },
+  {
+    "code": "BEN",
+    "name": "Benin",
+    "confederation": "CAF",
+    "flag": "BEN.svg",
+    "names": {
+      "zh-Hans": "贝宁",
+      "zh-Hant": "貝南",
+      "ja": "ベナン",
+      "ko": "베냉",
+      "es": "Benín"
+    },
+    "iocCode": "BEN",
+    "aliases": [
+      "Benin"
+    ]
+  },
+  {
+    "code": "BER",
+    "name": "Bermuda",
+    "confederation": "CONCACAF",
+    "flag": "BER.svg",
+    "names": {
+      "zh-Hans": "百慕大",
+      "zh-Hant": "百慕達",
+      "ja": "バミューダ",
+      "ko": "버뮤다",
+      "es": "Bermudas"
+    },
+    "iocCode": "BER",
+    "aliases": [
+      "Bermuda"
+    ]
+  },
+  {
+    "code": "BHU",
+    "name": "Bhutan",
+    "confederation": "AFC",
+    "flag": "BHU.svg",
+    "names": {
+      "zh-Hans": "不丹",
+      "zh-Hant": "不丹",
+      "ja": "ブータン",
+      "ko": "부탄",
+      "es": "Bután"
+    },
+    "iocCode": "BHU",
+    "aliases": [
+      "Bhutan"
+    ]
+  },
+  {
+    "code": "BOL",
+    "name": "Bolivia",
+    "confederation": "CONMEBOL",
+    "flag": "BOL.svg",
+    "names": {
+      "zh-Hans": "玻利维亚",
+      "zh-Hant": "玻利維亞",
+      "ja": "ボリビア",
+      "ko": "볼리비아",
+      "es": "Bolivia"
+    },
+    "iocCode": "BOL",
+    "aliases": [
+      "Plurinational State of Bolivia",
+      "Bolivia"
+    ]
+  },
+  {
+    "code": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "confederation": "UEFA",
+    "flag": "BIH.svg",
+    "names": {
+      "zh-Hans": "波斯尼亚和黑塞哥维那",
+      "zh-Hant": "波士尼亞與赫塞哥維納",
+      "ja": "ボスニア・ヘルツェゴビナ",
+      "ko": "보스니아 헤르체고비나",
+      "es": "Bosnia y Herzegovina"
+    },
+    "iocCode": "BIH",
+    "aliases": [
+      "Bosnia and Herzegovina"
+    ]
+  },
+  {
+    "code": "BOT",
+    "name": "Botswana",
+    "confederation": "CAF",
+    "flag": "BOT.svg",
+    "names": {
+      "zh-Hans": "博茨瓦纳",
+      "zh-Hant": "波札那",
+      "ja": "ボツワナ",
+      "ko": "보츠와나",
+      "es": "Botsuana"
+    },
+    "iocCode": "BOT",
+    "aliases": [
+      "Botswana"
+    ]
+  },
+  {
+    "code": "BRA",
+    "name": "Brazil",
+    "confederation": "CONMEBOL",
+    "flag": "BRA.svg",
+    "names": {
+      "zh-Hans": "巴西",
+      "zh-Hant": "巴西",
+      "ja": "ブラジル",
+      "ko": "브라질",
+      "es": "Brasil"
+    },
+    "iocCode": "BRA",
+    "aliases": [
+      "Brazil"
+    ]
+  },
+  {
+    "code": "VGB",
+    "name": "British Virgin Islands",
+    "confederation": "CONCACAF",
+    "flag": "VGB.svg",
+    "names": {
+      "zh-Hans": "英属维尔京群岛",
+      "zh-Hant": "英屬維京群島",
+      "ja": "英領ヴァージン諸島",
+      "ko": "영국령 버진아일랜드",
+      "es": "Islas Vírgenes Británicas"
+    },
+    "iocCode": "IVB",
+    "aliases": [
+      "Virgin Islands (British)"
+    ]
+  },
+  {
+    "code": "BRU",
+    "name": "Brunei Darussalam",
+    "confederation": "AFC",
+    "flag": "BRU.svg",
+    "names": {
+      "zh-Hans": "文莱",
+      "zh-Hant": "汶萊",
+      "ja": "ブルネイ",
+      "ko": "브루나이",
+      "es": "Brunéi"
+    },
+    "iocCode": "BRU",
+    "aliases": [
+      "Brunei Darussalam"
+    ]
+  },
+  {
+    "code": "BUL",
+    "name": "Bulgaria",
+    "confederation": "UEFA",
+    "flag": "BUL.svg",
+    "names": {
+      "zh-Hans": "保加利亚",
+      "zh-Hant": "保加利亞",
+      "ja": "ブルガリア",
+      "ko": "불가리아",
+      "es": "Bulgaria"
+    },
+    "iocCode": "BUL",
+    "aliases": [
+      "Bulgaria"
+    ]
+  },
+  {
+    "code": "BFA",
+    "name": "Burkina Faso",
+    "confederation": "CAF",
+    "flag": "BFA.svg",
+    "names": {
+      "zh-Hans": "布基纳法索",
+      "zh-Hant": "布吉納法索",
+      "ja": "ブルキナファソ",
+      "ko": "부르키나파소",
+      "es": "Burkina Faso"
+    },
+    "iocCode": "BUR",
+    "aliases": [
+      "Burkina Faso"
+    ]
+  },
+  {
+    "code": "BDI",
+    "name": "Burundi",
+    "confederation": "CAF",
+    "flag": "BDI.svg",
+    "names": {
+      "zh-Hans": "布隆迪",
+      "zh-Hant": "蒲隆地",
+      "ja": "ブルンジ",
+      "ko": "부룬디",
+      "es": "Burundi"
+    },
+    "iocCode": "BDI",
+    "aliases": [
+      "Burundi"
+    ]
+  },
+  {
+    "code": "CPV",
+    "name": "Cabo Verde",
+    "confederation": "CAF",
+    "flag": "CPV.svg",
+    "names": {
+      "zh-Hans": "佛得角",
+      "zh-Hant": "維德角",
+      "ja": "カーボベルデ",
+      "ko": "카보베르데",
+      "es": "Cabo Verde"
+    },
+    "iocCode": "CPV",
+    "aliases": [
+      "Cape Verde",
+      "Cabo Verde"
+    ]
+  },
+  {
+    "code": "CAM",
+    "name": "Cambodia",
+    "confederation": "AFC",
+    "flag": "CAM.svg",
+    "names": {
+      "zh-Hans": "柬埔寨",
+      "zh-Hant": "柬埔寨",
+      "ja": "カンボジア",
+      "ko": "캄보디아",
+      "es": "Camboya"
+    },
+    "iocCode": "CAM",
+    "aliases": [
+      "Cambodia"
+    ]
+  },
+  {
+    "code": "CMR",
+    "name": "Cameroon",
+    "confederation": "CAF",
+    "flag": "CMR.svg",
+    "names": {
+      "zh-Hans": "喀麦隆",
+      "zh-Hant": "喀麥隆",
+      "ja": "カメルーン",
+      "ko": "카메룬",
+      "es": "Camerún"
+    },
+    "iocCode": "CMR",
+    "aliases": [
+      "Cameroon"
+    ]
+  },
+  {
+    "code": "CAN",
+    "name": "Canada",
+    "confederation": "CONCACAF",
+    "flag": "CAN.svg",
+    "names": {
+      "zh-Hans": "加拿大",
+      "zh-Hant": "加拿大",
+      "ja": "カナダ",
+      "ko": "캐나다",
+      "es": "Canadá"
+    },
+    "iocCode": "CAN",
+    "aliases": [
+      "Canada"
+    ]
+  },
+  {
+    "code": "CAY",
+    "name": "Cayman Islands",
+    "confederation": "CONCACAF",
+    "flag": "CAY.svg",
+    "names": {
+      "zh-Hans": "开曼群岛",
+      "zh-Hant": "開曼群島",
+      "ja": "ケイマン諸島",
+      "ko": "케이맨 제도",
+      "es": "Islas Caimán"
+    },
+    "iocCode": "CAY",
+    "aliases": [
+      "Cayman Islands"
+    ]
+  },
+  {
+    "code": "CTA",
+    "name": "Central African Republic",
+    "confederation": "CAF",
+    "flag": "CTA.svg",
+    "names": {
+      "zh-Hans": "中非共和国",
+      "zh-Hant": "中非共和國",
+      "ja": "中央アフリカ共和国",
+      "ko": "중앙 아프리카 공화국",
+      "es": "República Centroafricana"
+    },
+    "iocCode": "CAF",
+    "aliases": [
+      "Central African Republic"
+    ]
+  },
+  {
+    "code": "CHA",
+    "name": "Chad",
+    "confederation": "CAF",
+    "flag": "CHA.svg",
+    "names": {
+      "zh-Hans": "乍得",
+      "zh-Hant": "查德",
+      "ja": "チャド",
+      "ko": "차드",
+      "es": "Chad"
+    },
+    "iocCode": "CHA",
+    "aliases": [
+      "Chad"
+    ]
+  },
+  {
+    "code": "CHI",
+    "name": "Chile",
+    "confederation": "CONMEBOL",
+    "flag": "CHI.svg",
+    "names": {
+      "zh-Hans": "智利",
+      "zh-Hant": "智利",
+      "ja": "チリ",
+      "ko": "칠레",
+      "es": "Chile"
+    },
+    "iocCode": "CHI",
+    "aliases": [
+      "Chile"
+    ]
+  },
+  {
+    "code": "CHN",
+    "name": "China PR",
+    "confederation": "AFC",
+    "flag": "CHN.svg",
+    "names": {
+      "zh-Hans": "中国",
+      "zh-Hant": "中國",
+      "ja": "中国",
+      "ko": "중국",
+      "es": "China"
+    },
+    "iocCode": "CHN",
+    "aliases": [
+      "China",
+      "中国队",
+      "中國隊",
+      "中国国家队",
+      "People's Republic of China"
+    ]
+  },
+  {
+    "code": "TPE",
+    "name": "Chinese Taipei",
+    "confederation": "AFC",
+    "flag": "TPE.svg",
+    "names": {
+      "zh-Hans": "中华台北",
+      "zh-Hant": "中華台北",
+      "ja": "チャイニーズタイペイ",
+      "ko": "차이니즈 타이베이",
+      "es": "Taipéi Chino"
+    },
+    "iocCode": "TPE",
+    "aliases": [
+      "China",
+      "Chinese Taipei",
+      "中华台北队",
+      "中華台北隊",
+      "台北",
+      "Taipei"
+    ]
+  },
+  {
+    "code": "COL",
+    "name": "Colombia",
+    "confederation": "CONMEBOL",
+    "flag": "COL.svg",
+    "names": {
+      "zh-Hans": "哥伦比亚",
+      "zh-Hant": "哥倫比亞",
+      "ja": "コロンビア",
+      "ko": "콜롬비아",
+      "es": "Colombia"
+    },
+    "iocCode": "COL",
+    "aliases": [
+      "Colombia"
+    ]
+  },
+  {
+    "code": "COM",
+    "name": "Comoros",
+    "confederation": "CAF",
+    "flag": "COM.svg",
+    "names": {
+      "zh-Hans": "科摩罗",
+      "zh-Hant": "葛摩",
+      "ja": "コモロ",
+      "ko": "코모로",
+      "es": "Comoras"
+    },
+    "iocCode": "COM",
+    "aliases": [
+      "Comoros"
+    ]
+  },
+  {
+    "code": "CGO",
+    "name": "Congo",
+    "confederation": "CAF",
+    "flag": "CGO.svg",
+    "names": {
+      "zh-Hans": "刚果（布）",
+      "zh-Hant": "剛果（布）",
+      "ja": "コンゴ共和国",
+      "ko": "콩고 공화국",
+      "es": "Congo"
+    },
+    "iocCode": "CGO",
+    "aliases": [
+      "Congo Republic",
+      "刚果共和国",
+      "剛果共和國",
+      "Republic of the Congo",
+      "Republic of Congo"
+    ]
+  },
+  {
+    "code": "COD",
+    "name": "Congo DR",
+    "confederation": "CAF",
+    "flag": "COD.svg",
+    "names": {
+      "zh-Hans": "刚果（金）",
+      "zh-Hant": "剛果（金）",
+      "ja": "コンゴ民主共和国",
+      "ko": "콩고 민주 공화국",
+      "es": "RD del Congo"
+    },
+    "iocCode": "COD",
+    "aliases": [
+      "DR Congo",
+      "刚果民主共和国",
+      "剛果民主共和國",
+      "Democratic Republic of the Congo",
+      "Democratic Republic of Congo"
+    ]
+  },
+  {
+    "code": "COK",
+    "name": "Cook Islands",
+    "confederation": "OFC",
+    "flag": "COK.svg",
+    "names": {
+      "zh-Hans": "库克群岛",
+      "zh-Hant": "庫克群島",
+      "ja": "クック諸島",
+      "ko": "쿡 제도",
+      "es": "Islas Cook"
+    },
+    "iocCode": "COK",
+    "aliases": [
+      "Cook Islands"
+    ]
+  },
+  {
+    "code": "CRC",
+    "name": "Costa Rica",
+    "confederation": "CONCACAF",
+    "flag": "CRC.svg",
+    "names": {
+      "zh-Hans": "哥斯达黎加",
+      "zh-Hant": "哥斯大黎加",
+      "ja": "コスタリカ",
+      "ko": "코스타리카",
+      "es": "Costa Rica"
+    },
+    "iocCode": "CRC",
+    "aliases": [
+      "Costa Rica"
+    ]
+  },
+  {
+    "code": "CIV",
+    "name": "Côte d'Ivoire",
+    "confederation": "CAF",
+    "flag": "CIV.svg",
+    "names": {
+      "zh-Hans": "科特迪瓦",
+      "zh-Hant": "象牙海岸",
+      "ja": "コートジボワール",
+      "ko": "코트디부아르",
+      "es": "Côte d’Ivoire"
+    },
+    "iocCode": "CIV",
+    "aliases": [
+      "Ivory Coast",
+      "科特迪瓦",
+      "象牙海岸",
+      "Côte d'Ivoire"
+    ]
+  },
+  {
+    "code": "CRO",
+    "name": "Croatia",
+    "confederation": "UEFA",
+    "flag": "CRO.svg",
+    "names": {
+      "zh-Hans": "克罗地亚",
+      "zh-Hant": "克羅埃西亞",
+      "ja": "クロアチア",
+      "ko": "크로아티아",
+      "es": "Croacia"
+    },
+    "iocCode": "CRO",
+    "aliases": [
+      "Croatia"
+    ]
+  },
+  {
+    "code": "CUB",
+    "name": "Cuba",
+    "confederation": "CONCACAF",
+    "flag": "CUB.svg",
+    "names": {
+      "zh-Hans": "古巴",
+      "zh-Hant": "古巴",
+      "ja": "キューバ",
+      "ko": "쿠바",
+      "es": "Cuba"
+    },
+    "iocCode": "CUB",
+    "aliases": [
+      "Cuba"
+    ]
+  },
+  {
+    "code": "CUW",
+    "name": "Curaçao",
+    "confederation": "CONCACAF",
+    "flag": "CUW.svg",
+    "names": {
+      "zh-Hans": "库拉索",
+      "zh-Hant": "庫拉索",
+      "ja": "キュラソー",
+      "ko": "퀴라소",
+      "es": "Curazao"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Curaçao"
+    ]
+  },
+  {
+    "code": "CYP",
+    "name": "Cyprus",
+    "confederation": "UEFA",
+    "flag": "CYP.svg",
+    "names": {
+      "zh-Hans": "塞浦路斯",
+      "zh-Hant": "賽普勒斯",
+      "ja": "キプロス",
+      "ko": "키프로스",
+      "es": "Chipre"
+    },
+    "iocCode": "CYP",
+    "aliases": [
+      "Cyprus"
+    ]
+  },
+  {
+    "code": "CZE",
+    "name": "Czechia",
+    "confederation": "UEFA",
+    "flag": "CZE.svg",
+    "names": {
+      "zh-Hans": "捷克",
+      "zh-Hant": "捷克",
+      "ja": "チェコ",
+      "ko": "체코",
+      "es": "Chequia"
+    },
+    "iocCode": "CZE",
+    "aliases": [
+      "Czech Republic"
+    ]
+  },
+  {
+    "code": "DEN",
+    "name": "Denmark",
+    "confederation": "UEFA",
+    "flag": "DEN.svg",
+    "names": {
+      "zh-Hans": "丹麦",
+      "zh-Hant": "丹麥",
+      "ja": "デンマーク",
+      "ko": "덴마크",
+      "es": "Dinamarca"
+    },
+    "iocCode": "DEN",
+    "aliases": [
+      "Denmark"
+    ]
+  },
+  {
+    "code": "DJI",
+    "name": "Djibouti",
+    "confederation": "CAF",
+    "flag": "DJI.svg",
+    "names": {
+      "zh-Hans": "吉布提",
+      "zh-Hant": "吉布地",
+      "ja": "ジブチ",
+      "ko": "지부티",
+      "es": "Yibuti"
+    },
+    "iocCode": "DJI",
+    "aliases": [
+      "Djibouti"
+    ]
+  },
+  {
+    "code": "DMA",
+    "name": "Dominica",
+    "confederation": "CONCACAF",
+    "flag": "DMA.svg",
+    "names": {
+      "zh-Hans": "多米尼克",
+      "zh-Hant": "多米尼克",
+      "ja": "ドミニカ国",
+      "ko": "도미니카",
+      "es": "Dominica"
+    },
+    "iocCode": "DMA",
+    "aliases": [
+      "Dominica"
+    ]
+  },
+  {
+    "code": "DOM",
+    "name": "Dominican Republic",
+    "confederation": "CONCACAF",
+    "flag": "DOM.svg",
+    "names": {
+      "zh-Hans": "多米尼加共和国",
+      "zh-Hant": "多明尼加共和國",
+      "ja": "ドミニカ共和国",
+      "ko": "도미니카 공화국",
+      "es": "República Dominicana"
+    },
+    "iocCode": "DOM",
+    "aliases": [
+      "Dominican Republic"
+    ]
+  },
+  {
+    "code": "PRK",
+    "name": "DPR Korea",
+    "confederation": "AFC",
+    "flag": "PRK.svg",
+    "names": {
+      "zh-Hans": "朝鲜",
+      "zh-Hant": "朝鮮",
+      "ja": "朝鮮民主主義人民共和国",
+      "ko": "조선민주주의인민공화국",
+      "es": "RPD de Corea"
+    },
+    "iocCode": "PRK",
+    "aliases": [
+      "North Korea",
+      "北韩",
+      "北韓",
+      "Democratic People's Republic of Korea"
+    ]
+  },
+  {
+    "code": "ECU",
+    "name": "Ecuador",
+    "confederation": "CONMEBOL",
+    "flag": "ECU.svg",
+    "names": {
+      "zh-Hans": "厄瓜多尔",
+      "zh-Hant": "厄瓜多",
+      "ja": "エクアドル",
+      "ko": "에콰도르",
+      "es": "Ecuador"
+    },
+    "iocCode": "ECU",
+    "aliases": [
+      "Ecuador"
+    ]
+  },
+  {
+    "code": "EGY",
+    "name": "Egypt",
+    "confederation": "CAF",
+    "flag": "EGY.svg",
+    "names": {
+      "zh-Hans": "埃及",
+      "zh-Hant": "埃及",
+      "ja": "エジプト",
+      "ko": "이집트",
+      "es": "Egipto"
+    },
+    "iocCode": "EGY",
+    "aliases": [
+      "Egypt"
+    ]
+  },
+  {
+    "code": "SLV",
+    "name": "El Salvador",
+    "confederation": "CONCACAF",
+    "flag": "SLV.svg",
+    "names": {
+      "zh-Hans": "萨尔瓦多",
+      "zh-Hant": "薩爾瓦多",
+      "ja": "エルサルバドル",
+      "ko": "엘살바도르",
+      "es": "El Salvador"
+    },
+    "iocCode": "ESA",
+    "aliases": [
+      "El Salvador"
+    ]
+  },
+  {
+    "code": "ENG",
+    "name": "England",
+    "confederation": "UEFA",
+    "flag": "ENG.svg",
+    "names": {
+      "zh-Hans": "英格兰",
+      "zh-Hant": "英格蘭",
+      "ja": "イングランド",
+      "ko": "잉글랜드",
+      "es": "Inglaterra"
+    },
+    "iocCode": "GBR",
+    "aliases": [
+      "England",
+      "英格蘭",
+      "Great Britain"
+    ]
+  },
+  {
+    "code": "EQG",
+    "name": "Equatorial Guinea",
+    "confederation": "CAF",
+    "flag": "EQG.svg",
+    "names": {
+      "zh-Hans": "赤道几内亚",
+      "zh-Hant": "赤道幾內亞",
+      "ja": "赤道ギニア",
+      "ko": "적도 기니",
+      "es": "Guinea Ecuatorial"
+    },
+    "iocCode": "GEQ",
+    "aliases": [
+      "Equatorial Guinea"
+    ]
+  },
+  {
+    "code": "ERI",
+    "name": "Eritrea",
+    "confederation": "CAF",
+    "flag": "ERI.svg",
+    "names": {
+      "zh-Hans": "厄立特里亚",
+      "zh-Hant": "厄利垂亞",
+      "ja": "エリトリア",
+      "ko": "에리트리아",
+      "es": "Eritrea"
+    },
+    "iocCode": "ERI",
+    "aliases": [
+      "Eritrea"
+    ]
+  },
+  {
+    "code": "EST",
+    "name": "Estonia",
+    "confederation": "UEFA",
+    "flag": "EST.svg",
+    "names": {
+      "zh-Hans": "爱沙尼亚",
+      "zh-Hant": "愛沙尼亞",
+      "ja": "エストニア",
+      "ko": "에스토니아",
+      "es": "Estonia"
+    },
+    "iocCode": "EST",
+    "aliases": [
+      "Estonia"
+    ]
+  },
+  {
+    "code": "SWZ",
+    "name": "Eswatini",
+    "confederation": "CAF",
+    "flag": "SWZ.svg",
+    "names": {
+      "zh-Hans": "斯威士兰",
+      "zh-Hant": "史瓦帝尼",
+      "ja": "エスワティニ",
+      "ko": "에스와티니",
+      "es": "Esuatini"
+    },
+    "iocCode": "SWZ",
+    "aliases": [
+      "Swaziland",
+      "Eswatini"
+    ]
+  },
+  {
+    "code": "ETH",
+    "name": "Ethiopia",
+    "confederation": "CAF",
+    "flag": "ETH.svg",
+    "names": {
+      "zh-Hans": "埃塞俄比亚",
+      "zh-Hant": "衣索比亞",
+      "ja": "エチオピア",
+      "ko": "에티오피아",
+      "es": "Etiopía"
+    },
+    "iocCode": "ETH",
+    "aliases": [
+      "Ethiopia"
+    ]
+  },
+  {
+    "code": "FRO",
+    "name": "Faroe Islands",
+    "confederation": "UEFA",
+    "flag": "FRO.svg",
+    "names": {
+      "zh-Hans": "法罗群岛",
+      "zh-Hant": "法羅群島",
+      "ja": "フェロー諸島",
+      "ko": "페로 제도",
+      "es": "Islas Feroe"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Faroe Islands"
+    ]
+  },
+  {
+    "code": "FIJ",
+    "name": "Fiji",
+    "confederation": "OFC",
+    "flag": "FIJ.svg",
+    "names": {
+      "zh-Hans": "斐济",
+      "zh-Hant": "斐濟",
+      "ja": "フィジー",
+      "ko": "피지",
+      "es": "Fiyi"
+    },
+    "iocCode": "FIJ",
+    "aliases": [
+      "Fiji"
+    ]
+  },
+  {
+    "code": "FIN",
+    "name": "Finland",
+    "confederation": "UEFA",
+    "flag": "FIN.svg",
+    "names": {
+      "zh-Hans": "芬兰",
+      "zh-Hant": "芬蘭",
+      "ja": "フィンランド",
+      "ko": "핀란드",
+      "es": "Finlandia"
+    },
+    "iocCode": "FIN",
+    "aliases": [
+      "Finland"
+    ]
+  },
+  {
+    "code": "FRA",
+    "name": "France",
+    "confederation": "UEFA",
+    "flag": "FRA.svg",
+    "names": {
+      "zh-Hans": "法国",
+      "zh-Hant": "法國",
+      "ja": "フランス",
+      "ko": "프랑스",
+      "es": "Francia"
+    },
+    "iocCode": "FRA",
+    "aliases": [
+      "France"
+    ]
+  },
+  {
+    "code": "GAB",
+    "name": "Gabon",
+    "confederation": "CAF",
+    "flag": "GAB.svg",
+    "names": {
+      "zh-Hans": "加蓬",
+      "zh-Hant": "加彭",
+      "ja": "ガボン",
+      "ko": "가봉",
+      "es": "Gabón"
+    },
+    "iocCode": "GAB",
+    "aliases": [
+      "Gabon"
+    ]
+  },
+  {
+    "code": "GEO",
+    "name": "Georgia",
+    "confederation": "UEFA",
+    "flag": "GEO.svg",
+    "names": {
+      "zh-Hans": "格鲁吉亚",
+      "zh-Hant": "喬治亞",
+      "ja": "ジョージア",
+      "ko": "조지아",
+      "es": "Georgia"
+    },
+    "iocCode": "GEO",
+    "aliases": [
+      "Georgia"
+    ]
+  },
+  {
+    "code": "GER",
+    "name": "Germany",
+    "confederation": "UEFA",
+    "flag": "GER.svg",
+    "names": {
+      "zh-Hans": "德国",
+      "zh-Hant": "德國",
+      "ja": "ドイツ",
+      "ko": "독일",
+      "es": "Alemania"
+    },
+    "iocCode": "GER",
+    "aliases": [
+      "Germany"
+    ]
+  },
+  {
+    "code": "GHA",
+    "name": "Ghana",
+    "confederation": "CAF",
+    "flag": "GHA.svg",
+    "names": {
+      "zh-Hans": "加纳",
+      "zh-Hant": "迦納",
+      "ja": "ガーナ",
+      "ko": "가나",
+      "es": "Ghana"
+    },
+    "iocCode": "GHA",
+    "aliases": [
+      "Ghana"
+    ]
+  },
+  {
+    "code": "GIB",
+    "name": "Gibraltar",
+    "confederation": "UEFA",
+    "flag": "GIB.svg",
+    "names": {
+      "zh-Hans": "直布罗陀",
+      "zh-Hant": "直布羅陀",
+      "ja": "ジブラルタル",
+      "ko": "지브롤터",
+      "es": "Gibraltar"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Gibraltar"
+    ]
+  },
+  {
+    "code": "GRE",
+    "name": "Greece",
+    "confederation": "UEFA",
+    "flag": "GRE.svg",
+    "names": {
+      "zh-Hans": "希腊",
+      "zh-Hant": "希臘",
+      "ja": "ギリシャ",
+      "ko": "그리스",
+      "es": "Grecia"
+    },
+    "iocCode": "GRE",
+    "aliases": [
+      "Greece"
+    ]
+  },
+  {
+    "code": "GRN",
+    "name": "Grenada",
+    "confederation": "CONCACAF",
+    "flag": "GRN.svg",
+    "names": {
+      "zh-Hans": "格林纳达",
+      "zh-Hant": "格瑞那達",
+      "ja": "グレナダ",
+      "ko": "그레나다",
+      "es": "Granada"
+    },
+    "iocCode": "GRN",
+    "aliases": [
+      "Grenada"
+    ]
+  },
+  {
+    "code": "GUM",
+    "name": "Guam",
+    "confederation": "AFC",
+    "flag": "GUM.svg",
+    "names": {
+      "zh-Hans": "关岛",
+      "zh-Hant": "關島",
+      "ja": "グアム",
+      "ko": "괌",
+      "es": "Guam"
+    },
+    "iocCode": "GUM",
+    "aliases": [
+      "Guam"
+    ]
+  },
+  {
+    "code": "GUA",
+    "name": "Guatemala",
+    "confederation": "CONCACAF",
+    "flag": "GUA.svg",
+    "names": {
+      "zh-Hans": "危地马拉",
+      "zh-Hant": "瓜地馬拉",
+      "ja": "グアテマラ",
+      "ko": "과테말라",
+      "es": "Guatemala"
+    },
+    "iocCode": "GUA",
+    "aliases": [
+      "Guatemala"
+    ]
+  },
+  {
+    "code": "GUI",
+    "name": "Guinea",
+    "confederation": "CAF",
+    "flag": "GUI.svg",
+    "names": {
+      "zh-Hans": "几内亚",
+      "zh-Hant": "幾內亞",
+      "ja": "ギニア",
+      "ko": "기니",
+      "es": "Guinea"
+    },
+    "iocCode": "GUI",
+    "aliases": [
+      "Guinea"
+    ]
+  },
+  {
+    "code": "GNB",
+    "name": "Guinea-Bissau",
+    "confederation": "CAF",
+    "flag": "GNB.svg",
+    "names": {
+      "zh-Hans": "几内亚比绍",
+      "zh-Hant": "幾內亞比索",
+      "ja": "ギニアビサウ",
+      "ko": "기니비사우",
+      "es": "Guinea-Bisáu"
+    },
+    "iocCode": "GBS",
+    "aliases": [
+      "Guinea-Bissau"
+    ]
+  },
+  {
+    "code": "GUY",
+    "name": "Guyana",
+    "confederation": "CONCACAF",
+    "flag": "GUY.svg",
+    "names": {
+      "zh-Hans": "圭亚那",
+      "zh-Hant": "蓋亞那",
+      "ja": "ガイアナ",
+      "ko": "가이아나",
+      "es": "Guyana"
+    },
+    "iocCode": "GUY",
+    "aliases": [
+      "Guyana"
+    ]
+  },
+  {
+    "code": "HAI",
+    "name": "Haiti",
+    "confederation": "CONCACAF",
+    "flag": "HAI.svg",
+    "names": {
+      "zh-Hans": "海地",
+      "zh-Hant": "海地",
+      "ja": "ハイチ",
+      "ko": "아이티",
+      "es": "Haití"
+    },
+    "iocCode": "HAI",
+    "aliases": [
+      "Haiti"
+    ]
+  },
+  {
+    "code": "HON",
+    "name": "Honduras",
+    "confederation": "CONCACAF",
+    "flag": "HON.svg",
+    "names": {
+      "zh-Hans": "洪都拉斯",
+      "zh-Hant": "宏都拉斯",
+      "ja": "ホンジュラス",
+      "ko": "온두라스",
+      "es": "Honduras"
+    },
+    "iocCode": "HON",
+    "aliases": [
+      "Honduras"
+    ]
+  },
+  {
+    "code": "HKG",
+    "name": "Hong Kong, China",
+    "confederation": "AFC",
+    "flag": "HKG.svg",
+    "names": {
+      "zh-Hans": "中国香港",
+      "zh-Hant": "中國香港",
+      "ja": "香港（中国）",
+      "ko": "홍콩(중국)",
+      "es": "Hong Kong, China"
+    },
+    "iocCode": "HKG",
+    "aliases": [
+      "China",
+      "香港",
+      "Hong Kong"
+    ]
+  },
+  {
+    "code": "HUN",
+    "name": "Hungary",
+    "confederation": "UEFA",
+    "flag": "HUN.svg",
+    "names": {
+      "zh-Hans": "匈牙利",
+      "zh-Hant": "匈牙利",
+      "ja": "ハンガリー",
+      "ko": "헝가리",
+      "es": "Hungría"
+    },
+    "iocCode": "HUN",
+    "aliases": [
+      "Hungary"
+    ]
+  },
+  {
+    "code": "ISL",
+    "name": "Iceland",
+    "confederation": "UEFA",
+    "flag": "ISL.svg",
+    "names": {
+      "zh-Hans": "冰岛",
+      "zh-Hant": "冰島",
+      "ja": "アイスランド",
+      "ko": "아이슬란드",
+      "es": "Islandia"
+    },
+    "iocCode": "ISL",
+    "aliases": [
+      "Iceland"
+    ]
+  },
+  {
+    "code": "IND",
+    "name": "India",
+    "confederation": "AFC",
+    "flag": "IND.svg",
+    "names": {
+      "zh-Hans": "印度",
+      "zh-Hant": "印度",
+      "ja": "インド",
+      "ko": "인도",
+      "es": "India"
+    },
+    "iocCode": "IND",
+    "aliases": [
+      "India"
+    ]
+  },
+  {
+    "code": "IDN",
+    "name": "Indonesia",
+    "confederation": "AFC",
+    "flag": "IDN.svg",
+    "names": {
+      "zh-Hans": "印度尼西亚",
+      "zh-Hant": "印尼",
+      "ja": "インドネシア",
+      "ko": "인도네시아",
+      "es": "Indonesia"
+    },
+    "iocCode": "INA",
+    "aliases": [
+      "Indonesia"
+    ]
+  },
+  {
+    "code": "IRN",
+    "name": "IR Iran",
+    "confederation": "AFC",
+    "flag": "IRN.svg",
+    "names": {
+      "zh-Hans": "伊朗",
+      "zh-Hant": "伊朗",
+      "ja": "イラン",
+      "ko": "이란",
+      "es": "Irán"
+    },
+    "iocCode": "IRI",
+    "aliases": [
+      "Iran",
+      "Islamic Republic of Iran"
+    ]
+  },
+  {
+    "code": "IRQ",
+    "name": "Iraq",
+    "confederation": "AFC",
+    "flag": "IRQ.svg",
+    "names": {
+      "zh-Hans": "伊拉克",
+      "zh-Hant": "伊拉克",
+      "ja": "イラク",
+      "ko": "이라크",
+      "es": "Irak"
+    },
+    "iocCode": "IRQ",
+    "aliases": [
+      "Iraq"
+    ]
+  },
+  {
+    "code": "ISR",
+    "name": "Israel",
+    "confederation": "UEFA",
+    "flag": "ISR.svg",
+    "names": {
+      "zh-Hans": "以色列",
+      "zh-Hant": "以色列",
+      "ja": "イスラエル",
+      "ko": "이스라엘",
+      "es": "Israel"
+    },
+    "iocCode": "ISR",
+    "aliases": [
+      "Israel"
+    ]
+  },
+  {
+    "code": "ITA",
+    "name": "Italy",
+    "confederation": "UEFA",
+    "flag": "ITA.svg",
+    "names": {
+      "zh-Hans": "意大利",
+      "zh-Hant": "義大利",
+      "ja": "イタリア",
+      "ko": "이탈리아",
+      "es": "Italia"
+    },
+    "iocCode": "ITA",
+    "aliases": [
+      "Italy"
+    ]
+  },
+  {
+    "code": "JAM",
+    "name": "Jamaica",
+    "confederation": "CONCACAF",
+    "flag": "JAM.svg",
+    "names": {
+      "zh-Hans": "牙买加",
+      "zh-Hant": "牙買加",
+      "ja": "ジャマイカ",
+      "ko": "자메이카",
+      "es": "Jamaica"
+    },
+    "iocCode": "JAM",
+    "aliases": [
+      "Jamaica"
+    ]
+  },
+  {
+    "code": "JPN",
+    "name": "Japan",
+    "confederation": "AFC",
+    "flag": "JPN.svg",
+    "names": {
+      "zh-Hans": "日本",
+      "zh-Hant": "日本",
+      "ja": "日本",
+      "ko": "일본",
+      "es": "Japón"
+    },
+    "iocCode": "JPN",
+    "aliases": [
+      "Japan"
+    ]
+  },
+  {
+    "code": "JOR",
+    "name": "Jordan",
+    "confederation": "AFC",
+    "flag": "JOR.svg",
+    "names": {
+      "zh-Hans": "约旦",
+      "zh-Hant": "約旦",
+      "ja": "ヨルダン",
+      "ko": "요르단",
+      "es": "Jordania"
+    },
+    "iocCode": "JOR",
+    "aliases": [
+      "Jordan"
+    ]
+  },
+  {
+    "code": "KAZ",
+    "name": "Kazakhstan",
+    "confederation": "UEFA",
+    "flag": "KAZ.svg",
+    "names": {
+      "zh-Hans": "哈萨克斯坦",
+      "zh-Hant": "哈薩克",
+      "ja": "カザフスタン",
+      "ko": "카자흐스탄",
+      "es": "Kazajistán"
+    },
+    "iocCode": "KAZ",
+    "aliases": [
+      "Kazakhstan"
+    ]
+  },
+  {
+    "code": "KEN",
+    "name": "Kenya",
+    "confederation": "CAF",
+    "flag": "KEN.svg",
+    "names": {
+      "zh-Hans": "肯尼亚",
+      "zh-Hant": "肯亞",
+      "ja": "ケニア",
+      "ko": "케냐",
+      "es": "Kenia"
+    },
+    "iocCode": "KEN",
+    "aliases": [
+      "Kenya"
+    ]
+  },
+  {
+    "code": "KOR",
+    "name": "Korea Republic",
+    "confederation": "AFC",
+    "flag": "KOR.svg",
+    "names": {
+      "zh-Hans": "韩国",
+      "zh-Hant": "韓國",
+      "ja": "韓国",
+      "ko": "대한민국",
+      "es": "República de Corea"
+    },
+    "iocCode": "KOR",
+    "aliases": [
+      "South Korea",
+      "Korea",
+      "南韩",
+      "南韓",
+      "Republic of Korea"
+    ]
+  },
+  {
+    "code": "KOS",
+    "name": "Kosovo",
+    "confederation": "UEFA",
+    "flag": "KOS.svg",
+    "names": {
+      "zh-Hans": "科索沃",
+      "zh-Hant": "科索沃",
+      "ja": "コソボ",
+      "ko": "코소보",
+      "es": "Kosovo"
+    },
+    "iocCode": "KOS",
+    "aliases": [
+      "Kosovo"
+    ]
+  },
+  {
+    "code": "KUW",
+    "name": "Kuwait",
+    "confederation": "AFC",
+    "flag": "KUW.svg",
+    "names": {
+      "zh-Hans": "科威特",
+      "zh-Hant": "科威特",
+      "ja": "クウェート",
+      "ko": "쿠웨이트",
+      "es": "Kuwait"
+    },
+    "iocCode": "KUW",
+    "aliases": [
+      "Kuwait"
+    ]
+  },
+  {
+    "code": "KGZ",
+    "name": "Kyrgyz Republic",
+    "confederation": "AFC",
+    "flag": "KGZ.svg",
+    "names": {
+      "zh-Hans": "吉尔吉斯斯坦",
+      "zh-Hant": "吉爾吉斯",
+      "ja": "キルギス",
+      "ko": "키르기스스탄",
+      "es": "Kirguistán"
+    },
+    "iocCode": "KGZ",
+    "aliases": [
+      "Kyrgyzstan"
+    ]
+  },
+  {
+    "code": "LAO",
+    "name": "Laos",
+    "confederation": "AFC",
+    "flag": "LAO.svg",
+    "names": {
+      "zh-Hans": "老挝",
+      "zh-Hant": "寮國",
+      "ja": "ラオス",
+      "ko": "라오스",
+      "es": "Laos"
+    },
+    "iocCode": "LAO",
+    "aliases": [
+      "Lao People's Democratic Republic",
+      "Laos"
+    ]
+  },
+  {
+    "code": "LVA",
+    "name": "Latvia",
+    "confederation": "UEFA",
+    "flag": "LVA.svg",
+    "names": {
+      "zh-Hans": "拉脱维亚",
+      "zh-Hant": "拉脫維亞",
+      "ja": "ラトビア",
+      "ko": "라트비아",
+      "es": "Letonia"
+    },
+    "iocCode": "LAT",
+    "aliases": [
+      "Latvia"
+    ]
+  },
+  {
+    "code": "LBN",
+    "name": "Lebanon",
+    "confederation": "AFC",
+    "flag": "LBN.svg",
+    "names": {
+      "zh-Hans": "黎巴嫩",
+      "zh-Hant": "黎巴嫩",
+      "ja": "レバノン",
+      "ko": "레바논",
+      "es": "Líbano"
+    },
+    "iocCode": "LBN",
+    "aliases": [
+      "LIB",
+      "Lebanon"
+    ]
+  },
+  {
+    "code": "LES",
+    "name": "Lesotho",
+    "confederation": "CAF",
+    "flag": "LES.svg",
+    "names": {
+      "zh-Hans": "莱索托",
+      "zh-Hant": "賴索托",
+      "ja": "レソト",
+      "ko": "레소토",
+      "es": "Lesoto"
+    },
+    "iocCode": "LES",
+    "aliases": [
+      "Lesotho"
+    ]
+  },
+  {
+    "code": "LBR",
+    "name": "Liberia",
+    "confederation": "CAF",
+    "flag": "LBR.svg",
+    "names": {
+      "zh-Hans": "利比里亚",
+      "zh-Hant": "賴比瑞亞",
+      "ja": "リベリア",
+      "ko": "라이베리아",
+      "es": "Liberia"
+    },
+    "iocCode": "LBR",
+    "aliases": [
+      "Liberia"
+    ]
+  },
+  {
+    "code": "LBY",
+    "name": "Libya",
+    "confederation": "CAF",
+    "flag": "LBY.svg",
+    "names": {
+      "zh-Hans": "利比亚",
+      "zh-Hant": "利比亞",
+      "ja": "リビア",
+      "ko": "리비아",
+      "es": "Libia"
+    },
+    "iocCode": "LBA",
+    "aliases": [
+      "Libya"
+    ]
+  },
+  {
+    "code": "LIE",
+    "name": "Liechtenstein",
+    "confederation": "UEFA",
+    "flag": "LIE.svg",
+    "names": {
+      "zh-Hans": "列支敦士登",
+      "zh-Hant": "列支敦斯登",
+      "ja": "リヒテンシュタイン",
+      "ko": "리히텐슈타인",
+      "es": "Liechtenstein"
+    },
+    "iocCode": "LIE",
+    "aliases": [
+      "Liechtenstein"
+    ]
+  },
+  {
+    "code": "LTU",
+    "name": "Lithuania",
+    "confederation": "UEFA",
+    "flag": "LTU.svg",
+    "names": {
+      "zh-Hans": "立陶宛",
+      "zh-Hant": "立陶宛",
+      "ja": "リトアニア",
+      "ko": "리투아니아",
+      "es": "Lituania"
+    },
+    "iocCode": "LTU",
+    "aliases": [
+      "Lithuania"
+    ]
+  },
+  {
+    "code": "LUX",
+    "name": "Luxembourg",
+    "confederation": "UEFA",
+    "flag": "LUX.svg",
+    "names": {
+      "zh-Hans": "卢森堡",
+      "zh-Hant": "盧森堡",
+      "ja": "ルクセンブルク",
+      "ko": "룩셈부르크",
+      "es": "Luxemburgo"
+    },
+    "iocCode": "LUX",
+    "aliases": [
+      "Luxembourg"
+    ]
+  },
+  {
+    "code": "MAC",
+    "name": "Macau, China",
+    "confederation": "AFC",
+    "flag": "MAC.svg",
+    "names": {
+      "zh-Hans": "中国澳门",
+      "zh-Hant": "中國澳門",
+      "ja": "マカオ（中国）",
+      "ko": "마카오(중국)",
+      "es": "Macao, China"
+    },
+    "iocCode": null,
+    "aliases": [
+      "China",
+      "澳门",
+      "澳門",
+      "Macao",
+      "Macau"
+    ]
+  },
+  {
+    "code": "MAD",
+    "name": "Madagascar",
+    "confederation": "CAF",
+    "flag": "MAD.svg",
+    "names": {
+      "zh-Hans": "马达加斯加",
+      "zh-Hant": "馬達加斯加",
+      "ja": "マダガスカル",
+      "ko": "마다가스카르",
+      "es": "Madagascar"
+    },
+    "iocCode": "MAD",
+    "aliases": [
+      "Madagascar"
+    ]
+  },
+  {
+    "code": "MWI",
+    "name": "Malawi",
+    "confederation": "CAF",
+    "flag": "MWI.svg",
+    "names": {
+      "zh-Hans": "马拉维",
+      "zh-Hant": "馬拉威",
+      "ja": "マラウイ",
+      "ko": "말라위",
+      "es": "Malaui"
+    },
+    "iocCode": "MAW",
+    "aliases": [
+      "Malawi"
+    ]
+  },
+  {
+    "code": "MAS",
+    "name": "Malaysia",
+    "confederation": "AFC",
+    "flag": "MAS.svg",
+    "names": {
+      "zh-Hans": "马来西亚",
+      "zh-Hant": "馬來西亞",
+      "ja": "マレーシア",
+      "ko": "말레이시아",
+      "es": "Malasia"
+    },
+    "iocCode": "MAS",
+    "aliases": [
+      "Malaysia"
+    ]
+  },
+  {
+    "code": "MDV",
+    "name": "Maldives",
+    "confederation": "AFC",
+    "flag": "MDV.svg",
+    "names": {
+      "zh-Hans": "马尔代夫",
+      "zh-Hant": "馬爾地夫",
+      "ja": "モルディブ",
+      "ko": "몰디브",
+      "es": "Maldivas"
+    },
+    "iocCode": "MDV",
+    "aliases": [
+      "Maldives"
+    ]
+  },
+  {
+    "code": "MLI",
+    "name": "Mali",
+    "confederation": "CAF",
+    "flag": "MLI.svg",
+    "names": {
+      "zh-Hans": "马里",
+      "zh-Hant": "馬利",
+      "ja": "マリ",
+      "ko": "말리",
+      "es": "Mali"
+    },
+    "iocCode": "MLI",
+    "aliases": [
+      "Mali"
+    ]
+  },
+  {
+    "code": "MLT",
+    "name": "Malta",
+    "confederation": "UEFA",
+    "flag": "MLT.svg",
+    "names": {
+      "zh-Hans": "马耳他",
+      "zh-Hant": "馬爾他",
+      "ja": "マルタ",
+      "ko": "몰타",
+      "es": "Malta"
+    },
+    "iocCode": "MLT",
+    "aliases": [
+      "Malta"
+    ]
+  },
+  {
+    "code": "MTN",
+    "name": "Mauritania",
+    "confederation": "CAF",
+    "flag": "MTN.svg",
+    "names": {
+      "zh-Hans": "毛里塔尼亚",
+      "zh-Hant": "茅利塔尼亞",
+      "ja": "モーリタニア",
+      "ko": "모리타니",
+      "es": "Mauritania"
+    },
+    "iocCode": "MTN",
+    "aliases": [
+      "Mauritania"
+    ]
+  },
+  {
+    "code": "MRI",
+    "name": "Mauritius",
+    "confederation": "CAF",
+    "flag": "MRI.svg",
+    "names": {
+      "zh-Hans": "毛里求斯",
+      "zh-Hant": "模里西斯",
+      "ja": "モーリシャス",
+      "ko": "모리셔스",
+      "es": "Mauricio"
+    },
+    "iocCode": "MRI",
+    "aliases": [
+      "Mauritius"
+    ]
+  },
+  {
+    "code": "MEX",
+    "name": "Mexico",
+    "confederation": "CONCACAF",
+    "flag": "MEX.svg",
+    "names": {
+      "zh-Hans": "墨西哥",
+      "zh-Hant": "墨西哥",
+      "ja": "メキシコ",
+      "ko": "멕시코",
+      "es": "México"
+    },
+    "iocCode": "MEX",
+    "aliases": [
+      "Mexico"
+    ]
+  },
+  {
+    "code": "MDA",
+    "name": "Moldova",
+    "confederation": "UEFA",
+    "flag": "MDA.svg",
+    "names": {
+      "zh-Hans": "摩尔多瓦",
+      "zh-Hant": "摩爾多瓦",
+      "ja": "モルドバ",
+      "ko": "몰도바",
+      "es": "Moldavia"
+    },
+    "iocCode": "MDA",
+    "aliases": [
+      "Republic of Moldova",
+      "Moldova"
+    ]
+  },
+  {
+    "code": "MNG",
+    "name": "Mongolia",
+    "confederation": "AFC",
+    "flag": "MNG.svg",
+    "names": {
+      "zh-Hans": "蒙古",
+      "zh-Hant": "蒙古",
+      "ja": "モンゴル",
+      "ko": "몽골",
+      "es": "Mongolia"
+    },
+    "iocCode": "MGL",
+    "aliases": [
+      "Mongolia"
+    ]
+  },
+  {
+    "code": "MNE",
+    "name": "Montenegro",
+    "confederation": "UEFA",
+    "flag": "MNE.svg",
+    "names": {
+      "zh-Hans": "黑山",
+      "zh-Hant": "蒙特內哥羅",
+      "ja": "モンテネグロ",
+      "ko": "몬테네그로",
+      "es": "Montenegro"
+    },
+    "iocCode": "MNE",
+    "aliases": [
+      "Montenegro"
+    ]
+  },
+  {
+    "code": "MSR",
+    "name": "Montserrat",
+    "confederation": "CONCACAF",
+    "flag": "MSR.svg",
+    "names": {
+      "zh-Hans": "蒙特塞拉特",
+      "zh-Hant": "蒙哲臘",
+      "ja": "モントセラト",
+      "ko": "몬트세라트",
+      "es": "Montserrat"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Montserrat"
+    ]
+  },
+  {
+    "code": "MAR",
+    "name": "Morocco",
+    "confederation": "CAF",
+    "flag": "MAR.svg",
+    "names": {
+      "zh-Hans": "摩洛哥",
+      "zh-Hant": "摩洛哥",
+      "ja": "モロッコ",
+      "ko": "모로코",
+      "es": "Marruecos"
+    },
+    "iocCode": "MAR",
+    "aliases": [
+      "Morocco"
+    ]
+  },
+  {
+    "code": "MOZ",
+    "name": "Mozambique",
+    "confederation": "CAF",
+    "flag": "MOZ.svg",
+    "names": {
+      "zh-Hans": "莫桑比克",
+      "zh-Hant": "莫三比克",
+      "ja": "モザンビーク",
+      "ko": "모잠비크",
+      "es": "Mozambique"
+    },
+    "iocCode": "MOZ",
+    "aliases": [
+      "Mozambique"
+    ]
+  },
+  {
+    "code": "MYA",
+    "name": "Myanmar",
+    "confederation": "AFC",
+    "flag": "MYA.svg",
+    "names": {
+      "zh-Hans": "缅甸",
+      "zh-Hant": "緬甸",
+      "ja": "ミャンマー (ビルマ)",
+      "ko": "미얀마",
+      "es": "Myanmar (Birmania)"
+    },
+    "iocCode": "MYA",
+    "aliases": [
+      "Myanmar"
+    ]
+  },
+  {
+    "code": "NAM",
+    "name": "Namibia",
+    "confederation": "CAF",
+    "flag": "NAM.svg",
+    "names": {
+      "zh-Hans": "纳米比亚",
+      "zh-Hant": "納米比亞",
+      "ja": "ナミビア",
+      "ko": "나미비아",
+      "es": "Namibia"
+    },
+    "iocCode": "NAM",
+    "aliases": [
+      "Namibia"
+    ]
+  },
+  {
+    "code": "NEP",
+    "name": "Nepal",
+    "confederation": "AFC",
+    "flag": "NEP.svg",
+    "names": {
+      "zh-Hans": "尼泊尔",
+      "zh-Hant": "尼泊爾",
+      "ja": "ネパール",
+      "ko": "네팔",
+      "es": "Nepal"
+    },
+    "iocCode": "NEP",
+    "aliases": [
+      "Nepal"
+    ]
+  },
+  {
+    "code": "NED",
+    "name": "Netherlands",
+    "confederation": "UEFA",
+    "flag": "NED.svg",
+    "names": {
+      "zh-Hans": "荷兰",
+      "zh-Hant": "荷蘭",
+      "ja": "オランダ",
+      "ko": "네덜란드",
+      "es": "Países Bajos"
+    },
+    "iocCode": "NED",
+    "aliases": [
+      "Netherlands"
+    ]
+  },
+  {
+    "code": "NCL",
+    "name": "New Caledonia",
+    "confederation": "OFC",
+    "flag": "NCL.svg",
+    "names": {
+      "zh-Hans": "新喀里多尼亚",
+      "zh-Hant": "新喀里多尼亞",
+      "ja": "ニューカレドニア",
+      "ko": "뉴칼레도니아",
+      "es": "Nueva Caledonia"
+    },
+    "iocCode": null,
+    "aliases": [
+      "New Caledonia"
+    ]
+  },
+  {
+    "code": "NZL",
+    "name": "New Zealand",
+    "confederation": "OFC",
+    "flag": "NZL.svg",
+    "names": {
+      "zh-Hans": "新西兰",
+      "zh-Hant": "紐西蘭",
+      "ja": "ニュージーランド",
+      "ko": "뉴질랜드",
+      "es": "Nueva Zelanda"
+    },
+    "iocCode": "NZL",
+    "aliases": [
+      "New Zealand"
+    ]
+  },
+  {
+    "code": "NCA",
+    "name": "Nicaragua",
+    "confederation": "CONCACAF",
+    "flag": "NCA.svg",
+    "names": {
+      "zh-Hans": "尼加拉瓜",
+      "zh-Hant": "尼加拉瓜",
+      "ja": "ニカラグア",
+      "ko": "니카라과",
+      "es": "Nicaragua"
+    },
+    "iocCode": "NCA",
+    "aliases": [
+      "Nicaragua"
+    ]
+  },
+  {
+    "code": "NIG",
+    "name": "Niger",
+    "confederation": "CAF",
+    "flag": "NIG.svg",
+    "names": {
+      "zh-Hans": "尼日尔",
+      "zh-Hant": "尼日",
+      "ja": "ニジェール",
+      "ko": "니제르",
+      "es": "Níger"
+    },
+    "iocCode": "NIG",
+    "aliases": [
+      "Niger"
+    ]
+  },
+  {
+    "code": "NGA",
+    "name": "Nigeria",
+    "confederation": "CAF",
+    "flag": "NGA.svg",
+    "names": {
+      "zh-Hans": "尼日利亚",
+      "zh-Hant": "奈及利亞",
+      "ja": "ナイジェリア",
+      "ko": "나이지리아",
+      "es": "Nigeria"
+    },
+    "iocCode": "NGR",
+    "aliases": [
+      "Nigeria"
+    ]
+  },
+  {
+    "code": "MKD",
+    "name": "North Macedonia",
+    "confederation": "UEFA",
+    "flag": "MKD.svg",
+    "names": {
+      "zh-Hans": "北马其顿",
+      "zh-Hant": "北馬其頓",
+      "ja": "北マケドニア",
+      "ko": "북마케도니아",
+      "es": "Macedonia del Norte"
+    },
+    "iocCode": "MKD",
+    "aliases": [
+      "North Macedonia"
+    ]
+  },
+  {
+    "code": "NIR",
+    "name": "Northern Ireland",
+    "confederation": "UEFA",
+    "flag": "NIR.svg",
+    "names": {
+      "zh-Hans": "北爱尔兰",
+      "zh-Hant": "北愛爾蘭",
+      "ja": "北アイルランド",
+      "ko": "북아일랜드",
+      "es": "Irlanda del Norte"
+    },
+    "iocCode": "GBR",
+    "aliases": [
+      "Great Britain",
+      "Northern Ireland"
+    ]
+  },
+  {
+    "code": "NOR",
+    "name": "Norway",
+    "confederation": "UEFA",
+    "flag": "NOR.svg",
+    "names": {
+      "zh-Hans": "挪威",
+      "zh-Hant": "挪威",
+      "ja": "ノルウェー",
+      "ko": "노르웨이",
+      "es": "Noruega"
+    },
+    "iocCode": "NOR",
+    "aliases": [
+      "Norway"
+    ]
+  },
+  {
+    "code": "OMA",
+    "name": "Oman",
+    "confederation": "AFC",
+    "flag": "OMA.svg",
+    "names": {
+      "zh-Hans": "阿曼",
+      "zh-Hant": "阿曼",
+      "ja": "オマーン",
+      "ko": "오만",
+      "es": "Omán"
+    },
+    "iocCode": "OMA",
+    "aliases": [
+      "Oman"
+    ]
+  },
+  {
+    "code": "PAK",
+    "name": "Pakistan",
+    "confederation": "AFC",
+    "flag": "PAK.svg",
+    "names": {
+      "zh-Hans": "巴基斯坦",
+      "zh-Hant": "巴基斯坦",
+      "ja": "パキスタン",
+      "ko": "파키스탄",
+      "es": "Pakistán"
+    },
+    "iocCode": "PAK",
+    "aliases": [
+      "Pakistan"
+    ]
+  },
+  {
+    "code": "PLE",
+    "name": "Palestine",
+    "confederation": "AFC",
+    "flag": "PLE.svg",
+    "names": {
+      "zh-Hans": "巴勒斯坦领土",
+      "zh-Hant": "巴勒斯坦自治區",
+      "ja": "パレスチナ自治区",
+      "ko": "팔레스타인 지구",
+      "es": "Territorios Palestinos"
+    },
+    "iocCode": "PLE",
+    "aliases": [
+      "State of Palestine"
+    ]
+  },
+  {
+    "code": "PAN",
+    "name": "Panama",
+    "confederation": "CONCACAF",
+    "flag": "PAN.svg",
+    "names": {
+      "zh-Hans": "巴拿马",
+      "zh-Hant": "巴拿馬",
+      "ja": "パナマ",
+      "ko": "파나마",
+      "es": "Panamá"
+    },
+    "iocCode": "PAN",
+    "aliases": [
+      "Panama"
+    ]
+  },
+  {
+    "code": "PNG",
+    "name": "Papua New Guinea",
+    "confederation": "OFC",
+    "flag": "PNG.svg",
+    "names": {
+      "zh-Hans": "巴布亚新几内亚",
+      "zh-Hant": "巴布亞紐幾內亞",
+      "ja": "パプアニューギニア",
+      "ko": "파푸아뉴기니",
+      "es": "Papúa Nueva Guinea"
+    },
+    "iocCode": "PNG",
+    "aliases": [
+      "Papua New Guinea"
+    ]
+  },
+  {
+    "code": "PAR",
+    "name": "Paraguay",
+    "confederation": "CONMEBOL",
+    "flag": "PAR.svg",
+    "names": {
+      "zh-Hans": "巴拉圭",
+      "zh-Hant": "巴拉圭",
+      "ja": "パラグアイ",
+      "ko": "파라과이",
+      "es": "Paraguay"
+    },
+    "iocCode": "PAR",
+    "aliases": [
+      "Paraguay"
+    ]
+  },
+  {
+    "code": "PER",
+    "name": "Peru",
+    "confederation": "CONMEBOL",
+    "flag": "PER.svg",
+    "names": {
+      "zh-Hans": "秘鲁",
+      "zh-Hant": "秘魯",
+      "ja": "ペルー",
+      "ko": "페루",
+      "es": "Perú"
+    },
+    "iocCode": "PER",
+    "aliases": [
+      "Peru"
+    ]
+  },
+  {
+    "code": "PHI",
+    "name": "Philippines",
+    "confederation": "AFC",
+    "flag": "PHI.svg",
+    "names": {
+      "zh-Hans": "菲律宾",
+      "zh-Hant": "菲律賓",
+      "ja": "フィリピン",
+      "ko": "필리핀",
+      "es": "Filipinas"
+    },
+    "iocCode": "PHI",
+    "aliases": [
+      "Philippines"
+    ]
+  },
+  {
+    "code": "POL",
+    "name": "Poland",
+    "confederation": "UEFA",
+    "flag": "POL.svg",
+    "names": {
+      "zh-Hans": "波兰",
+      "zh-Hant": "波蘭",
+      "ja": "ポーランド",
+      "ko": "폴란드",
+      "es": "Polonia"
+    },
+    "iocCode": "POL",
+    "aliases": [
+      "Poland"
+    ]
+  },
+  {
+    "code": "POR",
+    "name": "Portugal",
+    "confederation": "UEFA",
+    "flag": "POR.svg",
+    "names": {
+      "zh-Hans": "葡萄牙",
+      "zh-Hant": "葡萄牙",
+      "ja": "ポルトガル",
+      "ko": "포르투갈",
+      "es": "Portugal"
+    },
+    "iocCode": "POR",
+    "aliases": [
+      "Portugal"
+    ]
+  },
+  {
+    "code": "PUR",
+    "name": "Puerto Rico",
+    "confederation": "CONCACAF",
+    "flag": "PUR.svg",
+    "names": {
+      "zh-Hans": "波多黎各",
+      "zh-Hant": "波多黎各",
+      "ja": "プエルトリコ",
+      "ko": "푸에르토리코",
+      "es": "Puerto Rico"
+    },
+    "iocCode": "PUR",
+    "aliases": [
+      "Puerto Rico"
+    ]
+  },
+  {
+    "code": "QAT",
+    "name": "Qatar",
+    "confederation": "AFC",
+    "flag": "QAT.svg",
+    "names": {
+      "zh-Hans": "卡塔尔",
+      "zh-Hant": "卡達",
+      "ja": "カタール",
+      "ko": "카타르",
+      "es": "Catar"
+    },
+    "iocCode": "QAT",
+    "aliases": [
+      "Qatar"
+    ]
+  },
+  {
+    "code": "IRL",
+    "name": "Republic of Ireland",
+    "confederation": "UEFA",
+    "flag": "IRL.svg",
+    "names": {
+      "zh-Hans": "爱尔兰",
+      "zh-Hant": "愛爾蘭",
+      "ja": "アイルランド",
+      "ko": "아일랜드",
+      "es": "Irlanda"
+    },
+    "iocCode": "IRL",
+    "aliases": [
+      "Ireland",
+      "爱尔兰",
+      "愛爾蘭"
+    ]
+  },
+  {
+    "code": "ROU",
+    "name": "Romania",
+    "confederation": "UEFA",
+    "flag": "ROU.svg",
+    "names": {
+      "zh-Hans": "罗马尼亚",
+      "zh-Hant": "羅馬尼亞",
+      "ja": "ルーマニア",
+      "ko": "루마니아",
+      "es": "Rumanía"
+    },
+    "iocCode": "ROU",
+    "aliases": [
+      "Romania"
+    ]
+  },
+  {
+    "code": "RUS",
+    "name": "Russia",
+    "confederation": "UEFA",
+    "flag": "RUS.svg",
+    "names": {
+      "zh-Hans": "俄罗斯",
+      "zh-Hant": "俄羅斯",
+      "ja": "ロシア",
+      "ko": "러시아",
+      "es": "Rusia"
+    },
+    "iocCode": "RUS",
+    "aliases": [
+      "Russia"
+    ]
+  },
+  {
+    "code": "RWA",
+    "name": "Rwanda",
+    "confederation": "CAF",
+    "flag": "RWA.svg",
+    "names": {
+      "zh-Hans": "卢旺达",
+      "zh-Hant": "盧安達",
+      "ja": "ルワンダ",
+      "ko": "르완다",
+      "es": "Ruanda"
+    },
+    "iocCode": "RWA",
+    "aliases": [
+      "Rwanda"
+    ]
+  },
+  {
+    "code": "SAM",
+    "name": "Samoa",
+    "confederation": "OFC",
+    "flag": "SAM.svg",
+    "names": {
+      "zh-Hans": "萨摩亚",
+      "zh-Hant": "薩摩亞",
+      "ja": "サモア",
+      "ko": "사모아",
+      "es": "Samoa"
+    },
+    "iocCode": "SAM",
+    "aliases": [
+      "Samoa"
+    ]
+  },
+  {
+    "code": "SMR",
+    "name": "San Marino",
+    "confederation": "UEFA",
+    "flag": "SMR.svg",
+    "names": {
+      "zh-Hans": "圣马力诺",
+      "zh-Hant": "聖馬利諾",
+      "ja": "サンマリノ",
+      "ko": "산마리노",
+      "es": "San Marino"
+    },
+    "iocCode": "SMR",
+    "aliases": [
+      "San Marino"
+    ]
+  },
+  {
+    "code": "STP",
+    "name": "São Tomé and Príncipe",
+    "confederation": "CAF",
+    "flag": "STP.svg",
+    "names": {
+      "zh-Hans": "圣多美和普林西比",
+      "zh-Hant": "聖多美普林西比",
+      "ja": "サントメ・プリンシペ",
+      "ko": "상투메 프린시페",
+      "es": "Santo Tomé y Príncipe"
+    },
+    "iocCode": "STP",
+    "aliases": [
+      "Sao Tome and Principe"
+    ]
+  },
+  {
+    "code": "KSA",
+    "name": "Saudi Arabia",
+    "confederation": "AFC",
+    "flag": "KSA.svg",
+    "names": {
+      "zh-Hans": "沙特阿拉伯",
+      "zh-Hant": "沙烏地阿拉伯",
+      "ja": "サウジアラビア",
+      "ko": "사우디아라비아",
+      "es": "Arabia Saudí"
+    },
+    "iocCode": "KSA",
+    "aliases": [
+      "Saudi Arabia"
+    ]
+  },
+  {
+    "code": "SCO",
+    "name": "Scotland",
+    "confederation": "UEFA",
+    "flag": "SCO.svg",
+    "names": {
+      "zh-Hans": "苏格兰",
+      "zh-Hant": "蘇格蘭",
+      "ja": "スコットランド",
+      "ko": "스코틀랜드",
+      "es": "Escocia"
+    },
+    "iocCode": "GBR",
+    "aliases": [
+      "Scotland",
+      "蘇格蘭",
+      "Great Britain"
+    ]
+  },
+  {
+    "code": "SEN",
+    "name": "Senegal",
+    "confederation": "CAF",
+    "flag": "SEN.svg",
+    "names": {
+      "zh-Hans": "塞内加尔",
+      "zh-Hant": "塞內加爾",
+      "ja": "セネガル",
+      "ko": "세네갈",
+      "es": "Senegal"
+    },
+    "iocCode": "SEN",
+    "aliases": [
+      "Senegal"
+    ]
+  },
+  {
+    "code": "SRB",
+    "name": "Serbia",
+    "confederation": "UEFA",
+    "flag": "SRB.svg",
+    "names": {
+      "zh-Hans": "塞尔维亚",
+      "zh-Hant": "塞爾維亞",
+      "ja": "セルビア",
+      "ko": "세르비아",
+      "es": "Serbia"
+    },
+    "iocCode": "SRB",
+    "aliases": [
+      "Serbia"
+    ]
+  },
+  {
+    "code": "SEY",
+    "name": "Seychelles",
+    "confederation": "CAF",
+    "flag": "SEY.svg",
+    "names": {
+      "zh-Hans": "塞舌尔",
+      "zh-Hant": "塞席爾",
+      "ja": "セーシェル",
+      "ko": "세이셸",
+      "es": "Seychelles"
+    },
+    "iocCode": "SEY",
+    "aliases": [
+      "Seychelles"
+    ]
+  },
+  {
+    "code": "SLE",
+    "name": "Sierra Leone",
+    "confederation": "CAF",
+    "flag": "SLE.svg",
+    "names": {
+      "zh-Hans": "塞拉利昂",
+      "zh-Hant": "獅子山",
+      "ja": "シエラレオネ",
+      "ko": "시에라리온",
+      "es": "Sierra Leona"
+    },
+    "iocCode": "SLE",
+    "aliases": [
+      "Sierra Leone"
+    ]
+  },
+  {
+    "code": "SGP",
+    "name": "Singapore",
+    "confederation": "AFC",
+    "flag": "SGP.svg",
+    "names": {
+      "zh-Hans": "新加坡",
+      "zh-Hant": "新加坡",
+      "ja": "シンガポール",
+      "ko": "싱가포르",
+      "es": "Singapur"
+    },
+    "iocCode": "SGP",
+    "aliases": [
+      "SIN",
+      "Singapore"
+    ]
+  },
+  {
+    "code": "SVK",
+    "name": "Slovakia",
+    "confederation": "UEFA",
+    "flag": "SVK.svg",
+    "names": {
+      "zh-Hans": "斯洛伐克",
+      "zh-Hant": "斯洛伐克",
+      "ja": "スロバキア",
+      "ko": "슬로바키아",
+      "es": "Eslovaquia"
+    },
+    "iocCode": "SVK",
+    "aliases": [
+      "Slovakia"
+    ]
+  },
+  {
+    "code": "SVN",
+    "name": "Slovenia",
+    "confederation": "UEFA",
+    "flag": "SVN.svg",
+    "names": {
+      "zh-Hans": "斯洛文尼亚",
+      "zh-Hant": "斯洛維尼亞",
+      "ja": "スロベニア",
+      "ko": "슬로베니아",
+      "es": "Eslovenia"
+    },
+    "iocCode": "SLO",
+    "aliases": [
+      "Slovenia"
+    ]
+  },
+  {
+    "code": "SOL",
+    "name": "Solomon Islands",
+    "confederation": "OFC",
+    "flag": "SOL.svg",
+    "names": {
+      "zh-Hans": "所罗门群岛",
+      "zh-Hant": "索羅門群島",
+      "ja": "ソロモン諸島",
+      "ko": "솔로몬 제도",
+      "es": "Islas Salomón"
+    },
+    "iocCode": "SOL",
+    "aliases": [
+      "Solomon Islands"
+    ]
+  },
+  {
+    "code": "SOM",
+    "name": "Somalia",
+    "confederation": "CAF",
+    "flag": "SOM.svg",
+    "names": {
+      "zh-Hans": "索马里",
+      "zh-Hant": "索馬利亞",
+      "ja": "ソマリア",
+      "ko": "소말리아",
+      "es": "Somalia"
+    },
+    "iocCode": "SOM",
+    "aliases": [
+      "Somalia"
+    ]
+  },
+  {
+    "code": "RSA",
+    "name": "South Africa",
+    "confederation": "CAF",
+    "flag": "RSA.svg",
+    "names": {
+      "zh-Hans": "南非",
+      "zh-Hant": "南非",
+      "ja": "南アフリカ",
+      "ko": "남아프리카",
+      "es": "Sudáfrica"
+    },
+    "iocCode": "RSA",
+    "aliases": [
+      "South Africa"
+    ]
+  },
+  {
+    "code": "SSD",
+    "name": "South Sudan",
+    "confederation": "CAF",
+    "flag": "SSD.svg",
+    "names": {
+      "zh-Hans": "南苏丹",
+      "zh-Hant": "南蘇丹",
+      "ja": "南スーダン",
+      "ko": "남수단",
+      "es": "Sudán del Sur"
+    },
+    "iocCode": "SSD",
+    "aliases": [
+      "South Sudan"
+    ]
+  },
+  {
+    "code": "ESP",
+    "name": "Spain",
+    "confederation": "UEFA",
+    "flag": "ESP.svg",
+    "names": {
+      "zh-Hans": "西班牙",
+      "zh-Hant": "西班牙",
+      "ja": "スペイン",
+      "ko": "스페인",
+      "es": "España"
+    },
+    "iocCode": "ESP",
+    "aliases": [
+      "Spain"
+    ]
+  },
+  {
+    "code": "SRI",
+    "name": "Sri Lanka",
+    "confederation": "AFC",
+    "flag": "SRI.svg",
+    "names": {
+      "zh-Hans": "斯里兰卡",
+      "zh-Hant": "斯里蘭卡",
+      "ja": "スリランカ",
+      "ko": "스리랑카",
+      "es": "Sri Lanka"
+    },
+    "iocCode": "SRI",
+    "aliases": [
+      "Sri Lanka"
+    ]
+  },
+  {
+    "code": "SKN",
+    "name": "St Kitts and Nevis",
+    "confederation": "CONCACAF",
+    "flag": "SKN.svg",
+    "names": {
+      "zh-Hans": "圣基茨和尼维斯",
+      "zh-Hant": "聖克里斯多福及尼維斯",
+      "ja": "セントクリストファー・ネーヴィス",
+      "ko": "세인트키츠 네비스",
+      "es": "San Cristóbal y Nieves"
+    },
+    "iocCode": "SKN",
+    "aliases": [
+      "Saint Kitts and Nevis"
+    ]
+  },
+  {
+    "code": "LCA",
+    "name": "St Lucia",
+    "confederation": "CONCACAF",
+    "flag": "LCA.svg",
+    "names": {
+      "zh-Hans": "圣卢西亚",
+      "zh-Hant": "聖露西亞",
+      "ja": "セントルシア",
+      "ko": "세인트루시아",
+      "es": "Santa Lucía"
+    },
+    "iocCode": "LCA",
+    "aliases": [
+      "Saint Lucia"
+    ]
+  },
+  {
+    "code": "VIN",
+    "name": "St Vincent and the Grenadines",
+    "confederation": "CONCACAF",
+    "flag": "VIN.svg",
+    "names": {
+      "zh-Hans": "圣文森特和格林纳丁斯",
+      "zh-Hant": "聖文森及格瑞那丁",
+      "ja": "セントビンセント及びグレナディーン諸島",
+      "ko": "세인트빈센트그레나딘",
+      "es": "San Vicente y las Granadinas"
+    },
+    "iocCode": "VIN",
+    "aliases": [
+      "Saint Vincent and the Grenadines"
+    ]
+  },
+  {
+    "code": "SDN",
+    "name": "Sudan",
+    "confederation": "CAF",
+    "flag": "SDN.svg",
+    "names": {
+      "zh-Hans": "苏丹",
+      "zh-Hant": "蘇丹",
+      "ja": "スーダン",
+      "ko": "수단",
+      "es": "Sudán"
+    },
+    "iocCode": "SUD",
+    "aliases": [
+      "Sudan"
+    ]
+  },
+  {
+    "code": "SUR",
+    "name": "Suriname",
+    "confederation": "CONCACAF",
+    "flag": "SUR.svg",
+    "names": {
+      "zh-Hans": "苏里南",
+      "zh-Hant": "蘇利南",
+      "ja": "スリナム",
+      "ko": "수리남",
+      "es": "Surinam"
+    },
+    "iocCode": "SUR",
+    "aliases": [
+      "Suriname"
+    ]
+  },
+  {
+    "code": "SWE",
+    "name": "Sweden",
+    "confederation": "UEFA",
+    "flag": "SWE.svg",
+    "names": {
+      "zh-Hans": "瑞典",
+      "zh-Hant": "瑞典",
+      "ja": "スウェーデン",
+      "ko": "스웨덴",
+      "es": "Suecia"
+    },
+    "iocCode": "SWE",
+    "aliases": [
+      "Sweden"
+    ]
+  },
+  {
+    "code": "SUI",
+    "name": "Switzerland",
+    "confederation": "UEFA",
+    "flag": "SUI.svg",
+    "names": {
+      "zh-Hans": "瑞士",
+      "zh-Hant": "瑞士",
+      "ja": "スイス",
+      "ko": "스위스",
+      "es": "Suiza"
+    },
+    "iocCode": "SUI",
+    "aliases": [
+      "Switzerland"
+    ]
+  },
+  {
+    "code": "SYR",
+    "name": "Syria",
+    "confederation": "AFC",
+    "flag": "SYR.svg",
+    "names": {
+      "zh-Hans": "叙利亚",
+      "zh-Hant": "敘利亞",
+      "ja": "シリア",
+      "ko": "시리아",
+      "es": "Siria"
+    },
+    "iocCode": "SYR",
+    "aliases": [
+      "Syrian Arab Republic",
+      "Syria"
+    ]
+  },
+  {
+    "code": "TAH",
+    "name": "Tahiti",
+    "confederation": "OFC",
+    "flag": "TAH.svg",
+    "names": {
+      "zh-Hans": "塔希提",
+      "zh-Hant": "大溪地",
+      "ja": "タヒチ",
+      "ko": "타히티",
+      "es": "Tahití"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Tahiti",
+      "塔希地",
+      "塔希提",
+      "French Polynesia"
+    ]
+  },
+  {
+    "code": "TJK",
+    "name": "Tajikistan",
+    "confederation": "AFC",
+    "flag": "TJK.svg",
+    "names": {
+      "zh-Hans": "塔吉克斯坦",
+      "zh-Hant": "塔吉克",
+      "ja": "タジキスタン",
+      "ko": "타지키스탄",
+      "es": "Tayikistán"
+    },
+    "iocCode": "TJK",
+    "aliases": [
+      "Tajikistan"
+    ]
+  },
+  {
+    "code": "TAN",
+    "name": "Tanzania",
+    "confederation": "CAF",
+    "flag": "TAN.svg",
+    "names": {
+      "zh-Hans": "坦桑尼亚",
+      "zh-Hant": "坦尚尼亞",
+      "ja": "タンザニア",
+      "ko": "탄자니아",
+      "es": "Tanzania"
+    },
+    "iocCode": "TAN",
+    "aliases": [
+      "United Republic of Tanzania",
+      "Tanzania"
+    ]
+  },
+  {
+    "code": "THA",
+    "name": "Thailand",
+    "confederation": "AFC",
+    "flag": "THA.svg",
+    "names": {
+      "zh-Hans": "泰国",
+      "zh-Hant": "泰國",
+      "ja": "タイ",
+      "ko": "태국",
+      "es": "Tailandia"
+    },
+    "iocCode": "THA",
+    "aliases": [
+      "Thailand"
+    ]
+  },
+  {
+    "code": "GAM",
+    "name": "The Gambia",
+    "confederation": "CAF",
+    "flag": "GAM.svg",
+    "names": {
+      "zh-Hans": "冈比亚",
+      "zh-Hant": "甘比亞",
+      "ja": "ガンビア",
+      "ko": "감비아",
+      "es": "Gambia"
+    },
+    "iocCode": "GAM",
+    "aliases": [
+      "Gambia"
+    ]
+  },
+  {
+    "code": "TLS",
+    "name": "Timor-Leste",
+    "confederation": "AFC",
+    "flag": "TLS.svg",
+    "names": {
+      "zh-Hans": "东帝汶",
+      "zh-Hant": "東帝汶",
+      "ja": "東ティモール",
+      "ko": "동티모르",
+      "es": "Timor-Leste"
+    },
+    "iocCode": "TLS",
+    "aliases": [
+      "East Timor",
+      "Timor Leste",
+      "Timor-Leste"
+    ]
+  },
+  {
+    "code": "TOG",
+    "name": "Togo",
+    "confederation": "CAF",
+    "flag": "TOG.svg",
+    "names": {
+      "zh-Hans": "多哥",
+      "zh-Hant": "多哥",
+      "ja": "トーゴ",
+      "ko": "토고",
+      "es": "Togo"
+    },
+    "iocCode": "TOG",
+    "aliases": [
+      "Togo"
+    ]
+  },
+  {
+    "code": "TGA",
+    "name": "Tonga",
+    "confederation": "OFC",
+    "flag": "TGA.svg",
+    "names": {
+      "zh-Hans": "汤加",
+      "zh-Hant": "東加",
+      "ja": "トンガ",
+      "ko": "통가",
+      "es": "Tonga"
+    },
+    "iocCode": "TGA",
+    "aliases": [
+      "Tonga"
+    ]
+  },
+  {
+    "code": "TRI",
+    "name": "Trinidad and Tobago",
+    "confederation": "CONCACAF",
+    "flag": "TRI.svg",
+    "names": {
+      "zh-Hans": "特立尼达和多巴哥",
+      "zh-Hant": "千里達及托巴哥",
+      "ja": "トリニダード・トバゴ",
+      "ko": "트리니다드 토바고",
+      "es": "Trinidad y Tobago"
+    },
+    "iocCode": "TTO",
+    "aliases": [
+      "Trinidad and Tobago"
+    ]
+  },
+  {
+    "code": "TUN",
+    "name": "Tunisia",
+    "confederation": "CAF",
+    "flag": "TUN.svg",
+    "names": {
+      "zh-Hans": "突尼斯",
+      "zh-Hant": "突尼西亞",
+      "ja": "チュニジア",
+      "ko": "튀니지",
+      "es": "Túnez"
+    },
+    "iocCode": "TUN",
+    "aliases": [
+      "Tunisia"
+    ]
+  },
+  {
+    "code": "TUR",
+    "name": "Türkiye",
+    "confederation": "UEFA",
+    "flag": "TUR.svg",
+    "names": {
+      "zh-Hans": "土耳其",
+      "zh-Hant": "土耳其",
+      "ja": "トルコ",
+      "ko": "튀르키예",
+      "es": "Turquía"
+    },
+    "iocCode": "TUR",
+    "aliases": [
+      "Turkey",
+      "Türkiye"
+    ]
+  },
+  {
+    "code": "TKM",
+    "name": "Turkmenistan",
+    "confederation": "AFC",
+    "flag": "TKM.svg",
+    "names": {
+      "zh-Hans": "土库曼斯坦",
+      "zh-Hant": "土庫曼",
+      "ja": "トルクメニスタン",
+      "ko": "투르크메니스탄",
+      "es": "Turkmenistán"
+    },
+    "iocCode": "TKM",
+    "aliases": [
+      "Turkmenistan"
+    ]
+  },
+  {
+    "code": "TCA",
+    "name": "Turks and Caicos Islands",
+    "confederation": "CONCACAF",
+    "flag": "TCA.svg",
+    "names": {
+      "zh-Hans": "特克斯和凯科斯群岛",
+      "zh-Hant": "土克斯及開科斯群島",
+      "ja": "タークス・カイコス諸島",
+      "ko": "터크스 케이커스 제도",
+      "es": "Islas Turcas y Caicos"
+    },
+    "iocCode": null,
+    "aliases": [
+      "Turks and Caicos Islands"
+    ]
+  },
+  {
+    "code": "UGA",
+    "name": "Uganda",
+    "confederation": "CAF",
+    "flag": "UGA.svg",
+    "names": {
+      "zh-Hans": "乌干达",
+      "zh-Hant": "烏干達",
+      "ja": "ウガンダ",
+      "ko": "우간다",
+      "es": "Uganda"
+    },
+    "iocCode": "UGA",
+    "aliases": [
+      "Uganda"
+    ]
+  },
+  {
+    "code": "UKR",
+    "name": "Ukraine",
+    "confederation": "UEFA",
+    "flag": "UKR.svg",
+    "names": {
+      "zh-Hans": "乌克兰",
+      "zh-Hant": "烏克蘭",
+      "ja": "ウクライナ",
+      "ko": "우크라이나",
+      "es": "Ucrania"
+    },
+    "iocCode": "UKR",
+    "aliases": [
+      "Ukraine"
+    ]
+  },
+  {
+    "code": "UAE",
+    "name": "United Arab Emirates",
+    "confederation": "AFC",
+    "flag": "UAE.svg",
+    "names": {
+      "zh-Hans": "阿拉伯联合酋长国",
+      "zh-Hant": "阿拉伯聯合大公國",
+      "ja": "アラブ首長国連邦",
+      "ko": "아랍에미리트",
+      "es": "Emiratos Árabes Unidos"
+    },
+    "iocCode": "UAE",
+    "aliases": [
+      "United Arab Emirates"
+    ]
+  },
+  {
+    "code": "URU",
+    "name": "Uruguay",
+    "confederation": "CONMEBOL",
+    "flag": "URU.svg",
+    "names": {
+      "zh-Hans": "乌拉圭",
+      "zh-Hant": "烏拉圭",
+      "ja": "ウルグアイ",
+      "ko": "우루과이",
+      "es": "Uruguay"
+    },
+    "iocCode": "URU",
+    "aliases": [
+      "Uruguay"
+    ]
+  },
+  {
+    "code": "VIR",
+    "name": "US Virgin Islands",
+    "confederation": "CONCACAF",
+    "flag": "VIR.svg",
+    "names": {
+      "zh-Hans": "美属维尔京群岛",
+      "zh-Hant": "美屬維京群島",
+      "ja": "米領ヴァージン諸島",
+      "ko": "미국령 버진아일랜드",
+      "es": "Islas Vírgenes de EE. UU."
+    },
+    "iocCode": "ISV",
+    "aliases": [
+      "Virgin Islands (U.S.)"
+    ]
+  },
+  {
+    "code": "USA",
+    "name": "USA",
+    "confederation": "CONCACAF",
+    "flag": "USA.svg",
+    "names": {
+      "zh-Hans": "美国",
+      "zh-Hant": "美國",
+      "ja": "アメリカ合衆国",
+      "ko": "미국",
+      "es": "Estados Unidos"
+    },
+    "iocCode": "USA",
+    "aliases": [
+      "United States",
+      "United States of America",
+      "美国",
+      "美國"
+    ]
+  },
+  {
+    "code": "UZB",
+    "name": "Uzbekistan",
+    "confederation": "AFC",
+    "flag": "UZB.svg",
+    "names": {
+      "zh-Hans": "乌兹别克斯坦",
+      "zh-Hant": "烏茲別克",
+      "ja": "ウズベキスタン",
+      "ko": "우즈베키스탄",
+      "es": "Uzbekistán"
+    },
+    "iocCode": "UZB",
+    "aliases": [
+      "Uzbekistan"
+    ]
+  },
+  {
+    "code": "VAN",
+    "name": "Vanuatu",
+    "confederation": "OFC",
+    "flag": "VAN.svg",
+    "names": {
+      "zh-Hans": "瓦努阿图",
+      "zh-Hant": "萬那杜",
+      "ja": "バヌアツ",
+      "ko": "바누아투",
+      "es": "Vanuatu"
+    },
+    "iocCode": "VAN",
+    "aliases": [
+      "Vanuatu"
+    ]
+  },
+  {
+    "code": "VEN",
+    "name": "Venezuela",
+    "confederation": "CONMEBOL",
+    "flag": "VEN.svg",
+    "names": {
+      "zh-Hans": "委内瑞拉",
+      "zh-Hant": "委內瑞拉",
+      "ja": "ベネズエラ",
+      "ko": "베네수엘라",
+      "es": "Venezuela"
+    },
+    "iocCode": "VEN",
+    "aliases": [
+      "Bolivarian Republic of Venezuela",
+      "Venezuela"
+    ]
+  },
+  {
+    "code": "VIE",
+    "name": "Vietnam",
+    "confederation": "AFC",
+    "flag": "VIE.svg",
+    "names": {
+      "zh-Hans": "越南",
+      "zh-Hant": "越南",
+      "ja": "ベトナム",
+      "ko": "베트남",
+      "es": "Vietnam"
+    },
+    "iocCode": "VIE",
+    "aliases": [
+      "Vietnam"
+    ]
+  },
+  {
+    "code": "WAL",
+    "name": "Wales",
+    "confederation": "UEFA",
+    "flag": "WAL.svg",
+    "names": {
+      "zh-Hans": "威尔士",
+      "zh-Hant": "威爾斯",
+      "ja": "ウェールズ",
+      "ko": "웨일스",
+      "es": "Gales"
+    },
+    "iocCode": "GBR",
+    "aliases": [
+      "Wales",
+      "威尔斯",
+      "威爾士",
+      "Great Britain"
+    ]
+  },
+  {
+    "code": "YEM",
+    "name": "Yemen",
+    "confederation": "AFC",
+    "flag": "YEM.svg",
+    "names": {
+      "zh-Hans": "也门",
+      "zh-Hant": "葉門",
+      "ja": "イエメン",
+      "ko": "예멘",
+      "es": "Yemen"
+    },
+    "iocCode": "YEM",
+    "aliases": [
+      "Yemen"
+    ]
+  },
+  {
+    "code": "ZAM",
+    "name": "Zambia",
+    "confederation": "CAF",
+    "flag": "ZAM.svg",
+    "names": {
+      "zh-Hans": "赞比亚",
+      "zh-Hant": "尚比亞",
+      "ja": "ザンビア",
+      "ko": "잠비아",
+      "es": "Zambia"
+    },
+    "iocCode": "ZAM",
+    "aliases": [
+      "Zambia"
+    ]
+  },
+  {
+    "code": "ZIM",
+    "name": "Zimbabwe",
+    "confederation": "CAF",
+    "flag": "ZIM.svg",
+    "names": {
+      "zh-Hans": "津巴布韦",
+      "zh-Hant": "辛巴威",
+      "ja": "ジンバブエ",
+      "ko": "짐바브웨",
+      "es": "Zimbabue"
+    },
+    "iocCode": "ZIM",
+    "aliases": [
+      "Zimbabwe"
+    ]
+  }
+]

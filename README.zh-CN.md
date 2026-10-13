@@ -30,7 +30,7 @@ Classic：按位置分组展示球员，最后呈现首发与替补名单。
 | 球员卡片 | 编辑小卡、大卡和 Highlight，为不同卡片分别上传照片、调整构图和姓名排版。 |
 | 出场动画 | 使用 Classic 或 26/27 模板，设置主教练开场、球员出场顺序和片段时长。 |
 | 球队样式 | 更换队徽、配色、球衣纹理、卡片外形和背景图片或视频。 |
-| 字体与标签 | 选择内置字体或上传字体，给球员添加国旗、自定义图片标签。 |
+| 字体与标签 | 选择内置字体或上传字体，按中文名、英语全名或 FIFA／IOC 代码搜索 211 个 FIFA 会籍旗帜，也可添加自定义图片标签。 |
 | 预览与修改 | 播放、暂停、拖动时间轴或跳转片段，支持撤销和重做。 |
 | 卡片导出 | 在浏览器中生成透明背景 PNG，支持单张下载和批量 ZIP，卡框长边可选 1024、2048 或 4096 px。同类卡框尺寸一致，出框内容向外扩展透明画布。 |
 | 视频导出 | 导出无音轨的 H.264 MP4，可选 720p、1080p、1440p 或 2160p，以及 30／60 fps。 |
@@ -99,6 +99,8 @@ npm run preview
 
 内置字体随网站提供，页面无需连接 Google Fonts。网站托管方仍会收到加载页面和字体等资源的正常请求；浏览器导出不上传项目素材。
 
+FIFA 会籍搜索在本机完成，旗帜随网站提供，选中的图片随项目备份保存。名单按 2026-10-13 的 FIFA 官方目录核对，只包含 211 个会员协会；IOC 代码仅供搜索。Matchday XI 与 FIFA、IOC 没有官方隶属关系，使用说明见 [FIFA 旗帜库](docs/fifa-flags.md)。
+
 完整内容见[使用条款](public/TERMS.txt)和[隐私说明](public/PRIVACY.txt)。
 
 ## 许可证与致谢
@@ -114,6 +116,7 @@ npm run preview
 | [TypeScript](https://github.com/microsoft/TypeScript) | 类型检查 | Apache-2.0 |
 | [Tailwind CSS](https://github.com/tailwindlabs/tailwindcss) / Vite 插件 | 界面样式 | MIT |
 | [Lucide](https://github.com/lucide-icons/lucide) | 界面图标 | ISC |
+| [flag-icons](https://github.com/lipis/flag-icons) | 按 FIFA 会籍筛选的旗帜素材 | MIT |
 | [class-variance-authority](https://github.com/joe-bell/cva) | 组件样式变体 | Apache-2.0 |
 | [clsx](https://github.com/lukeed/clsx) | 组合 CSS 类名 | MIT |
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) | 合并 Tailwind 类名 | MIT |
@@ -125,5 +128,7 @@ npm run preview
 | [FFmpeg](https://ffmpeg.org/legal.html) | 本地与 Actions 视频编码 | LGPL／GPL，取决于构建配置 |
 
 内置字体取自 Google Fonts 的开源字体，随网站托管，采用 SIL Open Font License 1.1。每款字体的原始版权与许可声明均保留在 `public/fonts/`，来源见[字体说明](docs/font-sources.md)。
+
+FIFA 旗帜库包含 210 个基于 flag-icons 的 MIT SVG 素材，以及 Wikimedia Commons 标为公有领域的中华台北代表队旗帜。各素材保留原始版权与许可状态，详见[旗帜来源与声明](public/flags/FIFA-FLAGS-SOURCES.txt)和[文件来源清单](public/flags/manifest.json)。
 
 更多许可信息见[第三方说明](THIRD_PARTY_NOTICES.md)。Mediabunny 的 [MPL-2.0 许可证](public/MEDIABUNNY-LICENSE.txt)和[源码信息](public/DEPENDENCIES.txt)随网站一并提供。

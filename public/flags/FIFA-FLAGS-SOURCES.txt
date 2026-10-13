@@ -1,0 +1,56 @@
+Matchday XI — FIFA member-association flag library
+Snapshot / 核对日期: 2026-10-13
+
+MEMBERSHIP AND SEARCH DATA / 会籍与搜索数据
+The 211 association names and FIFA codes were checked against:
+https://inside.fifa.com/associations
+The catalog is maintained by Matchday XI; FIFA's bitmap artwork is not bundled.
+Local names use Intl.DisplayNames with football-association overrides.
+Current IOC codes were cross-checked against the current NOC table at:
+https://en.wikipedia.org/wiki/List_of_IOC_country_codes
+Only factual identifiers are included, not article prose or illustrations.
+IOC identifiers are search aliases. GBR finds England, Scotland, Wales and
+Northern Ireland; this does not add an IOC-only entry to the FIFA catalog.
+LIB and SIN are also accepted as former codes for Lebanon and Singapore.
+
+211 个名称和 FIFA 代码按 FIFA 官方会员协会名录核对。
+IOC 代码只是搜索别名；GBR 对应四个英国足协会籍，不增加会籍条目。
+该目录按体育协会会籍编排，不作为政治实体或主权分类。
+项目与 FIFA、IOC 或各协会没有官方隶属、赞助或认可关系。
+
+FLAG-ICONS / SVG 旗帜素材
+210 assets use MIT-licensed artwork from lipis/flag-icons.
+Copyright (c) 2013 Panayiotis Lipiridis
+Full licence: FLAG-ICONS-LICENSE.txt
+Pinned main source: https://github.com/lipis/flag-icons/tree/086f7e97d657358203916dbe84f61c2bccaa81eb
+PER uses the earlier coat-of-arms version, under the same MIT licence:
+https://github.com/lipis/flag-icons/blob/7dee7504f2f4a970841d847abf6cd3f1a928d0a0/flags/4x3/pe.svg
+NCL combines the French and Kanak SVGs side by side, with cropping around
+the Kanak emblem, to follow the FIFA directory's two-flag presentation.
+All bundled SVGs embed the applicable copyright/licence or source notice.
+Preserve the MIT notice when redistributing these assets or the library.
+
+CHINESE TAIPEI / 中华台北
+File: fifa/TPE.svg
+Source: https://commons.wikimedia.org/wiki/File:Flag_of_Chinese_Taipei_for_Olympic_Games.svg
+Artist: Pixeltoo; updated by Zscout370.
+Wikimedia Commons identifies this SVG as public domain (PD-ineligible).
+It matches the representative flag type displayed in FIFA's directory;
+the ordinary territory flag is not substituted.
+Public-domain copyright status does not waive independent trademark or
+insignia restrictions, including those associated with Olympic symbols.
+This asset is not claimed as original Matchday XI artwork or relicensed MIT.
+
+SCOPE AND PROVENANCE / 许可范围与溯源
+The Matchday XI source code retains its own MIT licence. Third-party artwork
+retains the status above; the software licence grants no official affiliation
+or rights in third-party trademarks. SVG proportions, colours and emblem
+details can differ from FIFA's bitmaps; these are independent vector versions.
+File sources, modifications and SHA-256 hashes: manifest.json
+Selected flags, including their embedded source notices, are copied into
+project JSON as image data. Search makes no requests to FIFA, IOC or Wikimedia.
+
+项目代码继续采用 MIT。旗帜素材分别保留上面的许可或公有领域状态；
+软件许可不授予第三方商标权或官方身份。SVG 版本的比例、颜色和图案
+细节可能与 FIFA 位图不同。每个文件的来源、修改与校验值见 manifest.json。
+选中的旗帜含来源声明，随项目 JSON 保存；搜索不向外部组织发送请求。

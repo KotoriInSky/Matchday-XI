@@ -172,6 +172,13 @@
 .tag-picker[open] summary::after { content: '−'; }
 .tag-picker summary img { width: 28px; height: 22px; object-fit: contain; }
 .tag-picker[open] > input { margin-top: 12px; }
+.fifa-library { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.fifa-options { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 4px; max-height: 340px; overflow-y: auto; overscroll-behavior: contain; padding: 4px; border: 1px solid var(--border); border-radius: 4px; }
+.fifa-options:empty { display: none; }
+.fifa-option { display: flex; align-items: center; gap: 10px; width: 100%; min-height: 58px; padding: 8px; border-radius: 3px; font-size: 13px; line-height: 1.35; text-align: left; cursor: pointer; }
+.fifa-option:hover { background: var(--muted); }
+.fifa-option:disabled { opacity: .65; cursor: wait; }
+.fifa-option img { width: 36px; height: 27px; object-fit: contain; flex-shrink: 0; }
 .card-dialog { width: min(960px, calc(100vw - 32px)); max-height: calc(100dvh - 40px); margin: auto; border: 1px solid var(--border); border-radius: 12px; padding: 24px; color: var(--foreground); background: var(--background); overflow: auto; }
 .card-dialog::backdrop { background: rgb(0 0 0 / .42); }
 .card-dialog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }

@@ -41,6 +41,8 @@ export interface Player {
 
 export interface Tag {
   id: string;
+  /** Built-in FIFA association, retained in portable project files. */
+  fifaCode?: string;
   /** Only shown in the editor. */
   label: string;
   img: string | null;

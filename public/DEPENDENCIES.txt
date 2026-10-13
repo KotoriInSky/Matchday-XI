@@ -12,3 +12,14 @@ Unmodified WOFF2 fonts are bundled under SIL Open Font License 1.1.
 Original copyright and licence: fonts/<family>/OFL.txt
 Sources and SHA-256 hashes: fonts/manifest.json
 No runtime connection to Google Fonts is required.
+
+FIFA member-association flags / FIFA 会员协会旗帜
+210 SVGs based on lipis/flag-icons, MIT.
+Copyright (c) 2013 Panayiotis Lipiridis
+Full licence: flags/FLAG-ICONS-LICENSE.txt
+Chinese Taipei SVG: Wikimedia Commons, listed as public domain (PD-ineligible).
+Artist: Pixeltoo; updated by Zscout370. Trademark/insignia rights are separate.
+Membership snapshot: FIFA directory, 211 associations, checked 2026-10-13.
+Sources and copyright: flags/FIFA-FLAGS-SOURCES.txt
+Pinned versions, modifications and SHA-256 hashes: flags/manifest.json
+These assets are bundled locally; no external flag service is used at runtime.

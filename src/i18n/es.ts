@@ -1,6 +1,12 @@
 import type { Messages } from './en';
 
 export const es: Messages = {
+  'fifa.title': 'Asociaciones miembro de FIFA',
+  'fifa.search': 'Buscar nombres y códigos FIFA / COI',
+  'fifa.noResults': 'No hay asociaciones FIFA coincidentes',
+  'fifa.loadError': 'No se pudo cargar la bandera. Inténtalo de nuevo.',
+  'fifa.projectTags': 'Etiquetas del proyecto',
+  'fifa.inProject': 'Ya está en el proyecto',
   'workspace.title': 'Estudio de partido',
   'workspace.edit': 'Editar alineación',
   'workspace.live': 'Vista en directo',

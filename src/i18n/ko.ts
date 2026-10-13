@@ -1,6 +1,12 @@
 import type { Messages } from './en';
 
 export const ko: Messages = {
+  'fifa.title': 'FIFA 회원 협회',
+  'fifa.search': '이름, 영어 전체 이름, FIFA / IOC 코드 검색',
+  'fifa.noResults': '일치하는 FIFA 회원 협회가 없습니다',
+  'fifa.loadError': '국기를 불러오지 못했습니다. 다시 시도해 주세요.',
+  'fifa.projectTags': '프로젝트 태그',
+  'fifa.inProject': '이미 추가됨',
   'workspace.title': '매치데이 스튜디오',
   'workspace.edit': '라인업 편집',
   'workspace.live': '실시간 미리보기',

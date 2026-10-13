@@ -1,0 +1,2122 @@
+{
+  "snapshotDate": "2026-10-13",
+  "membershipSource": "https://inside.fifa.com/associations",
+  "iocCodeReference": "https://en.wikipedia.org/wiki/List_of_IOC_country_codes",
+  "iocNotes": "Current NOC identifiers are search aliases. GBR resolves the four FIFA home associations. Associations without a separate IOC-recognized NOC have no IOC code here. LIB and SIN remain legacy search aliases for Lebanon and Singapore.",
+  "memberCount": 211,
+  "flagIconsCommit": "086f7e97d657358203916dbe84f61c2bccaa81eb",
+  "nameLocalizations": "Node.js Intl.DisplayNames (CLDR), with football-association names and search aliases curated by Matchday XI.",
+  "assets": [
+    {
+      "code": "AFG",
+      "file": "fifa/AFG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/af.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8a97421306536e3861a008104d150173a6bec292d085291449cce731df9c2057"
+    },
+    {
+      "code": "ALB",
+      "file": "fifa/ALB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/al.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "cf69654018793b92de947467b8828db5861db80dab9341b81dcbd84221ef7af5"
+    },
+    {
+      "code": "ALG",
+      "file": "fifa/ALG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/dz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9ae68ce772d68600ebcae7e9169a2ca0a3f8b9d7b928f10ac47a92d22704542a"
+    },
+    {
+      "code": "ASA",
+      "file": "fifa/ASA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/as.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7ed3f4216d7dc6f5c09e5b754b6232c918ace61ff528f385c3ded0e057819083"
+    },
+    {
+      "code": "AND",
+      "file": "fifa/AND.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ad.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "65817f911e5d28b6063d052c7658906b64cccc67a4e462b0217f8fa60ae5cde6"
+    },
+    {
+      "code": "ANG",
+      "file": "fifa/ANG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ao.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b12eb98974d928b623246c2c0e3cdc73589b66852f03280f0b37d85a2dbf1f6d"
+    },
+    {
+      "code": "AIA",
+      "file": "fifa/AIA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ai.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3c1fde0eecd6a1d6dfdc0395eb7a5f3bcfe34d50a0e92a3a9d719790125a4759"
+    },
+    {
+      "code": "ATG",
+      "file": "fifa/ATG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ag.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "faab7b86fd300d655c2492f7801ea962a555a31f751db81b2b9118f637e5d419"
+    },
+    {
+      "code": "ARG",
+      "file": "fifa/ARG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ar.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d1f74e472b7a1133af8341f8d1e004a969cf779e011a6ec7410ea8e6ad982e9e"
+    },
+    {
+      "code": "ARM",
+      "file": "fifa/ARM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/am.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c411e3047d4c92613694281e9c42bb134ed5c40b437e8febd735f4db27cdc16e"
+    },
+    {
+      "code": "ARU",
+      "file": "fifa/ARU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/aw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "66ccdaef0351574a8550d46ee623b4695f6797050ec17d9412b94fca38c95ee0"
+    },
+    {
+      "code": "AUS",
+      "file": "fifa/AUS.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/au.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "57ec553bd578c3ce87886e59af65bc6f1f05d5c95bed7807544a5b2973717685"
+    },
+    {
+      "code": "AUT",
+      "file": "fifa/AUT.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/at.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "60ec408344606fe93396db883d504be45386c87d0b9cdf4a080ca3f62b39243f"
+    },
+    {
+      "code": "AZE",
+      "file": "fifa/AZE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/az.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "0b23935fcd0e3e99d1ad88a0ebbd47d00cb6f970682f0adf92cb326c058f04ce"
+    },
+    {
+      "code": "BAH",
+      "file": "fifa/BAH.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bs.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "5362d0aa2d06b3cfc49641c5ea4c3dbb589fab02ea853b108ab4e30105ef9bef"
+    },
+    {
+      "code": "BHR",
+      "file": "fifa/BHR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bh.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2546d807fee0925906d000c1214dffbd29e6c926bacfcc2f34b9e683b0baf7b1"
+    },
+    {
+      "code": "BAN",
+      "file": "fifa/BAN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bd.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d3619c9c2c9004aaf6c7823909df609e8942e780f148fcddf4c65190ccdf64d4"
+    },
+    {
+      "code": "BRB",
+      "file": "fifa/BRB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bb.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2d6e45f30997b59345e430d6ce2c17852a77838faee8a5d942db5cf916ba494f"
+    },
+    {
+      "code": "BLR",
+      "file": "fifa/BLR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/by.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d84f29d73a3f03153286f12237ce6039ecbe0193df422250534bf81aba0888d0"
+    },
+    {
+      "code": "BEL",
+      "file": "fifa/BEL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/be.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f82c78663e6bcfec45261426cd5ab2beca24ccd9c249b2947ba0211183e9d8f9"
+    },
+    {
+      "code": "BLZ",
+      "file": "fifa/BLZ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c82916b5e8f2a77c10efec00572e32982c879eb45218b3774b3f71be727a8636"
+    },
+    {
+      "code": "BEN",
+      "file": "fifa/BEN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bj.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a8a6fe0a4d8693cb0795f14bad46cf3f026398ff8d4980e1d9ccdea57cb0e06e"
+    },
+    {
+      "code": "BER",
+      "file": "fifa/BER.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2fbd84c23fcc63f95bf2b923c302c95d545a09bf339ec1360fab2260dd2cabb0"
+    },
+    {
+      "code": "BHU",
+      "file": "fifa/BHU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "ba72af92fd46e64ef1e160525f349c7b2995e89c5fe3dd2439f72417e91ceb44"
+    },
+    {
+      "code": "BOL",
+      "file": "fifa/BOL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bo.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "999ab6d9f52f7538b6cab5f24519c2e15f47f151757427d197699d946fa8d78a"
+    },
+    {
+      "code": "BIH",
+      "file": "fifa/BIH.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ba.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "238f8f0823c8d630fbbccaf0ace6a65aa6e9c0644044a3e138a0f8645d0867a3"
+    },
+    {
+      "code": "BOT",
+      "file": "fifa/BOT.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9a8d5a6ef6bfe2ae9fa4285c1a438a8ae194ed77ba45b0ae1fe826e880c5a2df"
+    },
+    {
+      "code": "BRA",
+      "file": "fifa/BRA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/br.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b606b4e227aff525db8e16cc43be285bf93c0d9349aa9c1bfdde9666fc4dbe9b"
+    },
+    {
+      "code": "VGB",
+      "file": "fifa/VGB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/vg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4664d5c9e034f30bd10a582e35b9e5695fa0e322430823439d0c26097ddc6412"
+    },
+    {
+      "code": "BRU",
+      "file": "fifa/BRU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "982e1434f740d4a7979d88f7d55b97a10ff547c684f16c54a866ae4ffce3b4b5"
+    },
+    {
+      "code": "BUL",
+      "file": "fifa/BUL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "75530354f681aecbd5447da44b403465c3f5baa366938b5577e77a2de84b4315"
+    },
+    {
+      "code": "BFA",
+      "file": "fifa/BFA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bf.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "fc45abce4e0650ef16eafaa9d6aa5482306b7c24bd84cdae30e83d5a72db5254"
+    },
+    {
+      "code": "BDI",
+      "file": "fifa/BDI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/bi.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "79de6d9c554cc22228d07ed1e40c314399a5c2a5feb83c299bc07878967c1134"
+    },
+    {
+      "code": "CPV",
+      "file": "fifa/CPV.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cv.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3cad83a45fed5ba9eaaa0badcc12bb88e94f9d8bd1741da234be429b5e64d8d5"
+    },
+    {
+      "code": "CAM",
+      "file": "fifa/CAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kh.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d0c702a172ba1d3ce55c9c03137e285d6a5d6282ec06101f6fe79af7721adb36"
+    },
+    {
+      "code": "CMR",
+      "file": "fifa/CMR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "0fa24f6dc80f2c8ec9df7dfdb38ab750ac12f827721671eada8e3c7713436321"
+    },
+    {
+      "code": "CAN",
+      "file": "fifa/CAN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ca.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2a55228fa5d8a749aef3095a3b9d4babc92f942e7df47b045ae54cee79f612b3"
+    },
+    {
+      "code": "CAY",
+      "file": "fifa/CAY.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ky.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "092381febdd7d46d6d6a84ba23dbd082dd3c284dd51207b00265f8580552ebd3"
+    },
+    {
+      "code": "CTA",
+      "file": "fifa/CTA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cf.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6a093615f212645e341cf5a57c335c5900a5040dd473f63cd78deff77330b1be"
+    },
+    {
+      "code": "CHA",
+      "file": "fifa/CHA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/td.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f3ae3959491e561ed69e7aa47c5c8097580cf837cb2c3da3df45e39b946b5ac6"
+    },
+    {
+      "code": "CHI",
+      "file": "fifa/CHI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cl.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8d9dedfd6d3658123a8f4bf356100c0149c422acd223df203796ac6f650dea01"
+    },
+    {
+      "code": "CHN",
+      "file": "fifa/CHN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a4f88535ea1c34bd11e5ddc9130faaba67fd49aec4c827045b742b87164faf51"
+    },
+    {
+      "code": "TPE",
+      "file": "fifa/TPE.svg",
+      "license": "Public domain (PD-ineligible)",
+      "sources": [
+        "https://commons.wikimedia.org/wiki/File:Flag_of_Chinese_Taipei_for_Olympic_Games.svg"
+      ],
+      "modification": "Embedded source and public-domain status in an SVG comment.",
+      "sha256": "5936765bc1c93743ee8e4719ea2dc1bc0a06d55eda256aee4c52fea943e18cf6"
+    },
+    {
+      "code": "COL",
+      "file": "fifa/COL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/co.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "30bc26157777a6829f01599cbd0a619f0c43f4b615a3d9f4c1c7e5fcb181f96f"
+    },
+    {
+      "code": "COM",
+      "file": "fifa/COM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/km.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c7b86fa7eea00385ef0aab38f38e06a231da78e2dbb20158bfc1616fea9e46d2"
+    },
+    {
+      "code": "CGO",
+      "file": "fifa/CGO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "e975484488413225a5982fa7c4c8087d9f232892c98266e96b24154c04c63688"
+    },
+    {
+      "code": "COD",
+      "file": "fifa/COD.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cd.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9dd6fc08b93f72ca19ecc9d9ae383ad1af90d6eff5e1f7c719010b1f6b0ab7f9"
+    },
+    {
+      "code": "COK",
+      "file": "fifa/COK.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ck.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "25ed4e7a42c331ba4bcfefd020d9dd2ccb37ca08257f4f719343346c8ac6455e"
+    },
+    {
+      "code": "CRC",
+      "file": "fifa/CRC.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f986935f860842270c64646642c736028eb21f8e4ad1fb1f8a17471eb0214096"
+    },
+    {
+      "code": "CIV",
+      "file": "fifa/CIV.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ci.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "186d35df9df5fcfac0bf7c9df6e8ee95e01c5360542fe0b84e5acc0bf6fa3881"
+    },
+    {
+      "code": "CRO",
+      "file": "fifa/CRO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/hr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "30513edb81d9a053a68970c9dca4c183ec3612138d50f71812056ca16a3e27e7"
+    },
+    {
+      "code": "CUB",
+      "file": "fifa/CUB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b7a1d26ba2947f0725ec6370f66de8a01d98c7f196eef877abeaa1f0a02d8ad9"
+    },
+    {
+      "code": "CUW",
+      "file": "fifa/CUW.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f26c13ba51a6211eff215646e99266f18ae30dcb1da81d7066548b6260ee589d"
+    },
+    {
+      "code": "CYP",
+      "file": "fifa/CYP.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cy.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3d9e9eb764cc853186e99628d27ba4e8b5fd96135aa454bad06382b7a48b4e7b"
+    },
+    {
+      "code": "CZE",
+      "file": "fifa/CZE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/cz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "5fd794adf413d7799d531f4a18ac01f574f2f3236993376731b91cf4ad3830fc"
+    },
+    {
+      "code": "DEN",
+      "file": "fifa/DEN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/dk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8b59e7513cb8be62769b8af04127fc54ef116675b4b61f877fdecd08727a1157"
+    },
+    {
+      "code": "DJI",
+      "file": "fifa/DJI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/dj.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "481901a5e15dc7f25e491b9f86e2899132d39f11f489ae41e553c0ed2f544510"
+    },
+    {
+      "code": "DMA",
+      "file": "fifa/DMA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/dm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "21517e2e6854043a2a3725c222f18474b359a2e648ead45c83eceed6540819eb"
+    },
+    {
+      "code": "DOM",
+      "file": "fifa/DOM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/do.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "101f326dd73c81b0d4e0ddc4c097eb21594d2b5b44f391bd9943da517c062b9d"
+    },
+    {
+      "code": "PRK",
+      "file": "fifa/PRK.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kp.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c72a8c2d747309ec7786796d685ad08bdbb537fc9d29167e1c150cea55a66a6e"
+    },
+    {
+      "code": "ECU",
+      "file": "fifa/ECU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ec.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b24a67cc8735ebe226bf5fbbd8023134f7f71ee8b5354986b14ee9cb612af16c"
+    },
+    {
+      "code": "EGY",
+      "file": "fifa/EGY.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/eg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "336de8db052ce7d26d2d9c517465dd1e6fd33b0f4567ae2a73d35aa3d3844f9d"
+    },
+    {
+      "code": "SLV",
+      "file": "fifa/SLV.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sv.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9a0fab0f4e83104e7518b6223dc4fd806d8114a31d7c2ea94c4e24d2d9768b53"
+    },
+    {
+      "code": "ENG",
+      "file": "fifa/ENG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gb-eng.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9d3b48444eff29c57f3ccb31a462e5e0edec1ecb304eb492c5099ae9d931ae37"
+    },
+    {
+      "code": "EQG",
+      "file": "fifa/EQG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gq.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "94ee014db99f59ad7e46a06fd83ace408022e3720253127ce0a88a92a7d279c0"
+    },
+    {
+      "code": "ERI",
+      "file": "fifa/ERI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/er.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "1d6d9cbec489d60c3d9d3b61983fb0d117f125c163f3d16e0bb84864772bcbd9"
+    },
+    {
+      "code": "EST",
+      "file": "fifa/EST.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ee.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6976741b5ed22a5ef97b843dcd59bc11eda5ae9e4a676324d0cdf36218d1f316"
+    },
+    {
+      "code": "SWZ",
+      "file": "fifa/SWZ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d763d5008f3833a317acc2c3a7fb015100436f127d2a48f8c5eee8a05f0c6e7b"
+    },
+    {
+      "code": "ETH",
+      "file": "fifa/ETH.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/et.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "e40658a5be88a0506a5e48ad5dbc58353ddce2843b8304de918e24c9cd71cf09"
+    },
+    {
+      "code": "FRO",
+      "file": "fifa/FRO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/fo.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f89d90c8bb303e5b40afb438c61f9b7081d8a5d0dc779dbf8cd9b27cc9438ece"
+    },
+    {
+      "code": "FIJ",
+      "file": "fifa/FIJ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/fj.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3e68a04d152ab40ad5f50dae954260c456c1cf2909056969ac049169ada0302e"
+    },
+    {
+      "code": "FIN",
+      "file": "fifa/FIN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/fi.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "5fd3b39cfd09318602f0a159be54220cf9a861e9fab1cec0d502003cc23c6e44"
+    },
+    {
+      "code": "FRA",
+      "file": "fifa/FRA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/fr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4f86bf6d92040ebf20a7e775205cae9023f35a716a8540a2dec3c50f7a1f19cd"
+    },
+    {
+      "code": "GAB",
+      "file": "fifa/GAB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ga.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f15a17cc4bc6b1fc602b6ffc620ea883ae3639a4ae083621e1322831894299ad"
+    },
+    {
+      "code": "GEO",
+      "file": "fifa/GEO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ge.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d072b4ade9971295d40f24bd05d2f533980eb5840522036c4cb5908a84035a5b"
+    },
+    {
+      "code": "GER",
+      "file": "fifa/GER.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/de.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d9abe6ee1ef5fb066e01767c33ae5e954252402fcae58dd8dd27f79814f786b6"
+    },
+    {
+      "code": "GHA",
+      "file": "fifa/GHA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gh.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d71408c490be4efff0ef0c763ce22659f2768305323ffeaf74b9f112792c4b5f"
+    },
+    {
+      "code": "GIB",
+      "file": "fifa/GIB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gi.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6d472b41c2d923fa070897457b92e8579c1c1fb7d536f7aad5e5a0077f2861e5"
+    },
+    {
+      "code": "GRE",
+      "file": "fifa/GRE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "17fbd19903932f3af476a32410fbccc2256b5a326a8394e05ee59f9c54a53c71"
+    },
+    {
+      "code": "GRN",
+      "file": "fifa/GRN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gd.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "485d7fac88e30e1befc57631b9a4ec4d3a54d4299c12eb54834c0a2a7c91d1a9"
+    },
+    {
+      "code": "GUM",
+      "file": "fifa/GUM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a0ff6604e5534c57db0bb249131ba7a389e3761490364df83f3d2c5b2277edc7"
+    },
+    {
+      "code": "GUA",
+      "file": "fifa/GUA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3ca8a71c43c53b5e8346ad0aa4df6a335e4b27a3a25a33ac4f842bcdfc9ff52a"
+    },
+    {
+      "code": "GUI",
+      "file": "fifa/GUI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "124c0b79ff16825f426b5460f0d0577daecf7bfa11503cb9949bb2b356391a62"
+    },
+    {
+      "code": "GNB",
+      "file": "fifa/GNB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b0eb237b454d32ece87644acd93e30f92123ec5e3d176d2211bff89a46fd51aa"
+    },
+    {
+      "code": "GUY",
+      "file": "fifa/GUY.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gy.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4ea4464c816f75307f9a00543190371cdf1a95a967786bcb58b3b523c487a731"
+    },
+    {
+      "code": "HAI",
+      "file": "fifa/HAI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ht.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "0e427d1a9ee4644dff9fcce92274bc9312e7133381524deb4febf920c0039177"
+    },
+    {
+      "code": "HON",
+      "file": "fifa/HON.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/hn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c5efea5d6407ba2b0bb00eb99892ae47fce40c0e4e2ef757a1294e35e2a12d31"
+    },
+    {
+      "code": "HKG",
+      "file": "fifa/HKG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/hk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7cfaee9ae7d17b64549b2123fa0ecd6bd3d969df085f07a4d9f442ddb1b87394"
+    },
+    {
+      "code": "HUN",
+      "file": "fifa/HUN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/hu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4a6d8deedd767ea1ac2cc526f1fbf858fb6407a0c3e13f8fc9d9707143f2d609"
+    },
+    {
+      "code": "ISL",
+      "file": "fifa/ISL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/is.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "eed1065af81eb513643c08da70ed72ffd4c249c9fdc72545d20be932db9b716b"
+    },
+    {
+      "code": "IND",
+      "file": "fifa/IND.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/in.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "98b12eb962e93c72118f9576205211af9f06768a64d9d3baab078027b422b72a"
+    },
+    {
+      "code": "IDN",
+      "file": "fifa/IDN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/id.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3d5b022d72dc13dcde1336022e40669308cea260db29ccdedd29d2c94993bab7"
+    },
+    {
+      "code": "IRN",
+      "file": "fifa/IRN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ir.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7950e2eaa154a865a142897fd663f2014a0d3d95bbf2fd3d68cceee53ee7eace"
+    },
+    {
+      "code": "IRQ",
+      "file": "fifa/IRQ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/iq.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d29baa5fa5e6781d4e55e69383d5160479caad3fbe207ca2fc0e4055946b0eed"
+    },
+    {
+      "code": "ISR",
+      "file": "fifa/ISR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/il.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "73f57cb21d96f00be980fba58d9b8e5bf5f45df76da6e38a1b0c17375b0db37c"
+    },
+    {
+      "code": "ITA",
+      "file": "fifa/ITA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/it.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d82b51f0252d68296ff5f349e33726278ca6e08059c0a55593df1c88a74380b3"
+    },
+    {
+      "code": "JAM",
+      "file": "fifa/JAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/jm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7b3ca8cd54260c7793087f9860ed9d732b8f452f793c9809e0d4e3c81e695480"
+    },
+    {
+      "code": "JPN",
+      "file": "fifa/JPN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/jp.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "ff3206dfba0f103717e39b73beeba189fbb3a8781878f2a7f7403b06b741fb74"
+    },
+    {
+      "code": "JOR",
+      "file": "fifa/JOR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/jo.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a6b3473b07c2eca7799aee38f1080daa3a49423f7fe5d87212f4ef5b53559117"
+    },
+    {
+      "code": "KAZ",
+      "file": "fifa/KAZ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "54c393d709506c736186550a2d21b000cdcb6415d39faaffdce07d1fc8aaf455"
+    },
+    {
+      "code": "KEN",
+      "file": "fifa/KEN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ke.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "e9e570bb9a091ce84af47987c4a166d400308725fd55dd322986464ef458bfbf"
+    },
+    {
+      "code": "KOR",
+      "file": "fifa/KOR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "746c6878c950cfa8e034bdbe1b634a1723f8f11d433c912482c19e460d751995"
+    },
+    {
+      "code": "KOS",
+      "file": "fifa/KOS.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/xk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "e131b89bdf60ba731bf739001133ebf7de83b2610bab1e0ab5f6c5ff4174c51f"
+    },
+    {
+      "code": "KUW",
+      "file": "fifa/KUW.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "27eaddf6cb363955dc385db178a29af855fcbc05840c6416f019dfe80d5c7566"
+    },
+    {
+      "code": "KGZ",
+      "file": "fifa/KGZ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b0aa1f734083e1556748e89e11dfc08216541cd37e533aa94428355e87770757"
+    },
+    {
+      "code": "LAO",
+      "file": "fifa/LAO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/la.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2053275dd69a10feac996b2c36c4e4aecdccada338c77f02581542dc044399f6"
+    },
+    {
+      "code": "LVA",
+      "file": "fifa/LVA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lv.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "547763095cc6e7fe06d795b2a6d50990ed71207b541e4b6611132249cd7a9c93"
+    },
+    {
+      "code": "LBN",
+      "file": "fifa/LBN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lb.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8dddd6d988093b5a37124fcd85949c24a52ea115116519810e6b11dd607e0260"
+    },
+    {
+      "code": "LES",
+      "file": "fifa/LES.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ls.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "02bfc79a3669f49605a54a8769d054a59879bdb048b38edcbe5aa01c802423e0"
+    },
+    {
+      "code": "LBR",
+      "file": "fifa/LBR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9a3c79286fb7ad0280ca9fb489711c0228e1e9e0716dd2d8afe531e5d51b36db"
+    },
+    {
+      "code": "LBY",
+      "file": "fifa/LBY.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ly.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "20fedc341d7f862890e6fbdc4d3b8f82213dc5b1592855b20a200d9cf0250964"
+    },
+    {
+      "code": "LIE",
+      "file": "fifa/LIE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/li.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6142b87c8b4920eb540d464ee38580fedb2fa78ecccdee0be0e02486a521947e"
+    },
+    {
+      "code": "LTU",
+      "file": "fifa/LTU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "11ad0b2f4d339f32f5795d8592e8ee832a946b24d113541351b99957f99eaa0a"
+    },
+    {
+      "code": "LUX",
+      "file": "fifa/LUX.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "295c5e54193e1358a561297ca10291dca0cc4a164c97ac552f4c85fdc907282e"
+    },
+    {
+      "code": "MAC",
+      "file": "fifa/MAC.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mo.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "3c50d3451154ec9ba7e32c876bf815fcbb092c14e4082904e99c378d0b4f4958"
+    },
+    {
+      "code": "MAD",
+      "file": "fifa/MAD.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7273317a160efdcb0de42d69646f06657c27c3e168b18e0ef1093b8c86f5146d"
+    },
+    {
+      "code": "MWI",
+      "file": "fifa/MWI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "568c0658ed34d29cdf4a62df5d34e1556f27982fb987f5d3914b719f48c09085"
+    },
+    {
+      "code": "MAS",
+      "file": "fifa/MAS.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/my.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a9b82e41dcd150a2d1bcbd4fab327548d526d4ae4a42b23c03f55d2031d2da9e"
+    },
+    {
+      "code": "MDV",
+      "file": "fifa/MDV.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mv.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2e4e6f163d74956d4fa894395b4fe6b63ccdcb0701a0ab1ec79dd0936bf94b88"
+    },
+    {
+      "code": "MLI",
+      "file": "fifa/MLI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ml.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "1da91d1844510091e26b5417118ecd50b5ddec3159239d872f39c2070610d22f"
+    },
+    {
+      "code": "MLT",
+      "file": "fifa/MLT.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d9dd5fca69852f7dea5b571c536407e9a7e5c6c24ac814b5b13a53d778f3f4c4"
+    },
+    {
+      "code": "MTN",
+      "file": "fifa/MTN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "24c12f5ffffb6745c6db2cf27f029af366147e34fe49945d59e0f7175b719619"
+    },
+    {
+      "code": "MRI",
+      "file": "fifa/MRI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "68fa4271c882c6ba6015abc9cb35d5ec37cfd9093570fc614087474f2383b48f"
+    },
+    {
+      "code": "MEX",
+      "file": "fifa/MEX.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mx.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "463aa8aaf30e450e8d2aa1607752fdb9351b7f391913d80ecb51218fbd6e776f"
+    },
+    {
+      "code": "MDA",
+      "file": "fifa/MDA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/md.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "60e75c8f86b9590ec94ea276822388c19d4daa3de2638e99712bdf2beecfc1f8"
+    },
+    {
+      "code": "MNG",
+      "file": "fifa/MNG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a1882cd75065f3e89cb863deb2b8061a5a795f8762a013cece15a94b54230980"
+    },
+    {
+      "code": "MNE",
+      "file": "fifa/MNE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/me.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c90378ac14b57b9011d7d6623011ec13cac38b350dece2380522bcc80836f1db"
+    },
+    {
+      "code": "MSR",
+      "file": "fifa/MSR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ms.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d3504ef9eac44339cfc435b509755f170f6ad9f4298d5196c380e761fd51287e"
+    },
+    {
+      "code": "MAR",
+      "file": "fifa/MAR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ma.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b0e461bd9239b14d9ad5ddecd55afe1c83b9abbe16980d513c573853156877ee"
+    },
+    {
+      "code": "MOZ",
+      "file": "fifa/MOZ.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "53c0405c3327610f2ad7e8e4f3bff83b0d337b6af38c46b0f96c1384cc7efa7f"
+    },
+    {
+      "code": "MYA",
+      "file": "fifa/MYA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "cede0779ee97e171a0ddce254f63a068c68f949c2ec1c2a356d076a64703af99"
+    },
+    {
+      "code": "NAM",
+      "file": "fifa/NAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/na.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b010351f2ce6d17fb6ca9837bbb214fd8ac48b46b954a78ae3669ee81f56b57a"
+    },
+    {
+      "code": "NEP",
+      "file": "fifa/NEP.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/np.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8a0ebbbc8f98e8fad3bf582cecdcf4af792df74878b1cfd561be90a51e413666"
+    },
+    {
+      "code": "NED",
+      "file": "fifa/NED.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/nl.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d6d433f1b546cb7b7234dc097e9f5f1187927550922ff79de77759bc3c829684"
+    },
+    {
+      "code": "NCL",
+      "file": "fifa/NCL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/fr.svg",
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/nc.svg"
+      ],
+      "modification": "Combined the French and Kanak flags side by side, cropping the Kanak flag around its emblem to match the FIFA directory layout; embedded the original MIT notice.",
+      "sha256": "5bc764b886ad9c52b79b19dbbc14cd4f45b7e786170498a15c98407433554ab0"
+    },
+    {
+      "code": "NZL",
+      "file": "fifa/NZL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/nz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "672cabb9ffe007f1c17589f899538b598538a5fb554d3f685ccb88e4fe9f7715"
+    },
+    {
+      "code": "NCA",
+      "file": "fifa/NCA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ni.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8569d251c2905f5ae3b19bbc2dedb010eb301b05012264947421a244689611de"
+    },
+    {
+      "code": "NIG",
+      "file": "fifa/NIG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ne.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "91ee889639e1dbe8af4c44bd2c978079aeddfd49351d59c23d471abf9c895898"
+    },
+    {
+      "code": "NGA",
+      "file": "fifa/NGA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ng.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9f189099127f9e777aa47cce19ed0675574f89a227d40ad75c1c4c983cad830f"
+    },
+    {
+      "code": "MKD",
+      "file": "fifa/MKD.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/mk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "ee83bbbf303d323cbe3d97544442aa84df5fbd8cf601baa39d4b822aaabff804"
+    },
+    {
+      "code": "NIR",
+      "file": "fifa/NIR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gb-nir.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c9c9d4e09eb96db712f7b0ac7535b8ce220eeebcdb6db4537bf2d9559cb41e09"
+    },
+    {
+      "code": "NOR",
+      "file": "fifa/NOR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/no.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a5d59f91dcefc4e24b943ac54e0850c306bc21609e28458cb790cf336337eb77"
+    },
+    {
+      "code": "OMA",
+      "file": "fifa/OMA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/om.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "e308458cb98ce8ca0587f3ae9143db6c5e8476909cde1f68fd67ffa5e7bcb23a"
+    },
+    {
+      "code": "PAK",
+      "file": "fifa/PAK.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "69548e5300bb3d31a768fa5872e783e04e812c39b823454319f2043f0903b932"
+    },
+    {
+      "code": "PLE",
+      "file": "fifa/PLE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ps.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "cbc0f4808ba2d00bbf8b26d50203bc1f137c2f44886949a2ad0b687c02c3a926"
+    },
+    {
+      "code": "PAN",
+      "file": "fifa/PAN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pa.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7dfa80554d5de4dbb7f12c930364d003be0b2bc3b2a4752967dd43d837aacc1c"
+    },
+    {
+      "code": "PNG",
+      "file": "fifa/PNG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6f3644f97d391bb703fc2cde177fd3203fff20fafe6e1c4ae28180595728f030"
+    },
+    {
+      "code": "PAR",
+      "file": "fifa/PAR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/py.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "927606182b8113d990db4509547d283fe6961b6c09972c6793369b53b263ad28"
+    },
+    {
+      "code": "PER",
+      "file": "fifa/PER.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/7dee7504f2f4a970841d847abf6cd3f1a928d0a0/flags/4x3/pe.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c3f464c4ffd56952d607ac7887a25406efc08818c30362a995552f801e5b4610"
+    },
+    {
+      "code": "PHI",
+      "file": "fifa/PHI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ph.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8616174fa8f07047ae2390ef8979eb0f3db15194ec0f72cab7bbcc5813ce114f"
+    },
+    {
+      "code": "POL",
+      "file": "fifa/POL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pl.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "546d8fe58739d1b096327172be28884f163d5f9fab806114e2d82fc3b7a5c747"
+    },
+    {
+      "code": "POR",
+      "file": "fifa/POR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "991253982546c35cdb08c8c9a93963839eaed5f0117ad2f8a02c42cbd481f219"
+    },
+    {
+      "code": "PUR",
+      "file": "fifa/PUR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "348f76066d5a547d386bb2b48e736a786e1bd46d6f05b217a8b232b4519d85e9"
+    },
+    {
+      "code": "QAT",
+      "file": "fifa/QAT.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/qa.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b9d29d5e9fd3722b8388c2b23186b083951db34a544a6904f30b16c8b19aa93f"
+    },
+    {
+      "code": "IRL",
+      "file": "fifa/IRL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ie.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "47ccf43c8b53212edbf43ef4b0e432b7045f401d60595ec3bbb5a8729f9f7bc8"
+    },
+    {
+      "code": "ROU",
+      "file": "fifa/ROU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ro.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "44a121283d9e5dd3da8ee3b5d5df08f5629a36f2317d43044bbefa944dfe78dc"
+    },
+    {
+      "code": "RUS",
+      "file": "fifa/RUS.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ru.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c547596b1131a702870829430f09181fd843e75ce6d8341b26142d31edab1c05"
+    },
+    {
+      "code": "RWA",
+      "file": "fifa/RWA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/rw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "425f153733e70a3fe1aca778b38f38f12ce899da4f4e2fc5037029286f60b505"
+    },
+    {
+      "code": "SAM",
+      "file": "fifa/SAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ws.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2243ec0540f75a1f925e3cd6b206d3fcf7267a738c44950a5ea1ca9068fae153"
+    },
+    {
+      "code": "SMR",
+      "file": "fifa/SMR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "1c4e80c6d14ab6fa704fdd67961cd98918889ba90969644934b0efea8e44e602"
+    },
+    {
+      "code": "STP",
+      "file": "fifa/STP.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/st.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "fff0763aa55d589b043463b225d3c35a8c8de3ce0483e0e8a2bb2152c841b950"
+    },
+    {
+      "code": "KSA",
+      "file": "fifa/KSA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sa.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d933aa12f8e2e7c0129bf34c028bcfb9a24065c0205768562f0c48b90908367e"
+    },
+    {
+      "code": "SCO",
+      "file": "fifa/SCO.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gb-sct.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "aa8d80c7e1b955d543eb80b8257e89c7d5718e97848d529f08273fd645e7cb1d"
+    },
+    {
+      "code": "SEN",
+      "file": "fifa/SEN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4ecc809d550277068d465f4edfd3ec5a1f989f3041fb6f5c7eef30b741c52916"
+    },
+    {
+      "code": "SRB",
+      "file": "fifa/SRB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/rs.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "93a15fb359fec285c24b6dfe27d1d87c6d1d937869122068f02d64aa0272d76e"
+    },
+    {
+      "code": "SEY",
+      "file": "fifa/SEY.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sc.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "91a9d7a3437bacff7dc499d99c1bbdf0818af9449a2fc40a00d2db84bc389099"
+    },
+    {
+      "code": "SLE",
+      "file": "fifa/SLE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sl.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "19414188897cc07c37484b23c5739f49e1896a442f70fb75fd2695ffaeff9cfe"
+    },
+    {
+      "code": "SGP",
+      "file": "fifa/SGP.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9e4f80f36880429e8624898eb3a908920ce4f84905aec6d9ab132fa3f6bc35ab"
+    },
+    {
+      "code": "SVK",
+      "file": "fifa/SVK.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "95c710e9ba1b2d40a520fac9310022e5a0f4343378289ac39694187b5df8bd6a"
+    },
+    {
+      "code": "SVN",
+      "file": "fifa/SVN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/si.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d9c042f9928b2736ebff40143ad58c93e2e412bd656d95105f7d010c2413b9f0"
+    },
+    {
+      "code": "SOL",
+      "file": "fifa/SOL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sb.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "afdb3c2e009012bb9820fe18bdb238f84f805b2a1a9fc289041a8acc039bfc14"
+    },
+    {
+      "code": "SOM",
+      "file": "fifa/SOM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/so.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "27872d1c2cb9982c5351751994a53af564c8e1e14e1772693131cf99e85d9ef8"
+    },
+    {
+      "code": "RSA",
+      "file": "fifa/RSA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/za.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "2a43e678cb830e486c75f7db3cd8aa9c5c6e38a5fdb40fcef1d42de148a18927"
+    },
+    {
+      "code": "SSD",
+      "file": "fifa/SSD.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ss.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c22e833c39619c6d83d7ac6a3002c743da4d8b2c3fbc9d1061c17a1341eaa921"
+    },
+    {
+      "code": "ESP",
+      "file": "fifa/ESP.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/es.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a0ac83b6b204e0e10eed04762398fb7ecccf686223de6bfefd2384fedede1cd2"
+    },
+    {
+      "code": "SRI",
+      "file": "fifa/SRI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lk.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "cbd77317f12bcaa84ced2a740a420a2031c7783cd4900ed51d881209a012ffba"
+    },
+    {
+      "code": "SKN",
+      "file": "fifa/SKN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/kn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f6f180ef3b66c0e548472f0f43fc76407c723450fd7f4bbf790f257a787cbbd9"
+    },
+    {
+      "code": "LCA",
+      "file": "fifa/LCA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/lc.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "cd0372b3fa946102fe32e9bebb2b35c265beafae556c88bb9ec782d0b8629e97"
+    },
+    {
+      "code": "VIN",
+      "file": "fifa/VIN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/vc.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "1da50f9bb31eab247d06375a7d7477c0f07b40eaedcde5298fea89f117eb48bb"
+    },
+    {
+      "code": "SDN",
+      "file": "fifa/SDN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sd.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "31864f331edffe76358a81e33221db4b28bc5bb431b62d6081c1d2bf38b3bdf6"
+    },
+    {
+      "code": "SUR",
+      "file": "fifa/SUR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "91dfe2beda4a917d5532949162b5a194a50fe7588d9acb8d58ad8661ceb2cdda"
+    },
+    {
+      "code": "SWE",
+      "file": "fifa/SWE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/se.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "7418d1bd8bffd07bfe9ec488f5c8ed54f7fb0b9ec567d51505e2be46a7cdbea5"
+    },
+    {
+      "code": "SUI",
+      "file": "fifa/SUI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ch.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "57ba753676bbda95833a0ae045acf89fac14e6d7c40f0bd0e63d71bbfdf0dbc9"
+    },
+    {
+      "code": "SYR",
+      "file": "fifa/SYR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/sy.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "85ecec37697df1ef3226ddbb3326d1f05f60a2dbd73b12f98ad17d4de21e6732"
+    },
+    {
+      "code": "TAH",
+      "file": "fifa/TAH.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/pf.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "35c3e2b8fdd04f65043d1477dd0933b9d4f523cfe6fdf852e6e8906336e2c520"
+    },
+    {
+      "code": "TJK",
+      "file": "fifa/TJK.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tj.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "48d19ac5a19ced956f31fecec7e2f6bb6c6728465463935b72cdaaf9d7693ecb"
+    },
+    {
+      "code": "TAN",
+      "file": "fifa/TAN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "b72993111a1f95997c5243195b04d2cfbce6071e3ce7a983be866c133a490976"
+    },
+    {
+      "code": "THA",
+      "file": "fifa/THA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/th.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "434f843a00d96b2728719d70edbf0d5373e601d61622054e80e4d22d81bca6a9"
+    },
+    {
+      "code": "GAM",
+      "file": "fifa/GAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a44ca91f1a896a1c1247c73b0997a8d4f7227929a4a03304047759f30b3e7de0"
+    },
+    {
+      "code": "TLS",
+      "file": "fifa/TLS.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tl.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8c02d98cfb42f19fb7590280ba2dca401a7e6c6a1998913596e21100122b49b4"
+    },
+    {
+      "code": "TOG",
+      "file": "fifa/TOG.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tg.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a2efbee094b7baf45b9038f1dd5ee699819a10a65b594dddd63b56b4ce456bdb"
+    },
+    {
+      "code": "TGA",
+      "file": "fifa/TGA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/to.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "4fe3f95399ece66c80683313b32214821dac6642942ffed1d94cd03724e12548"
+    },
+    {
+      "code": "TRI",
+      "file": "fifa/TRI.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tt.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "9bf7d79f0ac7e6508434067237e2a7646299c7bf9ae2439243801db6c8b7eb37"
+    },
+    {
+      "code": "TUN",
+      "file": "fifa/TUN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "54ca0d3a905e16eb007be10137cea865e2ba5697f448cbe7808a69d996804e2d"
+    },
+    {
+      "code": "TUR",
+      "file": "fifa/TUR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tr.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "11fe5b324bb4e95a818f7805d7878ba6ce209860d3af802447e2028b9d47fb4c"
+    },
+    {
+      "code": "TKM",
+      "file": "fifa/TKM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "108b12f01ab26cb295d7175f87f4088adb63db5f4b441e13d81a99457097de64"
+    },
+    {
+      "code": "TCA",
+      "file": "fifa/TCA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/tc.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "a215402e2f829aedaeaed48d91710b5679fefaaa5765c40c58615ba15064dbe7"
+    },
+    {
+      "code": "UGA",
+      "file": "fifa/UGA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ug.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "6777c08edaf0751ae6c938e322e8ddf0e2c7b28bbc2a6fbcfc083e655e93c2ed"
+    },
+    {
+      "code": "UKR",
+      "file": "fifa/UKR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ua.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "ac0dbc4b0707f7e41395473333a54de2f94ce5319100f6cedaa7cc4b952ac415"
+    },
+    {
+      "code": "UAE",
+      "file": "fifa/UAE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ae.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "bba3cc1a0a2254911eda64ad4e57a43dfe1d88ab640ad56269fc174fd20921a4"
+    },
+    {
+      "code": "URU",
+      "file": "fifa/URU.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/uy.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "afb07a41eef67a851e774e8bf266c00ade31f5406adeeb558a267808a00156e4"
+    },
+    {
+      "code": "VIR",
+      "file": "fifa/VIR.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/vi.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "d60d062705ad325849a6e89e257a2846ddf3d7ebac9ac52c2f544bd8815271cc"
+    },
+    {
+      "code": "USA",
+      "file": "fifa/USA.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/us.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "78712199d861ecdc3bb07eee1d33bd4a2a760fa1d1aca8dcf3729e3683e1836a"
+    },
+    {
+      "code": "UZB",
+      "file": "fifa/UZB.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/uz.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "77970cf4e7e1d072d9f98e19813f3be169e789785cf9d6d6886389f917b2f4ba"
+    },
+    {
+      "code": "VAN",
+      "file": "fifa/VAN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/vu.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "435ee6dafd9ce81262936738ac0f1f53d9c6bccfabb24775254669bdf7c5a384"
+    },
+    {
+      "code": "VEN",
+      "file": "fifa/VEN.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ve.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "8c018d18e67438398e321c8930cf9eac7efdd52a6c96c3a86fe8ab032ce759d4"
+    },
+    {
+      "code": "VIE",
+      "file": "fifa/VIE.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/vn.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "ba9af17c66d55125e6d160f24be98a3394611e2a5e834a10a6ebb48e2b4d46ea"
+    },
+    {
+      "code": "WAL",
+      "file": "fifa/WAL.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/gb-wls.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "f935e3538ea71039eed8a21196f2265d17954d6cd8ac67d32f1572ca812d1fcb"
+    },
+    {
+      "code": "YEM",
+      "file": "fifa/YEM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/ye.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "c8c421abfa2d362f0822190cf69c1c2dca8e97cd7934bc29332a6428dedca67e"
+    },
+    {
+      "code": "ZAM",
+      "file": "fifa/ZAM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/zm.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "37b959650e4da3b38c9d5a1ad4259827396408d1fb3a81782dc1ab1bc9a2a718"
+    },
+    {
+      "code": "ZIM",
+      "file": "fifa/ZIM.svg",
+      "license": "MIT",
+      "sources": [
+        "https://github.com/lipis/flag-icons/blob/086f7e97d657358203916dbe84f61c2bccaa81eb/flags/4x3/zw.svg"
+      ],
+      "modification": "Embedded the original MIT notice in an SVG comment.",
+      "sha256": "655ffd5bcad6b59f534ced5a7507edd775fc1fd77a6a1b7ca37af3fd7584bd74"
+    }
+  ]
+}

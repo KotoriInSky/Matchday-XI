@@ -30,6 +30,16 @@ Built-in fonts are unmodified WOFF2 assets sourced from Google Fonts and served 
 
 Uploaded fonts remain subject to the uploader's licence, including embedding or redistribution restrictions. Project JSON can contain the uploaded font file data.
 
+## FIFA member-association flags
+
+The built-in catalog contains the 211 FIFA member associations checked against the [official directory](https://inside.fifa.com/associations) on 2026-10-13. IOC codes are factual search aliases, cross-checked against the current NOC table in [List of IOC country codes](https://en.wikipedia.org/wiki/List_of_IOC_country_codes); no article prose or illustrations are copied. The catalog and localized association names are maintained by Matchday XI. This is a sports membership list, not a political territory classification or an official FIFA / IOC product.
+
+210 bundled SVG assets use [lipis/flag-icons](https://github.com/lipis/flag-icons), copyright (c) 2013 Panayiotis Lipiridis, under MIT. The normal source is pinned at commit `086f7e97d657358203916dbe84f61c2bccaa81eb`. Peru uses the earlier coat-of-arms SVG at `7dee7504f2f4a970841d847abf6cd3f1a928d0a0`. New Caledonia combines the French and Kanak artwork to match the directory's two-flag presentation. The full upstream notice is distributed in [public/flags/FLAG-ICONS-LICENSE.txt](public/flags/FLAG-ICONS-LICENSE.txt) and embedded in the SVGs.
+
+The Chinese Taipei representative flag comes from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Flag_of_Chinese_Taipei_for_Olympic_Games.svg), attributed to Pixeltoo and updated by Zscout370. Commons lists the SVG as public domain (PD-ineligible). This status does not waive independent trademark or insignia restrictions. It is not relicensed as original MIT artwork.
+
+The [distributed source notice](public/flags/FIFA-FLAGS-SOURCES.txt) and [manifest](public/flags/manifest.json) record the sources, modifications and SHA-256 hashes. FIFA's bitmap flag images are not bundled. Selected SVGs, including embedded notices, are stored in project backups; keep the upstream notices when redistributing the assets or library. Independent vector proportions and drawing details may differ from FIFA's bitmaps.
+
 ## Local rendering tools
 
 Chrome, Chromium and FFmpeg are installed separately and are not distributed as project source assets. Their licences and notices apply independently. FFmpeg licensing depends on its build configuration and enabled codecs; see [FFmpeg legal information](https://ffmpeg.org/legal.html). The renderer invokes the installed build's `libx264` encoder for H.264 output.

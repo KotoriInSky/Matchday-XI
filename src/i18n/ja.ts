@@ -1,6 +1,12 @@
 import type { Messages } from './en';
 
 export const ja: Messages = {
+  'fifa.title': 'FIFA加盟協会',
+  'fifa.search': '名称・英語名・FIFA / IOCコードで検索',
+  'fifa.noResults': '一致するFIFA加盟協会はありません',
+  'fifa.loadError': '旗を読み込めませんでした。再試行してください。',
+  'fifa.projectTags': 'プロジェクトのタグ',
+  'fifa.inProject': '追加済み',
   'workspace.title': 'マッチデースタジオ',
   'workspace.edit': 'ラインナップを編集',
   'workspace.live': 'ライブプレビュー',

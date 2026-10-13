@@ -17,6 +17,7 @@ export function HowToUse() {
       <div className="space-y-3 py-4 text-muted-foreground">
         <p>{copy('Use photos, badges, fonts and video that you have permission to use. Check the relevant licences before publishing your work.', '使用你有权使用的照片、队徽、字体和视频。发布作品前，请核对相关素材的许可范围。', '使用你有權使用的照片、隊徽、字體和影片。發布作品前，請核對相關素材的授權範圍。')}</p>
         <p>{copy('Palette names describe visual styles. They do not imply endorsement or affiliation with a team or competition.', '配色名称用于识别视觉风格，不代表球队或赛事的授权、合作或认可。', '配色名稱用於識別視覺風格，不代表球隊或賽事的授權、合作或認可。')}</p>
+        <p>{copy('Built-in flags use flag-icons (MIT) and a Chinese Taipei SVG listed as public domain by Wikimedia Commons. ', '内置旗帜使用 flag-icons（MIT）及 Wikimedia Commons 标为公有领域的中华台北 SVG。', '內建旗幟使用 flag-icons（MIT）及 Wikimedia Commons 標為公有領域的中華台北 SVG。')}<a className="underline underline-offset-4 text-foreground" href={`${import.meta.env.BASE_URL}flags/FIFA-FLAGS-SOURCES.txt`} target="_blank" rel="noreferrer">{copy('Flag sources & licences', '旗帜来源与许可', '旗幟來源與授權')}</a></p>
       </div>
     </details>
     <details className="py-3">

@@ -4,11 +4,13 @@ import type { GraphicText } from '@/engine/types';
 import { useI18n } from '@/i18n';
 import { uploadCoachPhoto, uploadCrest, uploadTag } from '@/lib/actions';
 import { store, useLineup } from '@/lib/store';
+import { tagMatches, tagName } from '@/lib/fifa';
 import { Button } from '../ui/button';
 import { Field, Input, Switch } from '../ui/form';
 import { Grid, Note, Section, Subsection } from '../ui/section';
 import { Framer, PictureButtons, ResNote } from './Picture';
 import { ScenePreviewAction } from './ScenePreviewAction';
+import { FifaFlagLibrary } from './FifaFlagLibrary';
 
 function TextField({ label, k, hint, placeholder, maxLength }: { label: string; k: keyof GraphicText; hint?: string; placeholder?: string; maxLength?: number }) {
   const s = useLineup();
@@ -119,12 +121,20 @@ export function ClubPanel() {
 }
 
 export function TagsPanel({ onSelect }: { onSelect(id: string): void }) {
-  const { t } = useI18n();
+  const { t, lang } = useI18n();
   const s = useLineup();
   const [query, setQuery] = useState('');
-  const matches = s.tags.filter((tag) => tag.label.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()));
-  return (
-    <Section title={t('tab.tags')} actions={<Button variant="outline" onClick={async () => {
+  const [fifaQuery, setFifaQuery] = useState('');
+  const matches = s.tags.filter(tag => tagMatches(tag, query));
+  return <div className="flex flex-col gap-6">
+    <Section title={t('fifa.title')}>
+      <div className="relative">
+        <Search className="absolute left-3 top-3.5 size-4 text-muted-foreground" aria-hidden="true" />
+        <Input type="search" aria-label={t('fifa.search')} placeholder={t('fifa.search')} className="pl-9" value={fifaQuery} onChange={e => setFifaQuery(e.target.value)} />
+      </div>
+      <FifaFlagLibrary query={fifaQuery} onSelect={onSelect} />
+    </Section>
+    <Section title={t('fifa.projectTags')} actions={<Button variant="outline" onClick={async () => {
       const before = new Set(store.state.tags.map((tag) => tag.id));
       await uploadTag();
       const added = store.state.tags.find((tag) => !before.has(tag.id));
@@ -139,10 +149,10 @@ export function TagsPanel({ onSelect }: { onSelect(id: string): void }) {
         {matches.map((tag) => <li key={tag.id}>
           <button type="button" onClick={() => onSelect(tag.id)}>
             {tag.img ? <img src={tag.img} alt="" /> : <span className="size-8" />}
-            <span>{tag.label || t('lineup.unnamedTag')}</span>
+            <span>{tagName(tag, lang) || t('lineup.unnamedTag')}</span>
           </button>
         </li>)}
       </ul>
     </Section>
-  );
+  </div>;
 }

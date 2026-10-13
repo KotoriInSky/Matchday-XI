@@ -88,7 +88,7 @@ export async function uploadTag(id?: string) {
     if (id) {
       store.update((s) => {
         const tag = s.tags.find((x) => x.id === id);
-        if (tag) Object.assign(tag, { img, shape, fit: newFit() });
+        if (tag) { Object.assign(tag, { img, shape, fit: newFit() }); delete tag.fifaCode; }
       });
     } else {
       const label = file.name.replace(/\.[^.]+$/, '').replace(/[_-]+/g, ' ').slice(0, 24);
