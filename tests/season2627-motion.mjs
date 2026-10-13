@@ -37,30 +37,79 @@ try {
   }, base);
 
   let plan = await page.evaluate(() => window.motionInit());
-  // Filled and outline abbreviations occupy the same moving row until the full name takes over.
+  // The outline stack stays fixed while the filled abbreviation loops down into its central gap.
   for (const mgrLen of [4, 6, 10]) {
     plan = await page.evaluate(async (length) => {
       window.motionState.anim.mgrLen = length;
       return window.motionInit();
     }, mgrLen);
     const manager = plan.manager;
+    const openingPositions = [];
+    for (const time of [manager.start + .05, manager.start + .2, manager.start + .55]) {
+      await page.evaluate(time => window.exportRenderer.frame(time), time);
+      openingPositions.push(await page.evaluate(() => {
+        const panel = document.querySelector('[class*="s26-panel_"]').getBoundingClientRect();
+        const crest = document.querySelector('[class*="s26-crest-y_"]').getBoundingClientRect();
+        return { x: panel.left, crest: crest.left + crest.width / 2, width: innerWidth };
+      }));
+    }
+    assert.ok(openingPositions[0].x < openingPositions[1].x && openingPositions[1].x < openingPositions[2].x, 'Opening panel must move right as it appears');
+    for (const position of openingPositions) assert.ok(Math.abs(position.crest - position.x) < .1, 'Opening crest detached from panel');
+    assert.ok(Math.abs(openingPositions[2].x - openingPositions[2].width * .29) < .1, 'Opening panel did not settle at the manager boundary');
+    const rollPositions = [], outlinePositions = [];
     for (const time of [manager.rollStart, manager.rollStart + (manager.rollEnd - manager.rollStart) * .4, manager.rollEnd]) {
       await page.evaluate((time) => window.exportRenderer.frame(time), time);
       const phase = await page.evaluate(() => {
         const solid = document.querySelector('[class*="s26-solid_"]'), gap = document.querySelector('[class*="s26-outline-gap_"]');
         const name = document.querySelector('[class*="s26-team_"]');
-        return { delta: Math.abs(solid.getBoundingClientRect().y - gap.getBoundingClientRect().y), name: getComputedStyle(name).opacity };
+        return { delta: Math.abs(solid.getBoundingClientRect().y - gap.getBoundingClientRect().y), y: solid.getBoundingClientRect().y, outlineY: gap.getBoundingClientRect().y, name: getComputedStyle(name).opacity };
       });
-      assert.ok(phase.delta < .1, 'Filled abbreviation is detached from the scrolling stack');
+      if (time === manager.rollEnd) assert.ok(phase.delta < .1, 'Filled abbreviation did not settle into the central outline gap');
       assert.equal(phase.name, '0', 'Full name appeared during the abbreviation roll');
+      rollPositions.push(phase.y);
+      outlinePositions.push(phase.outlineY);
     }
+    assert.ok(outlinePositions.every(y => Math.abs(y - outlinePositions[0]) < .1), 'Outline background moved during the filled abbreviation roll');
+    assert.ok(rollPositions[0] < rollPositions[1] && rollPositions[1] < rollPositions[2], 'Abbreviation must roll down, wrap around and settle without reversing');
+    const loop = [];
+    for (const fraction of [.25, .42, .85]) {
+      await page.evaluate(time => window.exportRenderer.frame(time), manager.rollStart + (manager.rollEnd - manager.rollStart) * fraction);
+      loop.push(await page.evaluate(() => {
+        const solids = [...document.querySelectorAll('[class*="s26-solid_"]')];
+        return { main: solids[0].getBoundingClientRect().y, copy: solids[1]?.getBoundingClientRect().y, height: innerHeight };
+      }));
+    }
+    assert.ok(loop[0].copy >= 0 && loop[0].copy < loop[0].height / 2, 'First solid row must enter from the top');
+    assert.ok(loop[1].copy > loop[1].height / 2, 'First solid row never reached the bottom');
+    assert.ok(loop[2].main > 0 && loop[2].main < loop[2].height / 2, 'Next solid row did not return from the top');
+    const handoff = [];
+    for (let fraction = 0; fraction <= 1; fraction += .05) {
+      const time = manager.nameStart + (manager.nameReady - manager.nameStart) * fraction;
+      await page.evaluate(time => window.exportRenderer.frame(time), time);
+      handoff.push(await page.evaluate(() => {
+        const solid = document.querySelector('[class*="s26-solid_"]'), name = document.querySelector('[class*="s26-team_"]');
+        const bounds = element => { const range = document.createRange(); range.selectNodeContents(element); const rect = range.getBoundingClientRect(); return { left: rect.left, right: rect.right }; };
+        return { solid: bounds(solid), name: bounds(name), solidOpacity: Number(getComputedStyle(solid).opacity), nameOpacity: Number(getComputedStyle(name).opacity), edge: document.querySelector('[class*="s26-panel_"]').getBoundingClientRect().left, width: innerWidth };
+      }));
+    }
+    for (const frame of handoff) {
+      if (frame.solidOpacity > 0 && frame.solid.left < frame.width) assert.equal(frame.solidOpacity, 1, 'Abbreviation faded while still on screen');
+      if (frame.solidOpacity > 0 && frame.nameOpacity > 0 && frame.name.right > frame.edge && frame.solid.left < frame.width) {
+        assert.ok(frame.name.right <= frame.solid.left + 1, 'Full name overlaps the departing abbreviation');
+      }
+    }
+    await page.evaluate(time => window.exportRenderer.frame(time), manager.rollEnd);
+    const beforeSeek = await page.screenshot();
+    await page.evaluate(time => window.exportRenderer.frame(time), manager.nameReady);
+    await page.evaluate(time => window.exportRenderer.frame(time), manager.rollEnd);
+    assert.ok(beforeSeek.equals(await page.screenshot()), 'Backward seek changed the settled title');
     await page.evaluate((time) => window.exportRenderer.frame(time), manager.nameReady + .01);
     const namePhase = await page.evaluate(() => ({
       solid: getComputedStyle(document.querySelector('[class*="s26-solid_"]')).opacity,
       name: getComputedStyle(document.querySelector('[class*="s26-team_"]')).opacity,
     }));
     assert.deepEqual(namePhase, { solid: '0', name: '1' });
-    evidence.push({ managerLength: mgrLen, title: 'filled abbreviation follows outline row before full name' });
+    evidence.push({ managerLength: mgrLen, title: 'rightward opening, stationary outlines, filled downward full loop, centre hold, opaque slide without overlap, deterministic backward seek' });
   }
   plan = await page.evaluate(async () => { window.motionState.anim.mgrLen = 6; return window.motionInit(); });
   for (const [name, time] of [
@@ -138,6 +187,43 @@ try {
   }
   await page.evaluate(() => { window.motionState.formation = '4-2-3-1'; });
 
+  // Even oversized or repositioned photos must not paint on the surface beyond their own column.
+  for (const full of [false, true]) {
+    plan = await page.evaluate(async full => {
+      const state = structuredClone(window.motionState);
+      const photo = 'data:image/svg+xml,' + encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500"><rect width="800" height="500" fill="#ef2638"/></svg>');
+      for (const player of state.players) Object.assign(player, {
+        photo, photoK: photo, cut: !full, cutK: !full, key: true,
+        fit: { z: 2, x: 40, y: -20 }, fitK: { z: 2, x: 40, y: -20 },
+      });
+      await window.exportRenderer.init(state, 'en', null);
+      return window.motionPlan(state);
+    }, full);
+    const group = plan.groups[1];
+    for (const time of [group.start + .4, group.settled + .1, group.cut + .2]) {
+      await page.evaluate(time => window.exportRenderer.frame(time), time);
+      const boundary = await page.evaluate(() => {
+        // Uncover the extended surface so sidebar occlusion cannot hide an escaping photo.
+        document.querySelector('[class*="s26-panel-track_"]').style.setProperty('opacity', '0', 'important');
+        const column = document.querySelector('[data-group="1"] [class*="s26-column-position_"]:last-child');
+        const rect = column.getBoundingClientRect();
+        const surface = column.querySelector('[class*="s26-column-bg_"]').getBoundingClientRect();
+        return { x: Math.ceil(rect.right + 1), y: 80, width: 24, height: 48, bleed: surface.right - rect.right, stageWidth: innerWidth };
+      });
+      assert.ok(boundary.bleed >= boundary.stageWidth * .095, 'Clipping photos removed the surface extension under the sidebar');
+      const clip = { x: boundary.x, y: boundary.y, width: boundary.width, height: boundary.height };
+      const withPhotos = await page.screenshot({ clip });
+      await page.evaluate(() => {
+        document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = 'hidden'; });
+      });
+      assert.ok(withPhotos.equals(await page.screenshot({ clip })), `Photo escaped its column (${full ? 'opaque' : 'cut-out'}, ${time})`);
+      await page.evaluate(() => {
+        document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = ''; });
+      });
+    }
+    evidence.push({ photoClipping: full ? 'opaque' : 'cut-out', phases: 'entry, settled, highlight', surfaceBleed: 'retained' });
+  }
+
   for (const shape of ['rounded', 'sharp', 'angled']) {
     plan = await page.evaluate((shape) => window.motionInit(shape), shape);
     await page.evaluate((time) => window.exportRenderer.frame(time), plan.total);
@@ -171,6 +257,8 @@ try {
   // Reduced motion removes the portrait displacement, light pass and small-card turn.
   await page.emulateMedia({ reducedMotion: 'reduce' });
   plan = await page.evaluate(() => window.motionInit());
+  await page.evaluate(time => window.exportRenderer.frame(time), plan.manager.start + .2);
+  assert.ok(await page.evaluate(() => Math.abs(document.querySelector('[class*="s26-panel_"]').getBoundingClientRect().left - innerWidth * .29) < .1), 'Reduced motion still slides the opening panel');
   for (const time of [plan.groups[1].start + .3, plan.final.start + .5]) {
     await page.evaluate((time) => window.exportRenderer.frame(time), time);
     const reduced = await page.evaluate(() => ({
@@ -181,5 +269,5 @@ try {
   }
   assert.deepEqual(errors, []);
   await writeFile(`${output}/checks.json`, JSON.stringify({ evidence, errors }, null, 2));
-  console.log('26/27 motion: synced title roll, visible adjacent-card shadow, deterministic reflection, 1–7 columns, cut-out/opaque portraits, all card shapes and reduced motion passed.');
+  console.log('26/27 motion: rightward opening, stationary outlines with filled title roll, clipped cut-out/opaque portraits, visible adjacent-card shadow, deterministic reflection, 1–7 columns, all card shapes and reduced motion passed.');
 } finally { await browser.close(); }

@@ -29,8 +29,8 @@ const MIN_HIGHLIGHT_HOLD = 3.5;
 /** One timing plan for markup, preview and frame-by-frame export. No timers or frame-rate assumptions. */
 export function planSeason2627(s: LineupState): SeasonPlan {
   const lead = s.anim.intro ? s.anim.introLen : .35;
-  const rollStart = lead + .12, rollEnd = rollStart + Math.min(1.6, s.anim.mgrLen * .36);
-  const manager = s.anim.manager ? { start: lead, end: lead + s.anim.mgrLen, rollStart, rollEnd, nameStart: rollEnd + .55, nameReady: rollEnd + 1.03 } : null;
+  const rollStart = lead + .16, rollEnd = rollStart + Math.min(.78, s.anim.mgrLen * .2);
+  const manager = s.anim.manager ? { start: lead, end: lead + s.anim.mgrLen, rollStart, rollEnd, nameStart: rollEnd + .22, nameReady: rollEnd + 1.34 } : null;
   const marks: SeasonPlan['marks'] = [];
   if (s.anim.intro) marks.push({ t: 0, scene: 'intro' });
   if (manager) marks.push({ t: manager.start, scene: 'manager' });
@@ -72,9 +72,9 @@ function playerTags(s: LineupState, p: Player, index: number) {
 }
 
 function portrait(photo: string | null, cut: boolean, fit: Fit, path: string, num: string, id: string, key = false) {
-  return `<div class="s26-photo${photo && !cut ? ' s26-full-photo' : ''}${key ? ' s26-key-photo' : ''}">${photo
+  return `<div class="s26-photo-window"><div class="s26-photo${photo && !cut ? ' s26-full-photo' : ''}${key ? ' s26-key-photo' : ''}">${photo
     ? `<img src="${esc(photo)}" alt="" draggable="false" data-fit="${path}" style="${fitStyle(fit)}">`
-    : personSVG(num, id)}</div>`;
+    : personSVG(num, id)}</div></div>`;
 }
 
 export function seasonPlayerHTML(s: LineupState, index: number, count = 1, preview = false, keyPreview = false) {
@@ -121,8 +121,8 @@ export function season2627HTML(s: LineupState, videoURL: string | null) {
     <div class="s26-panel-track">
       <div class="s26-panel"></div>
       ${plan.manager ? `<div class="s26-title">
-        <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 8 }, (_, i) => `<span${i === 3 ? ' class="s26-outline-gap"' : ''}>${ab}</span>`).join('')}</div></div>
-        <div class="s26-solid">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
+        <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 16 }, (_, i) => `<span${i === 3 || i === 9 ? ' class="s26-outline-gap"' : ''}>${ab}</span>`).join('')}</div></div>
+        <div class="s26-solid">${ab}</div><div class="s26-solid s26-solid-loop" aria-hidden="true">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
       </div>` : ''}
       ${plan.groups.map((g, gi) => `<div class="s26-role${/[぀-ヿ㐀-鿿가-힯]/.test(s.text[`grp${g.role}`]) ? ' s26-cjk' : ''}" data-role="${gi}"><span>${esc(s.text[`grp${g.role}`])}</span></div>`).join('')}
       ${s.look.crest ? `<div class="s26-crest"><div class="s26-crest-y">${crestHTML(s)}</div></div>` : ''}
@@ -183,10 +183,19 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
   const opening = plan.manager?.start ?? plan.groups[0]?.start ?? plan.final.start;
   enter(q('.s26-wash'), opening, .7);
   const rail = q('.s26-panel-track');
-  const initialEdge = plan.manager ? 33 : plan.groups.length ? 90 : 36;
+  const initialEdge = plan.manager ? 29 : plan.groups.length ? 90 : 36;
   const firstGroup = plan.groups[0]?.start ?? plan.final.start;
-  const points: { t: number; edge: number; y: number }[] = [{ t: 0, edge: initialEdge, y: plan.manager ? 28.125 : 7 }];
-  if (plan.manager && plan.groups.length) points.push({ t: firstGroup - .1, edge: 33, y: 28.125 }, { t: firstGroup + .85, edge: 90, y: 7 });
+  const openingEdge = plan.manager && !reduced ? 0 : initialEdge;
+  const points: { t: number; edge: number; y: number }[] = [{ t: 0, edge: openingEdge, y: plan.manager ? 28.125 : 7 }];
+  if (plan.manager) {
+    // Reveal the scene from left to right while the shared panel boundary moves into place.
+    points.push({ t: opening, edge: openingEdge, y: 28.125 }, { t: opening + .55, edge: initialEdge, y: 28.125 });
+    add(q('.s26'), [
+      { clipPath: reduced ? 'inset(0 0% 0 0)' : 'inset(0 100% 0 0)', easing: ease },
+      { clipPath: 'inset(0 0% 0 0)' },
+    ], opening, reduced ? .01 : .55);
+  }
+  if (plan.manager && plan.groups.length) points.push({ t: firstGroup - .1, edge: 29, y: 28.125 }, { t: firstGroup + .85, edge: 90, y: 7 });
   points.push({ t: plan.final.start, edge: plan.groups.length ? 90 : initialEdge, y: plan.groups.length ? 7 : 28.125 }, { t: plan.final.ready, edge: 36, y: 28.125 }, { t: plan.total, edge: 36, y: 28.125 });
   const keyframes = (axis: 'edge' | 'y') => points.map((point) => ({
     transform: axis === 'edge' ? `translateX(${point.edge}cqw)` : `translateY(${point.y - 4.25}cqw)`,
@@ -195,7 +204,7 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
   add(rail, keyframes('edge'), 0, plan.total);
   add(q('.s26-crest-y'), keyframes('y'), 0, plan.total);
   add(q('.s26-pitch-reveal'), points.map((point) => ({ clipPath: `inset(0 0 0 ${point.edge}%)`, offset: point.t / plan.total, easing: reduced ? 'steps(1,end)' : ease })), 0, plan.total);
-  add(rail, [{ opacity: 0 }, { opacity: 1 }], opening, .55);
+  add(rail, [{ opacity: 0 }, { opacity: 1 }], opening, plan.manager && !reduced ? .12 : .55);
 
   if (plan.manager) {
     const { start, end, rollStart, rollEnd, nameStart, nameReady } = plan.manager;
@@ -205,22 +214,26 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
     revealName(q('.s26-coach-name'), start + .2, .45);
     show(q('.s26-title'), start, end + .4);
     life(q('.s26-title'), start, start + .6, end - .15, end + .3);
-    // The filled abbreviation rides the same stack as the outline rows; it is not a fixed overlay.
-    // Row 3 is reserved for it. 28.125 - (3.5 * 12.43) = -15.38 cqw at the centre line.
-    const roll = [{ y: 44, offset: 0 }, { y: -6, offset: .68 }, { y: 0, offset: 1 }];
-    add(q('.s26-outline'), roll.map(({ y, offset }) => ({
-      transform: `translateY(${(-15.38 + (reduced ? 0 : y)).toFixed(3)}cqw)`, offset, easing: ease,
-    })), rollStart, rollEnd - rollStart);
+    // Only the filled abbreviation loops down past the bottom and returns from the top,
+    // then decelerates into the central gap in the stationary outline background.
+    const roll = [
+      { y: -91.175, offset: 0, easing: 'cubic-bezier(.3,0,.7,1)' },
+      { y: -37.4, offset: .44, easing: 'cubic-bezier(.16,1,.3,1)' },
+      { y: 0, offset: 1, easing: 'linear' },
+    ];
     const solidDuration = nameStart + .36 - rollStart;
-    add(q('.s26-solid'), [
-      ...roll.map(({ y, offset }) => ({ opacity: 1, transform: `translate(0,${reduced ? 0 : y}cqw)`, offset: offset * (rollEnd - rollStart) / solidDuration, easing: ease })),
+    qa('.s26-solid').forEach((solid) => add(solid, [
+      ...roll.map(({ y, offset, easing }) => ({ opacity: 1, transform: `translate(0,${reduced ? 0 : y}cqw)`, offset: offset * (rollEnd - rollStart) / solidDuration, easing })),
       { opacity: 1, transform: 'translate(0,0)', offset: (nameStart - rollStart) / solidDuration, easing: 'cubic-bezier(.6,0,.4,1)' },
-      { opacity: 0, transform: `translate(${reduced ? 0 : 35}cqw,0)`, offset: 1 },
-    ], rollStart, solidDuration);
+      { opacity: 1, transform: `translate(${reduced ? 0 : 70}cqw,0)`, offset: 1 - .000001, easing: 'steps(1,end)' },
+      { opacity: 0, transform: `translate(${reduced ? 0 : 70}cqw,0)`, offset: 1 },
+    ], rollStart, solidDuration));
     add(q('.s26-team'), [
-      { opacity: 0, clipPath: reduced ? 'inset(0)' : 'inset(0 100% 0 0)', transform: `translate(${reduced ? 0 : -5}cqw,-50%)`, easing: ease },
+      { opacity: 0, transform: reduced ? 'translate(0,-50%)' : 'translate(calc(-100% - 13cqw),-50%)', offset: 0, easing: 'steps(1,end)' },
+      { opacity: 1, transform: reduced ? 'translate(0,-50%)' : 'translate(calc(-100% - 13cqw),-50%)', offset: .000001, easing: 'cubic-bezier(.16,1,.3,1)' },
       { opacity: 1, clipPath: 'inset(0)', transform: 'translate(0,-50%)' },
-    ], nameStart + .08, nameReady - nameStart - .08);
+    ], nameStart + (reduced ? .36 : .18), reduced ? .01 : nameReady - nameStart - .18);
+    add(q('.s26-outline'), [{ opacity: 1 }, { opacity: .24 }], nameStart + .25, reduced ? .01 : nameReady - nameStart - .25);
   }
 
   const groupEls = qa('.s26-group'), roleEls = qa('.s26-role');

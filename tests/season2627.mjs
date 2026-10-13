@@ -39,7 +39,7 @@ try {
     return window.testModules.planSeason2627(state);
   });
   assert.deepEqual(plan.groups.map((g) => g.role), ['GK', 'DEF', 'MID', 'MID', 'FWD']);
-  for (const time of [0, plan.manager.start + 1, plan.manager.end, plan.manager.end + .4, plan.manager.end + .85, plan.final.start, plan.final.start + .5, plan.final.ready, plan.total]) {
+  for (const time of [0, plan.manager.start, plan.manager.start + .2, plan.manager.start + .55, plan.manager.start + 1, plan.manager.end, plan.manager.end + .4, plan.manager.end + .85, plan.final.start, plan.final.start + .5, plan.final.ready, plan.total]) {
     await render.evaluate((t) => window.exportRenderer.frame(t), time);
     const delta = await render.evaluate(() => {
       const crest = document.querySelector('[class*="s26-crest-y"]');
