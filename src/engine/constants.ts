@@ -94,7 +94,7 @@ export const SAMPLE: LineupState = {
   slotPos: {},
   tags: SAMPLE_TAGS,
   players: samplePlayers.map(([num, name, tag1, extra]) => ({ ...blankPlayer(), num, name, tag1, ...(extra || {}) })),
-  subs: '12 Marc-André | TER STEGEN (GK)\n5 Matthijs | DE LIGT (CB)\n15 Theo | HERNÁNDEZ (LB)\n7 Heung-min | SON (ST)\n10 | RAPHINHA (RW)\n11 Ángel | DI MARÍA (LW)\n17 Kevin | DE BRUYNE (CM)\n20 Bernardo | SILVA (AM)\n18 | CASEMIRO (DM)',
+  subs: '12 Marc-André | TER STEGEN (GK)\n5 Matthijs | DE LIGT\n15 Theo | HERNÁNDEZ\n7 Heung-min | SON\n10 | RAPHINHA\n11 Ángel | DI MARÍA\n17 Kevin | DE BRUYNE\n20 Bernardo | SILVA\n18 | CASEMIRO',
   colors: { c1: '#0f3d3e', k2: '#2a7a6f', c2: '#f4b942', c3: '#f3f6f2', c4: '#102a2b' },
   fonts: { display: 'Outfit', body: 'Outfit', cjk: 'auto' },
   customFonts: { display: null, body: null, number: null },
