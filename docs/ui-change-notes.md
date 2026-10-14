@@ -28,7 +28,7 @@
 ## 5. 增加一键升序整理选项
 
 - 增加快速整理名单的选项。
-- 门将不参与排序，其余球员按球衣号码升序排列。
+- 在替补名单中提供排序按钮；门将保留原位，其余有号码的替补按球衣号码升序排列。同号保持原有顺序，没有号码的备注和空行保留原位。
 
 ## 6. 调整文本框交互
 
@@ -109,3 +109,4 @@
 | 主教练介绍去掉额外色块 | 已检验 | 类型检查、构建、26/27 场景回归、两个模板主教练截图检查通过 | `fix: remove extra manager name backgrounds` |
 | 默认标签采用 FIFA 素材 | 已检验 | 默认素材与库文件一致；FIFA 搜索、撤销、保存恢复、两种卡片导出、类型检查与构建通过 | `fix: use bundled FIFA artwork for default tags` |
 | 替补默认只标 GK | 已检验 | 两个模板默认仅有 GK；用户已有或主动填写的位置保留；类型检查与构建通过 | `fix: show only GK in default substitute positions` |
+| 替补一键按号码升序整理 | 已检验 | 数字排序、同号稳定、GK/备注/空行保留、撤销重做、刷新恢复、4 种宽度界面回归、类型检查与构建通过 | `feat: sort numbered substitutes while keeping goalkeepers in place` |

@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
-import { ChevronDown, Star } from 'lucide-react';
+import { ArrowDown01, ChevronDown, Star } from 'lucide-react';
 import { PRESET_FORMATIONS } from '@/engine/constants';
 import { parseFormation, slotsFor } from '@/engine/formation';
 import type { Player } from '@/engine/types';
+import { sortSubstitutes } from '@/engine/state';
 import { useT } from '@/i18n';
 import { store, useLineup } from '@/lib/store';
 import { Button } from '../ui/button';
@@ -42,6 +43,12 @@ export function LineupPanel({ onInspect }: { onInspect(i: number): void }) {
             <Textarea id={id} aria-describedby={describedBy} rows={8} value={s.subs} onChange={(e) => store.update((st) => (st.subs = e.target.value))} />
           )}
         </Field>
+        <Button variant="outline" className="self-start" disabled={sortSubstitutes(s.subs) === s.subs} onClick={() => {
+          store.beginHistoryGroup();
+          store.update((st) => { st.subs = sortSubstitutes(st.subs); });
+          store.endHistoryGroup();
+        }}><ArrowDown01 />{t('lineup.sortSubs')}</Button>
+        <p className="text-xs text-muted-foreground">{t('lineup.sortSubsHint')}</p>
       </Section>
     </div>
   );

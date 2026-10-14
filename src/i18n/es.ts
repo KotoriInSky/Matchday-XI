@@ -99,6 +99,8 @@ export const es: Messages = {
   'lineup.keyPhoto': 'Foto de jugador clave',
   'lineup.keyPhotoHint': 'Opcional. Un retrato más grande para la carta plateada.',
   'lineup.substitutes': 'Suplentes',
+  'lineup.sortSubs': 'Ordenar por dorsal',
+  'lineup.sortSubsHint': 'Los porteros conservan su posición; los demás suplentes con dorsal se ordenan de menor a mayor.',
   'lineup.subsHint': 'Uno por línea, primero el dorsal, p. ej. 12 Álex García (GK)',
   'lineup.player': 'Jugador {n}',
 

@@ -180,3 +180,16 @@ export function parseSubs(txt: string) {
     return m ? { num: m[1], name: m[2] } : { num: '', name: l };
   });
 }
+
+/** Sort numbered outfield substitutes while preserving keepers, notes and blank rows. */
+export function sortSubstitutes(txt: string): string {
+  const lines = String(txt || '').split('\n');
+  const movable = lines.flatMap((line, index) => {
+    const match = line.trim().match(/^(\d{1,3})[\s.\-:]+(.+)$/);
+    const keeper = /[（(]\s*(?:GK|Goalkeeper|门将|門將)\s*[）)]\s*$/i.test(line.trim());
+    return match && !keeper ? [{ index, number: Number(match[1]), line }] : [];
+  });
+  const sorted = [...movable].sort((a, b) => a.number - b.number || a.index - b.index);
+  movable.forEach((item, index) => { lines[item.index] = sorted[index].line; });
+  return lines.join('\n');
+}

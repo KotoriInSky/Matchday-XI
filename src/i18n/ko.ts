@@ -99,6 +99,8 @@ export const ko: Messages = {
   'lineup.keyPhoto': '핵심 선수 사진',
   'lineup.keyPhotoHint': '선택 사항. 실버 카드에 쓰는 큰 인물 사진입니다.',
   'lineup.substitutes': '교체 명단',
+  'lineup.sortSubs': '등번호순 정렬',
+  'lineup.sortSubsHint': '골키퍼 위치를 유지하고 나머지 등번호가 있는 교체 선수를 오름차순으로 정렬합니다.',
   'lineup.subsHint': '한 줄에 한 명, 등번호 먼저. 예: 12 김민수 (GK)',
   'lineup.player': '선수 {n}',
 

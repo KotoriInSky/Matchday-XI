@@ -99,6 +99,8 @@ export const ja: Messages = {
   'lineup.keyPhoto': 'キープレーヤー用写真',
   'lineup.keyPhotoHint': '任意。シルバーのカードに使う大きなポートレート。',
   'lineup.substitutes': '控え',
+  'lineup.sortSubs': '背番号順に並べる',
+  'lineup.sortSubsHint': 'GK の位置を保ち、その他の番号付きの控えを昇順に並べます。',
   'lineup.subsHint': '1 行に 1 人、背番号を先に（例：12 山田太郎 (GK)）',
   'lineup.player': '選手 {n}',
 

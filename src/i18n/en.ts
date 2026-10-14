@@ -117,6 +117,8 @@ export const en = {
   'lineup.keyPhoto': 'Key player photo',
   'lineup.keyPhotoHint': 'Optional. A bigger portrait for the silver card.',
   'lineup.substitutes': 'Substitutes',
+  'lineup.sortSubs': 'Sort by number',
+  'lineup.sortSubsHint': 'Goalkeepers stay in place; other numbered substitutes sort in ascending order.',
   'lineup.subsHint': 'One per line, number first, e.g. 12 Alex Smith (GK)',
   'lineup.player': 'Player {n}',
 

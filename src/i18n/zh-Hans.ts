@@ -118,6 +118,8 @@ export const zhHans: Messages = {
   'lineup.keyPhoto': '核心球员照片',
   'lineup.keyPhotoHint': '可选。银色卡片上更大的肖像。',
   'lineup.substitutes': '替补',
+  'lineup.sortSubs': '按号码排序',
+  'lineup.sortSubsHint': '门将保留原位，其他有号码的替补按号码升序排列。',
   'lineup.subsHint': '格式：号码 名 | 姓（位置），每行一人；| 可省略。',
   'lineup.player': '球员 {n}',
 

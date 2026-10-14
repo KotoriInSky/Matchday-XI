@@ -118,6 +118,8 @@ export const zhHant: Messages = {
   'lineup.keyPhoto': '關鍵球員照片',
   'lineup.keyPhotoHint': '選填。銀色卡片上更大的肖像。',
   'lineup.substitutes': '替補',
+  'lineup.sortSubs': '按背號排序',
+  'lineup.sortSubsHint': '門將保留原位，其他有背號的替補按背號升冪排列。',
   'lineup.subsHint': '格式：背號 名 | 姓（位置），每行一人；| 可省略。',
   'lineup.player': '球員 {n}',
 
