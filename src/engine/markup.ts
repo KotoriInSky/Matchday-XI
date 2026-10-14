@@ -92,8 +92,11 @@ export function boardLayout(s: LineupState) {
   });
   // Centre on the 16:9 frame's short axis, accounting for the field's 1.6cqw top inset.
   const by = ((100 * 9 / 16 / 2 - 1.6) / FH) * 100;
+  // Every row shares a base size that fits the densest row; centre cards keep their emphasis.
+  const maxCount = Math.max(1, ...groups.map((g) => g.items.length));
+  const W = Math.min((19 * s.look.bigSize) / 100, (FW - 13) / maxCount - 4, 33), bs = W / CW;
   groups.forEach((g) => {
-    const k = g.items.length, W = Math.min((19 * s.look.bigSize) / 100, (FW - 13) / k - 4, 33), bs = W / CW;
+    const k = g.items.length;
     g.items.forEach((it, j) => {
       it.bs = bs * (k > 1 && Math.abs(j - (k - 1) / 2) < .6 ? 1.08 : 1);
       it.by = by;

@@ -52,6 +52,7 @@ try {
       return [...groups.values()];
     }, state);
     assert.ok(groups.length >= 3, 'The test must exercise every formation row');
+    let baseSize;
     for (const [groupIndex, group] of groups.entries()) {
       for (const time of [group.landed, group.landed + .4, group.leaving - .1]) {
         await page.evaluate(time => window.exportRenderer.frame(time), time);
@@ -61,16 +62,25 @@ try {
           return ids.map(id => {
             const card = document.querySelector(`[class*="_bigc_"][data-i="${id}"]`);
             const bounds = card.getBoundingClientRect();
-            return { id, center: bounds.y + bounds.height / 2, expected: center, opacity: Number(getComputedStyle(card).opacity), top: bounds.top, bottom: bounds.bottom, stageTop: stage.top, stageBottom: stage.bottom };
+            return { id, width: bounds.width, height: bounds.height, center: bounds.y + bounds.height / 2, expected: center, opacity: Number(getComputedStyle(card).opacity), top: bounds.top, bottom: bounds.bottom, stageTop: stage.top, stageBottom: stage.bottom };
           });
         }, group.ids);
         measurements.push({ config, groupIndex, time, cards: result });
         if (caseIndex === 0 && time === group.landed) await page.screenshot({ path: `${output}/row-${groupIndex}.png` });
+        baseSize ??= { width: result[0].width, height: result[0].height };
         for (const card of result) {
           assert.ok(card.opacity > .99, 'The card must be fully visible when measured');
           assert.ok(Math.abs(card.center - card.expected) < .1,
             `Big card ${card.id} must stop at the frame's short-axis center: ${JSON.stringify({ config, time, ...card })}`);
           assert.ok(card.top >= card.stageTop && card.bottom <= card.stageBottom, 'The settled card frame must remain inside the broadcast frame');
+          // Compare the goalkeeper and outside cards across rows. Centre cards may be larger.
+          const standardSize = result.length !== 2 && (card === result[0] || card === result.at(-1));
+          for (const dimension of ['width', 'height']) {
+            if (standardSize) assert.ok(Math.abs(card[dimension] - baseSize[dimension]) < .1,
+              `Rows must share the same unfolded card size: ${JSON.stringify({ config, groupIndex, id: card.id, dimension, actual: card[dimension], expected: baseSize[dimension] })}`);
+            assert.ok(card[dimension] >= baseSize[dimension] - .1 && card[dimension] <= baseSize[dimension] * 1.1 + .1,
+              'Within-row emphasis must remain close to the shared card size');
+          }
         }
       }
     }
@@ -78,7 +88,7 @@ try {
     assert.ok(await page.locator('[class*="_bigc_"]').evaluateAll(cards => cards.every(card => Number(getComputedStyle(card).opacity) === 0)), 'Big cards must return to the pitch after their reveal');
   }
   assert.deepEqual(errors, []);
-  console.log(`Classic big-card rotation: ${cases.length} configurations, ${measurements.length} frames centered within 0.1px; return animation passed.`);
+  console.log(`Classic big-card rotation: ${cases.length} configurations, ${measurements.length} frames centered within 0.1px, consistent sizes across rows with within-row emphasis; return animation passed.`);
 } finally {
   await writeFile(`${output}/measurements.json`, JSON.stringify({ measurements, errors }, null, 2));
   await browser.close();
