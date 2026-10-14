@@ -92,15 +92,19 @@ export function boardLayout(s: LineupState) {
   });
   // Centre on the 16:9 frame's short axis, accounting for the field's 1.6cqw top inset.
   const by = ((100 * 9 / 16 / 2 - 1.6) / FH) * 100;
-  // Every row shares a base size that fits the densest row; centre cards keep their emphasis.
+  // Use one base size for all rows, with room for the centre-card emphasis at 100%.
   const maxCount = Math.max(1, ...groups.map((g) => g.items.length));
-  const W = Math.min((19 * s.look.bigSize) / 100, (FW - 13) / maxCount - 4, 33), bs = W / CW;
+  const emphasis = 1.08, gap = 1.5, available = FW - 9;
+  const baseWidth = Math.min(19, (available - gap * (maxCount - 1)) / (maxCount * emphasis));
+  const W = (baseWidth * s.look.bigSize) / 100, bs = W / CW;
   groups.forEach((g) => {
     const k = g.items.length;
+    // At larger settings, tighten the spacing instead of silently capping the card size.
+    const step = k > 1 ? Math.min(W * emphasis + gap, (available - W * emphasis) / (k - 1)) : 0;
     g.items.forEach((it, j) => {
-      it.bs = bs * (k > 1 && Math.abs(j - (k - 1) / 2) < .6 ? 1.08 : 1);
+      it.bs = bs * (k > 1 && Math.abs(j - (k - 1) / 2) < .6 ? emphasis : 1);
       it.by = by;
-      it.bx = 46 + (j - (k - 1) / 2) * (((W + 4) / FW) * 100);
+      it.bx = 46 + (j - (k - 1) / 2) * ((step / FW) * 100);
     });
   });
   return { slots, items, groups, labels };
@@ -286,7 +290,8 @@ function boardHTML(s: LineupState) {
     ? L.items
         .map((it) => {
           const p: SeqPlayer = { ...s.players[it.i], pos: it.pos, idx: it.i };
-          return `<div class="rc bigc${p.key ? ' key' : ''}${p.captain ? ' cap' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;transform:translate(-50%,-50%) scale(${it.ss.toFixed(4)})"><div class="flip"><div class="fface">${rcInner(s, p, 'bg' + it.i)}</div><div class="fback"><div class="bk">${crestHTML(s)}</div></div></div></div>`;
+          // Stack overlapping cards from left to right so their left-aligned numbers stay visible.
+          return `<div class="rc bigc${p.key ? ' key' : ''}${p.captain ? ' cap' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;transform:translate(-50%,-50%) scale(${it.ss.toFixed(4)});z-index:${300 + Math.round(it.bx * 10)}"><div class="flip"><div class="fface">${rcInner(s, p, 'bg' + it.i)}</div><div class="fback"><div class="bk">${crestHTML(s)}</div></div></div></div>`;
         })
         .join('')
     : '';
