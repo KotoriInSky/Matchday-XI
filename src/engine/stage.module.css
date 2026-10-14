@@ -308,7 +308,6 @@
 .bg[data-mode="stripes"]{background:var(--text-pat) center/cover}
 :is(.m-panel,.bpanel-bg) > .stripes-bg{background:var(--text-pat) center/cover}
 :is(.m-panel,.bpanel-bg) > .stripes-bg::after{display:none}
-.m-name{background:var(--text-pat) center/cover;padding:.7cqw 1cqw;border-radius:.35cqw;text-shadow:none}
 .rc-shade{background:linear-gradient(to top,#101820 28%,transparent)}
 .rc-name{color:var(--name-color,#FFFFFF)}
 .h-info{background:var(--text-pat) center/cover;padding:1.2cqw;border-radius:.4cqw}

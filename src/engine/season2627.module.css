@@ -17,7 +17,7 @@
 .s26-coach-photo{position:absolute;inset:2.5cqw -2cqw 0 0;display:flex;justify-content:center;align-items:flex-end;overflow:hidden}
 .s26-coach-photo img{width:100%;height:100%;object-fit:contain;object-position:center bottom;transform-origin:50% 100%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(calc(var(--fz,1) * var(--gz,1)));mask-image:linear-gradient(to top,transparent 0,#000 23%);filter:drop-shadow(.28cqw .38cqw .5cqw #08121c52)}
 .s26-coach-photo svg{width:90%;height:88%;margin-bottom:4cqw}
-.s26-coach-name{position:absolute;left:2.5cqw;right:3cqw;bottom:3cqw;padding:1cqw;background:var(--s26-background);color:var(--s26-background-ink);font-family:var(--fd);line-height:1.08}
+.s26-coach-name{position:absolute;left:2.5cqw;right:3cqw;bottom:3cqw;color:var(--s26-background-ink);font-family:var(--fd);line-height:1.08}
 .s26-coach-name span{display:block;font-family:var(--fb);font-size:1.15cqw;font-weight:400;margin-bottom:.5cqw}
 .s26-coach-name b{font-size:2.8cqw;font-weight:700;overflow-wrap:anywhere}
 .s26-group{position:absolute;inset:0 auto 0 0;width:90cqw;z-index:3;visibility:hidden;clip-path:inset(0 -10cqw 0 0)}
