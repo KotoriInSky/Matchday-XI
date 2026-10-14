@@ -1,4 +1,6 @@
 import type { Fit, GraphicText, LineupState, Player, Tag } from './types';
+import defaultFifaFlags from '@/data/default-fifa-flags.json';
+import fifaMembers from '@/data/fifa-members.json';
 
 /** Bundled font families and weights used by the font vendoring script. */
 export const FONT_SPECS: Record<string, string> = {
@@ -46,34 +48,13 @@ export const PRESETS = [
   { id: 'tangerine', c: ['#e8641f', '#16181d', '#ffffff', '#ffe9da'], k2: '#16181d' },
 ] as const;
 
-/* Sample tag pictures: simple flags drawn here so the sample works offline. */
-const svgURI = (body: string) => 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 20">${body}</svg>`);
-const hBands = (cs: string[]) => cs.map((c, i) => `<rect y="${(i * 20) / cs.length}" width="30" height="${20 / cs.length + 0.01}" fill="${c}"/>`).join('');
-const vBands = (cs: string[]) => cs.map((c, i) => `<rect x="${i * 10}" width="10.01" height="20" fill="${c}"/>`).join('');
-const star = (cx: number, cy: number, r: number, fill: string) => {
-  let p = '';
-  for (let k = 0; k < 10; k++) {
-    const a = -Math.PI / 2 + (k * Math.PI) / 5, rr = k % 2 ? r * 0.4 : r;
-    p += (cx + rr * Math.cos(a)).toFixed(2) + ',' + (cy + rr * Math.sin(a)).toFixed(2) + ' ';
-  }
-  return `<polygon points="${p}" fill="${fill}"/>`;
-};
-
 export const newFit = (): Fit => ({ z: 1, x: 0, y: 0 });
 
-const SAMPLE_TAGS: Tag[] = [
-  { id: 'eng', label: '英格兰 · England', img: svgURI('<rect width="30" height="20" fill="#fff"/><path d="M13 0h4v20h-4Z M0 8h30v4H0Z" fill="#CE1124"/>') },
-  { id: 'it', label: '意大利 · Italy', img: svgURI(vBands(['#009246', '#ffffff', '#CE2B37'])) },
-  { id: 'nl', label: '荷兰 · Netherlands', img: svgURI(hBands(['#AE1C28', '#FFFFFF', '#21468B'])) },
-  { id: 'kr', label: '韩国 · South Korea', img: svgURI('<rect width="30" height="20" fill="#fff"/><g transform="translate(15 10) rotate(33.69)"><circle r="4.5" fill="#CD2E3A"/><path d="M-4.5 0a4.5 4.5 0 0 0 9 0a2.25 2.25 0 0 0-4.5 0a2.25 2.25 0 0 1-4.5 0" fill="#0047A0"/></g>' + [
-    [-8, -5, -56, [false, false, false]], [8, 5, -56, [true, true, true]],
-    [8, -5, 56, [true, false, true]], [-8, 5, 56, [false, true, false]],
-  ].map(([x, y, angle, broken]) => '<g transform="translate(' + (15 + Number(x)) + ' ' + (10 + Number(y)) + ') rotate(' + angle + ')">' + (broken as boolean[]).map((split, i) => split ? '<path d="M-2.2 ' + (i - 1) + 'h1.8m.8 0h1.8" stroke="#000" stroke-width=".65"/>' : '<path d="M-2.2 ' + (i - 1) + 'h4.4" stroke="#000" stroke-width=".65"/>').join('') + '</g>').join('')) },
-  { id: 'jp', label: '日本 · Japan', img: svgURI('<rect width="30" height="20" fill="#fff"/><circle cx="15" cy="10" r="6" fill="#BC002D"/>') },
-  { id: 'hu', label: '匈牙利 · Hungary', img: svgURI(hBands(['#CE2939', '#ffffff', '#477050'])) },
-  { id: 'br', label: '巴西 · Brazil', img: svgURI('<rect width="30" height="20" fill="#009B3A"/><path d="M15 2L28 10 15 18 2 10Z" fill="#FFDF00"/><circle cx="15" cy="10" r="5" fill="#002776"/><path d="M10.3 8.5Q15 8 19.8 12" fill="none" stroke="#fff" stroke-width="1"/>' + star(14, 12, .45, '#fff') + star(17, 11, .4, '#fff')) },
-  { id: 'cn', label: '中国 · China', img: svgURI('<rect width="30" height="20" fill="#DE2910"/>' + star(5, 5, 3, '#FFDE00') + [[10,2,-31],[12,4,-8],[12,7,18],[10,9,40]].map(([x,y,r]) => '<g transform="rotate(' + r + ' ' + x + ' ' + y + ')">' + star(x,y,1,'#FFDE00') + '</g>').join('')) },
-].map((t) => ({ ...t, shape: 'wide' as const, fit: newFit() }));
+const SAMPLE_TAGS: Tag[] = Object.entries({ eng: 'ENG', it: 'ITA', nl: 'NED', kr: 'KOR', jp: 'JPN', hu: 'HUN', br: 'BRA', cn: 'CHN' }).map(([id, code]) => ({
+  id, fifaCode: code, label: fifaMembers.find(member => member.code === code)!.name,
+  img: 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(defaultFifaFlags[code as keyof typeof defaultFifaFlags]),
+  shape: 'wide', fit: newFit(),
+}));
 
 export const blankPlayer = (): Player => ({
   num: '', name: '', short: '', nameLine1: null, nameLine2: null, nameSize1: 100, nameSize2: 100, pos: '', photo: null, photo2: null, photoK: null, cut: true, cutK: true, cutS: true,

@@ -12,6 +12,8 @@ Names are localized for the six built-in interface languages. The catalog preser
 
 Flags are served with the app and selected SVGs are embedded in the project, including their source notices. Backups and exports therefore do not depend on an external flag service. Search terms remain in the browser. The library is a dated snapshot, not an automatically updated membership feed.
 
+The demo's default tags also use these library SVGs, embedded with their notices. Run `node scripts/build-default-flags.mjs` after updating the corresponding library assets to refresh the portable defaults. Existing saved projects retain their own tags.
+
 210 SVG assets are based on MIT-licensed [flag-icons](https://github.com/lipis/flag-icons). The Chinese Taipei representative flag is sourced from Wikimedia Commons, which identifies it as public domain; trademark and insignia restrictions remain separate. See the distributed [source and copyright notice](../public/flags/FIFA-FLAGS-SOURCES.txt), [MIT notice](../public/flags/FLAG-ICONS-LICENSE.txt) and [per-file manifest](../public/flags/manifest.json). Matchday XI is independent of FIFA, IOC and the associations.
 
 ## 中文说明

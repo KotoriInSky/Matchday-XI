@@ -5,6 +5,10 @@ import { createHash } from 'node:crypto';
 
 const members = JSON.parse(await readFile('src/data/fifa-members.json', 'utf8'));
 const manifest = JSON.parse(await readFile('public/flags/manifest.json', 'utf8'));
+const defaultFlags = JSON.parse(await readFile('src/data/default-fifa-flags.json', 'utf8'));
+for (const [code, svg] of Object.entries(defaultFlags)) {
+  assert.equal(svg, await readFile(`public/flags/fifa/${code}.svg`, 'utf8'), `Default ${code} must use the library artwork and notices`);
+}
 assert.equal(members.length, 211);
 assert.equal(new Set(members.map(m => m.code)).size, 211);
 assert.equal(manifest.assets.length, 211);
