@@ -2,7 +2,7 @@
  * HTML for the broadcast frame. Class names here are the plain names from stage.module.css;
  * the stage maps them to the module's generated names before inserting the markup.
  */
-import { CH, CW, FH, FW, ROLE_OF, SMALL, STEP } from './constants';
+import { CW, FH, FW, ROLE_OF, SMALL, STEP } from './constants';
 import { slotsFor, type Role } from './formation';
 import { broadcastName, playerNameLines, clamp, parseSubs, shortName, splitName, fitRef, playerTagPath } from './state';
 import type { Fit, LineupState, Player } from './types';
@@ -90,11 +90,10 @@ export function boardLayout(s: LineupState) {
     if (last && last.role === g.role) last.groups.push(gi);
     else labels.push({ role: g.role, groups: [gi] });
   });
+  // Centre on the 16:9 frame's short axis, accounting for the field's 1.6cqw top inset.
+  const by = ((100 * 9 / 16 / 2 - 1.6) / FH) * 100;
   groups.forEach((g) => {
     const k = g.items.length, W = Math.min((19 * s.look.bigSize) / 100, (FW - 13) / k - 4, 33), bs = W / CW;
-    const halfH = ((CH * bs) / 2 / FH) * 100;
-    const avgY = g.items.reduce((a, it) => a + it.sy, 0) / k;
-    const by = clamp(avgY, halfH + 1.5, 100 - halfH - 1.5);
     g.items.forEach((it, j) => {
       it.bs = bs * (k > 1 && Math.abs(j - (k - 1) / 2) < .6 ? 1.08 : 1);
       it.by = by;
