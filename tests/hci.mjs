@@ -70,7 +70,7 @@ try {
     return [playerCardHTML(window.hciStore.state, 0), seasonPlayerHTML(window.hciStore.state, 0)];
   });
   for (const html of markup) assert.match(html, /data-fit="pt:0:it" style="[^"]*--fx:4\.00%/);
-  await tab('标签'); await page.locator('.tag-index button').filter({ hasText: 'Italy' }).click();
+  await tab('标签'); await page.locator('.tag-index button').filter({ hasText: '意大利' }).click();
   const sharedX = dialog.getByLabel('水平位置', { exact: true });
   assert.equal(await sharedX.inputValue(), '3');
   await sharedX.focus(); await page.keyboard.press('ArrowRight'); await page.keyboard.press('ArrowRight');

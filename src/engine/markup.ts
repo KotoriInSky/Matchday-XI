@@ -189,10 +189,10 @@ function rcInner(s: LineupState, p: SeqPlayer, gid: string) {
   return `<div class="rc-in${p.photo && p.cut !== false ? ' cutout' : ''}">
     <div class="stripes-bg"></div>
     ${p.key ? '<div class="rc-metal"></div><div class="rc-holo"></div>' : ''}
-    <div class="rc-num">${esc(p.num)}</div>
+    <div class="rc-num" data-card-text>${esc(p.num)}</div>
     <div class="rc-photo${fullCls(p)}">${p.photo ? `<img src="${p.photo}" alt="" draggable="false" data-fit="p:${p.idx}:fit" style="${fitStyle(p.fit)}">` : personSVG(p.num, gid)}</div>
     <div class="rc-shade"></div>
-    <div class="rc-name" style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100}">${first ? `<span class="up">${esc(first)}</span>` : ''}${last ? `<b class="up">${esc(last)}</b>` : ''}</div>
+    <div class="rc-name" data-card-text style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100}">${first ? `<span class="up">${esc(first)}</span>` : ''}${last ? `<b class="up">${esc(last)}</b>` : ''}</div>
     <i class="sheen"></i>${p.key ? '<i class="rc-flash"></i>' : ''}
   </div>${p.key ? keyPhotoHTML(p, gid) : ''}${tags ? `<div class="rc-tags">${tags}</div>` : ''}`;
 }
@@ -241,7 +241,7 @@ const CJK_RE = /[぀-ヿ㐀-鿿가-힯]/;
 
 // Both faces use the final pitch label, preserving manually mixed case and line breaks.
 const smallName = (p: Player) => broadcastName(playerNameLines(p)[1]);
-const smallNameHTML = (p: Player) => `<div class="nm"><b style="font-size:${1.05 * p.nameSize2 / 100}cqw">${esc(smallName(p))}</b></div>`;
+const smallNameHTML = (p: Player) => `<div class="nm" data-card-text><b style="font-size:${1.05 * p.nameSize2 / 100}cqw">${esc(smallName(p))}</b></div>`;
 
 function smallTagsHTML(s: LineupState, p: Player, index: number, season = false) {
   const badges = tagHTML(s, p.tag1, index) + tagHTML(s, p.tag2, index);

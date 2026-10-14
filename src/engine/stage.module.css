@@ -334,3 +334,4 @@
 .h-info{top:auto;bottom:8cqw}
 .sm-por{position:relative;padding-bottom:1.6cqw}
 .sm-por .nm,.sm-por.cutout .nm{position:absolute;left:0;right:0;bottom:0;z-index:1}
+.inspector [data-card-text]{pointer-events:auto;cursor:text;user-select:text}

@@ -90,13 +90,13 @@ export function seasonPlayerHTML(s: LineupState, index: number, count = 1, previ
   };
   return `<div class="s26-column${preview ? ' s26-preview-column' : ''}" data-player="${index}" data-key="${key}" style="--s26-name-bg:${normalSurface};--s26-key-name-bg:${keySurface};--s26-key-name-light:${foilTone('#ffffff', .24)};--s26-key-name-dark:${foilTone('#263547', .08)}">
     <div class="s26-column-bg"></div>${key ? '<div class="s26-metal"><div class="s26-foil-relief"></div><div class="s26-reflection"></div></div>' : ''}<div class="s26-entry-light" aria-hidden="true"></div>
-    <div class="s26-number">${esc(p.num)}</div>
+    <div class="s26-number" data-card-text>${esc(p.num)}</div>
     ${portrait(p.photo, p.cut !== false, p.fit, `p:${index}:fit`, p.num, 'season-' + index)}
     ${key ? portrait(p.photoK || p.photo, (p.photoK ? p.cutK : p.cut) !== false, p.fitK, `p:${index}:fitK`, p.num, 'season-key-' + index, true) : ''}
     ${key ? '<div class="s26-key-coat"><div class="s26-reflection"></div></div>' : ''}
     <div class="s26-veil"></div>${key ? '<div class="s26-key-veil"></div>' : ''}
     <div class="s26-info" style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100};--s26-name-size:${count <= 2 ? 3.2 : 2.05}cqw">
-      <div class="s26-name">${first ? `<span>${esc(broadcastName(first))}</span>` : ''}${last ? `<b>${esc(broadcastName(last))}</b>` : ''}</div>
+      <div class="s26-name" data-card-text>${first ? `<span>${esc(broadcastName(first))}</span>` : ''}${last ? `<b>${esc(broadcastName(last))}</b>` : ''}</div>
       ${playerTags(s, p, index)}
     </div>
   </div>`;

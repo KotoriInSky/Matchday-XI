@@ -33,7 +33,7 @@
 ## 6. 调整文本框交互
 
 - 调整文本框的操作方式。
-- 不再直接拖动文本。
+- 姓名通过文本框编辑；在卡片上拖动文字只进行文本选择，不触发照片移动，图片和标签仍可单独拖动。
 
 ## 7. 鲁本·迪亚斯默认排版参考
 
@@ -110,3 +110,4 @@
 | 默认标签采用 FIFA 素材 | 已检验 | 默认素材与库文件一致；FIFA 搜索、撤销、保存恢复、两种卡片导出、类型检查与构建通过 | `fix: use bundled FIFA artwork for default tags` |
 | 替补默认只标 GK | 已检验 | 两个模板默认仅有 GK；用户已有或主动填写的位置保留；类型检查与构建通过 | `fix: show only GK in default substitute positions` |
 | 替补一键按号码升序整理 | 已检验 | 数字排序、同号稳定、GK/备注/空行保留、撤销重做、刷新恢复、4 种宽度界面回归、类型检查与构建通过 | `feat: sort numbered substitutes while keeping goalkeepers in place` |
+| 文本框编辑与图片拖动分开 | 已检验 | 两种模板的文字拖选不移动照片、图片可拖、姓名输入可编辑；HCI 回归、类型检查与构建通过 | `fix: keep card text selection separate from image dragging` |

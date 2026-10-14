@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test:ui": "node tests/ui.mjs",
     "test:subs": "node tests/substitute-sort.mjs",
+    "test:card-text": "node tests/card-text.mjs",
     "test:hci": "node tests/hci.mjs",
     "test:cards": "node tests/card-export.mjs",
     "test:storage": "node tests/storage.mjs",

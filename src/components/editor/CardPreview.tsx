@@ -64,6 +64,7 @@ export function CardPreview({ playerIndex, tagId, onPlayerChange, onClose, onSce
     if (path) store.update((state) => { const f = fitRef(state, path, true); if (f) f[key] = value; }, { fit: path });
   };
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
+    if ((e.target as Element).closest('[data-card-text]')) return;
     const hit = (e.target as Element).closest<HTMLElement>('[data-fit]');
     const image = hit || ((e.target as Element).closest('.' + styles.rc) && [...e.currentTarget.querySelectorAll<HTMLElement>('[data-fit]')].find((el) => el.dataset.fit === path));
     if (!image) return;
@@ -158,7 +159,7 @@ export function CardPreview({ playerIndex, tagId, onPlayerChange, onClose, onSce
               <Slider label={zh ? '字号' : 'Text size'} min={60} max={140} step={5} value={line ? p.nameSize2 : p.nameSize1} format={(v) => `${v}%`} onChange={(v) => store.update((state) => { state.players[playerIndex][line ? 'nameSize2' : 'nameSize1'] = v; })} />
             </div>)}
           </div>
-          <p id="card-name-wrap-help" className="text-xs text-muted-foreground">{zh ? '按 Enter 换行，例如 ALEXANDER- ↵ ARNOLD。字号保持不变，文字从底部向上延展。' : 'Press Enter to wrap, e.g. ALEXANDER- ↵ ARNOLD. Text grows upward at the same size.'}</p>
+          <p id="card-name-wrap-help" className="text-xs text-muted-foreground">{zh ? '姓名通过文本框编辑，拖动文字不会移动图片。按 Enter 换行，例如 ALEXANDER- ↵ ARNOLD；文字从底部向上延展。' : 'Edit names in the text fields. Dragging text does not move the photo. Press Enter to wrap; text grows upward from the bottom.'}</p>
           </Subsection>
           <div className="card-field-pair">
           <Switch label={t('lineup.key')} checked={p.key} onCheckedChange={(value) => store.update((state) => state.players[playerIndex].key = value)} />
