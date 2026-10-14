@@ -37,7 +37,7 @@
 .s26-key-coat{position:absolute;inset:0;opacity:0;pointer-events:none;mask-image:linear-gradient(to bottom,#000 0,#000 60%,transparent 79%)}
 .s26-key-coat .s26-reflection{opacity:.1;mix-blend-mode:screen}
 .s26-entry-light{position:absolute;top:-10%;bottom:-10%;left:0;width:35%;opacity:0;pointer-events:none;background:linear-gradient(90deg,transparent,#fff,transparent);transform:translateX(-150%) skewX(-16deg)}
-.s26-number{position:absolute;left:1.2cqw;top:1.2cqw;font-family:var(--fn,var(--fd));font-size:8.5cqw;line-height:1;font-weight:800;font-variant-numeric:tabular-nums;color:var(--number-ink,#fff);-webkit-text-stroke:.14cqw var(--number-color,#111);paint-order:stroke fill;opacity:.22}
+.s26-number{position:absolute;left:calc(var(--card-w) * .045);top:calc(var(--card-h) * .03 - var(--card-w) * .479 * .15);font-family:var(--fn,var(--fd));font-size:calc(var(--card-w) * .479);line-height:1;font-weight:800;font-variant-numeric:tabular-nums;color:var(--number-ink,#fff);-webkit-text-stroke:.14cqw var(--number-color,#111);paint-order:stroke fill;opacity:.22}
 /* Keep the crop fixed to the card while the portrait moves and its backing surface bleeds. */
 .s26-photo-window{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .s26-photo{position:absolute;inset:4cqw -6% 0;display:flex;align-items:flex-end;justify-content:center;pointer-events:none}
@@ -50,11 +50,13 @@
 .s26-full-photo img{width:100%;height:100%;object-fit:cover;object-position:50% 15%;mask-image:linear-gradient(to top,transparent 0,#000 20%);filter:none}
 .s26-veil,.s26-key-veil{position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top,var(--s26-name-bg,#101820) 0,var(--s26-name-bg,#101820) 20%,transparent 52%)}
 .s26-key-veil{opacity:0;background:linear-gradient(to top,var(--s26-key-name-bg,#dde1e5) 0,var(--s26-key-name-dark,#cfd5dc) 8%,var(--s26-key-name-light,#e8ecf0) 17%,var(--s26-key-name-bg,#dde1e5) 22%,transparent 52%)}
-.s26-info{position:absolute;left:1.2cqw;right:1.2cqw;bottom:2.6cqw;pointer-events:none}
-.s26-name{display:flex;flex-direction:column;gap:.25cqw;font-family:var(--fd);color:var(--name-color,#fff);line-height:1.06;white-space:pre-wrap;overflow-wrap:anywhere}
-.s26-name span{font-family:var(--fb);font-size:calc(1.25cqw * var(--name-scale-1,1));font-weight:400}
-.s26-name b{font-size:calc(var(--s26-name-size,2.05cqw) * var(--name-scale-2,1));font-weight:750}
-.s26-tags{display:flex;gap:.55cqw;align-items:center;margin-top:.85cqw;height:var(--s26-tag-h)}
+.s26-info{position:absolute;left:6%;right:6%;bottom:calc(var(--card-h) * .03 - var(--card-w) * .153 * var(--name-scale-2,1) * .17);pointer-events:none}
+.s26-name{display:flex;flex-direction:column;font-family:var(--fd);color:var(--name-color,#fff);line-height:1.08;white-space:pre-wrap;overflow-wrap:anywhere}
+.s26-name span{font-family:var(--fb);font-size:calc(var(--card-w) * .083 * var(--name-scale-1,1));font-weight:400}
+.s26-name b{font-size:calc(var(--card-w) * .153 * var(--name-scale-2,1));font-weight:700}
+/* Match the visible gap rather than adding to the font's built-in line-box whitespace. */
+.s26-name span + b{margin-top:calc(var(--card-h) * .011 - var(--card-w) * .083 * var(--name-scale-1,1) * .13 - var(--card-w) * .153 * var(--name-scale-2,1) * .175)}
+.s26-tags{position:absolute;left:0;top:46%;display:flex;gap:.55cqw;align-items:center;height:var(--s26-tag-h)}
 .s26-tag,.s26-badge{display:block;position:relative;flex:none;height:var(--s26-tag-h);width:var(--s26-tag-w)}
 .s26-square{width:var(--s26-tag-h)}
 .s26-tag img{display:block;width:100%;height:100%;object-fit:contain;transform:translate(var(--fx,0%),var(--fy,0%)) scale(var(--fz,1));filter:drop-shadow(0 .07cqw .08cqw #10182038)}
@@ -93,13 +95,10 @@
 .s26-preview{position:absolute;inset:0;--s26-tag-h:calc(1.365cqw * var(--tgz,1));--s26-tag-w:calc(2.0475cqw * var(--tgz,1))}
 .s26-preview-column{left:18cqw;right:18cqw;top:0;bottom:0}
 .s26-preview .s26-column{overflow:visible}
+.s26-preview .s26-photo-window{overflow:visible}
 .s26-preview .s26-full-photo{overflow:hidden}
 .s26-preview .s26-photo{top:1cqw}
-.s26-preview .s26-info{left:3cqw;right:3cqw;bottom:5cqw}
-.s26-preview .s26-name span{font-size:calc(3cqw * var(--name-scale-1,1))}
-.s26-preview .s26-name b{font-size:calc(5cqw * var(--name-scale-2,1))}
-.s26-preview .s26-number{font-size:16cqw;left:3cqw;top:3cqw}
-.s26-preview .s26-tags{margin-top:1.5cqw;transform:scale(1.7);transform-origin:0 0}
+.s26-preview .s26-tags{transform:translateX(-50%) scale(1.7);transform-origin:0 0}
 .s26-preview-key .s26-metal,.s26-preview-key .s26-key-veil,.s26-preview-key .s26-key-photo,.s26-preview-key .s26-key-coat{opacity:1}
 .s26-preview-key .s26-reflection{background-position:35% 0}
 .s26-preview-key .s26-veil{opacity:0}

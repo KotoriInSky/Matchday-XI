@@ -156,9 +156,10 @@ export function CardPreview({ playerIndex, tagId, onPlayerChange, onClose, onSce
           <div className="grid grid-cols-2 gap-3">
             {([0, 1] as const).map((line) => <div key={line} className="min-w-0 space-y-3">
               <Field label={zh ? (line ? '第二行' : '第一行') : (line ? 'Second line' : 'First line')}>{({ id }) => <Textarea id={id} rows={2} aria-describedby="card-name-wrap-help" value={playerNameLines(p)[line]} onChange={(e) => store.update((state) => { const player = state.players[playerIndex]; const lines = playerNameLines(player); player.nameLine1 = lines[0]; player.nameLine2 = lines[1]; player[line ? 'nameLine2' : 'nameLine1'] = e.target.value; })} />}</Field>
-              <Slider label={zh ? '字号' : 'Text size'} min={60} max={140} step={5} value={line ? p.nameSize2 : p.nameSize1} format={(v) => `${v}%`} onChange={(v) => store.update((state) => { state.players[playerIndex][line ? 'nameSize2' : 'nameSize1'] = v; })} />
+              {variant !== 'small' && <Slider label={zh ? (line ? '第二行字号' : '第一行字号') : (line ? 'Second-line text size' : 'First-line text size')} min={30} max={250} step={5} value={line ? p.nameSize2 : p.nameSize1} format={(v) => `${v}%`} onChange={(v) => store.update((state) => { state.players[playerIndex][line ? 'nameSize2' : 'nameSize1'] = v; })} />}
             </div>)}
           </div>
+          {variant === 'small' && <Slider label={zh ? '小卡字号' : 'Pitch-card text size'} min={30} max={250} step={5} value={p.nameSizeSmall} format={(v) => `${v}%`} onChange={(v) => store.update((state) => { state.players[playerIndex].nameSizeSmall = v; })} hint={zh ? '小卡显示第二行姓名，字号独立于大卡。' : 'Pitch cards show the second name line, with a separate text size.'} />}
           <p id="card-name-wrap-help" className="text-xs text-muted-foreground">{zh ? '姓名通过文本框编辑，拖动文字不会移动图片。按 Enter 换行，例如 ALEXANDER- ↵ ARNOLD；文字从底部向上延展。' : 'Edit names in the text fields. Dragging text does not move the photo. Press Enter to wrap; text grows upward from the bottom.'}</p>
           </Subsection>
           <div className="card-field-pair">

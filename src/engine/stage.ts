@@ -201,7 +201,7 @@ export class Stage {
         sb.style.zoom = String(f);
       }
     }
-    this.qa('.i-title, .i-team, .m-team, .sm-num small, .s26-team, .s26-solid').forEach((el) => {
+    this.qa('.i-title, .i-team, .m-team, .s26-team, .s26-solid').forEach((el) => {
       el.style.fontSize = '';
       const base = parseFloat(getComputedStyle(el).fontSize);
       let f = base;

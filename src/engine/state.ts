@@ -40,11 +40,15 @@ export function normalize(input: unknown): LineupState {
   d.formation = (parseFormation(d.formation) || parseFormation('4-3-3')!).label;
   const ps = (Array.isArray(d.players) ? d.players : []).slice(0, 11).map((p) => deepMerge(blankPlayer() as unknown as Obj, p) as unknown as LineupState['players'][number]);
   while (ps.length < 11) ps.push(blankPlayer());
-  ps.forEach((p) => {
+  const incomingPlayers = isObj(input) && Array.isArray(input.players) ? input.players : [];
+  ps.forEach((p, index) => {
     p.nameLine1 = typeof p.nameLine1 === 'string' ? p.nameLine1 : null;
     p.nameLine2 = typeof p.nameLine2 === 'string' ? p.nameLine2 : null;
-    p.nameSize1 = clamp(Number(p.nameSize1) || 100, 60, 140);
-    p.nameSize2 = clamp(Number(p.nameSize2) || 100, 60, 140);
+    p.nameSize1 = clamp(Number(p.nameSize1) || 100, 30, 250);
+    p.nameSize2 = clamp(Number(p.nameSize2) || 100, 30, 250);
+    const incoming = incomingPlayers[index];
+    const smallSize = isObj(incoming) && !('nameSizeSmall' in incoming) ? incoming.nameSize2 : p.nameSizeSmall;
+    p.nameSizeSmall = clamp(Number(smallSize) || 100, 30, 250);
   });
   d.players = ps;
   d.tags = (Array.isArray(d.tags) ? d.tags : [])

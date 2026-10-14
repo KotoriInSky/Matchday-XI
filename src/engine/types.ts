@@ -15,6 +15,8 @@ export interface Player {
   nameLine2: string | null;
   nameSize1: number;
   nameSize2: number;
+  /** Independent surname size on the small pitch card. */
+  nameSizeSmall: number;
   /** Optional position label override, e.g. "CAM". */
   pos: string;
   photo: string | null;

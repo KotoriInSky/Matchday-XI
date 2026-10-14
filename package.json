@@ -12,6 +12,7 @@
     "test:ui": "node tests/ui.mjs",
     "test:subs": "node tests/substitute-sort.mjs",
     "test:card-text": "node tests/card-text.mjs",
+    "test:card-type": "node tests/card-typography.mjs",
     "test:hci": "node tests/hci.mjs",
     "test:cards": "node tests/card-export.mjs",
     "test:storage": "node tests/storage.mjs",

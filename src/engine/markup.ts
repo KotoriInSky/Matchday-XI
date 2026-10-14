@@ -241,7 +241,7 @@ const CJK_RE = /[぀-ヿ㐀-鿿가-힯]/;
 
 // Both faces use the final pitch label, preserving manually mixed case and line breaks.
 const smallName = (p: Player) => broadcastName(playerNameLines(p)[1]);
-const smallNameHTML = (p: Player) => `<div class="nm" data-card-text><b style="font-size:${1.05 * p.nameSize2 / 100}cqw">${esc(smallName(p))}</b></div>`;
+const smallNameHTML = (p: Player) => `<div class="nm" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100}"><b>${esc(smallName(p))}</b></div>`;
 
 function smallTagsHTML(s: LineupState, p: Player, index: number, season = false) {
   const badges = tagHTML(s, p.tag1, index) + tagHTML(s, p.tag2, index);
@@ -260,7 +260,7 @@ export function smallCardsHTML(s: LineupState, season = false) {
       const cutout = !!pic && (p.photo2 ? p.cutS !== false : p.cut !== false);
       return `<div class="slot${season ? ' s26-slot' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;--s:${it.s.toFixed(3)};z-index:${Math.round(it.y)}"><div class="card"><div class="cvis"><div class="cflip">
       <div class="sm-face${season ? ' s26-small-face' : ''}">${season ? '<div class="s26-card-shadow" aria-hidden="true"><div></div></div>' : ''}<div class="sm-por${cutout ? ' cutout' : ''}${season && cutout ? ' s26-small-cutout' : ''}"><div class="ph">${ph}</div>${smallNameHTML(p)}</div>${badges}${cap}</div>
-      <div class="sm-num"><b>${esc(p.num)}</b><small style="font-size:${.72 * p.nameSize2 / 100}cqw">${esc(smallName(p))}</small></div>
+      <div class="sm-num" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100};--small-number-x:${p.num.length > 2 ? .55 : .8}"><b>${esc(p.num)}</b><small>${esc(smallName(p))}</small></div>
     </div></div></div></div>`;
     })
     .join('');

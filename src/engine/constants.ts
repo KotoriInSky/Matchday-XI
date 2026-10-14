@@ -57,7 +57,7 @@ const SAMPLE_TAGS: Tag[] = Object.entries({ eng: 'ENG', it: 'ITA', nl: 'NED', kr
 }));
 
 export const blankPlayer = (): Player => ({
-  num: '', name: '', short: '', nameLine1: null, nameLine2: null, nameSize1: 100, nameSize2: 100, pos: '', photo: null, photo2: null, photoK: null, cut: true, cutK: true, cutS: true,
+  num: '', name: '', short: '', nameLine1: null, nameLine2: null, nameSize1: 100, nameSize2: 100, nameSizeSmall: 100, pos: '', photo: null, photo2: null, photoK: null, cut: true, cutK: true, cutS: true,
   fit: newFit(), fitS: newFit(), fitK: newFit(), res: null, captain: false, key: false, tag1: '', tag2: '', tagFits: null,
 });
 
