@@ -51,20 +51,21 @@
 
 /* Scene 2: manager intro */
 .mgr{--manager-text-left:40cqw;position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
-.m-back{position:absolute;inset:0;background:radial-gradient(120% 100% at 60% 40%,var(--c1d),color-mix(in srgb,var(--c1d) 70%,#000))}
-.m-sweep{position:absolute;inset:-18%;background:var(--sweep) center/cover;opacity:0;filter:drop-shadow(0 0 1.5cqw rgba(0,0,0,.35))}
+.m-sweep{position:absolute;inset:0;z-index:5;background:linear-gradient(112deg,var(--c1d) 0%,var(--c1) 22%,var(--c1l) 40%,#06d96f 50%,#c8ff92 58%,#1ce1d2 67%,#00da83 79%,#56ede4 90%,#19d99a 100%);background-size:350% 100%;background-position:100% 50%;-webkit-mask:var(--sweep) center/cover no-repeat;mask:var(--sweep) center/cover no-repeat;opacity:0}
+.m-sweep-team{position:absolute;inset:0;background:var(--text-pat) center/cover;mask-image:linear-gradient(90deg,#000 45%,transparent 55%);mask-size:300% 100%;mask-position:100% 50%;mask-repeat:no-repeat}
 .haze{position:absolute;inset:0;z-index:1;opacity:0;pointer-events:none;background:color-mix(in srgb,#eef1f4 58%,transparent);-webkit-backdrop-filter:blur(.5cqw);backdrop-filter:blur(.5cqw)}
-.m-panel{position:absolute;left:33cqw;top:0;width:100cqw;bottom:0;border-radius:2.6cqw 0 0 2.6cqw;overflow:hidden;background:linear-gradient(160deg,var(--c1l),var(--c1) 55%,var(--c1d));box-shadow:-1cqw 0 3cqw rgba(0,0,0,.3)}
-.m-colw{position:absolute;top:0;bottom:0;left:var(--manager-text-left);width:0;z-index:2}
-.m-col{position:absolute;top:0;left:0;display:flex;flex-direction:column;align-items:flex-start;font-family:var(--fd);font-weight:800;font-size:9cqw;letter-spacing:.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:.14cqw color-mix(in srgb,var(--c3) 88%,transparent);white-space:nowrap}
-.m-col span{display:block;height:8.55cqw;line-height:8.55cqw}
-.m-col .m-gap{color:transparent;-webkit-text-stroke:0}
-.m-solid{position:absolute;left:var(--manager-text-left);text-align:left;top:calc(50% - 4.275cqw);height:8.55cqw;line-height:8.55cqw;z-index:3;font-family:var(--fd);font-weight:800;font-size:9cqw;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;color:var(--c3)}
+.m-panel{position:absolute;left:33cqw;top:0;width:100cqw;bottom:0;z-index:2;border-radius:2.6cqw 0 0 2.6cqw;overflow:hidden;background:linear-gradient(160deg,var(--c1l),var(--c1) 55%,var(--c1d));box-shadow:-1cqw 0 3cqw rgba(0,0,0,.3)}
+.m-titles{position:absolute;inset:0;z-index:3}
+.m-colw{position:absolute;top:0;bottom:0;left:var(--manager-text-left);right:0;z-index:3;overflow:hidden}
+.m-col{position:absolute;top:calc(50% - 29.925cqw);left:0;display:flex;flex-direction:column;align-items:flex-start;font-family:var(--fd);font-weight:800;font-size:9cqw;letter-spacing:.02em;text-transform:uppercase;color:transparent;-webkit-text-stroke:.14cqw color-mix(in srgb,var(--c3) 88%,transparent);white-space:nowrap}
+.m-col span{display:block;height:8.55cqw;line-height:8.55cqw;opacity:0}
+.m-solid{position:absolute;left:var(--manager-text-left);text-align:left;top:calc(50% - 4.275cqw);height:8.55cqw;line-height:8.55cqw;z-index:3;font-family:var(--fd);font-weight:800;font-size:9cqw;letter-spacing:.02em;text-transform:uppercase;white-space:nowrap;color:var(--c3);opacity:0}
 .m-solid i{display:block;font-style:normal}
 .m-eye{position:absolute;left:3cqw;top:3cqw;z-index:3;font-weight:700;font-size:1.2cqw;line-height:1;letter-spacing:.18em;text-transform:uppercase;color:var(--c4);background:var(--c2);padding:.6cqw 1cqw;border-radius:.35cqw;box-shadow:0 .3cqw .8cqw rgba(0,0,0,.25)}
 .m-teamw{position:absolute;left:var(--manager-text-left);text-align:left;right:7cqw;top:calc(50% - 4.275cqw);height:8.55cqw;z-index:3;overflow:hidden}
 .m-team{height:8.55cqw;line-height:8.55cqw;font-family:var(--fd);font-weight:800;font-size:9cqw;letter-spacing:.02em;white-space:nowrap}
 .m-crest{position:absolute;left:28.75cqw;top:50%;margin-top:-4.25cqw;width:8.5cqw;height:8.5cqw;z-index:4;display:flex;align-items:center;justify-content:center;filter:drop-shadow(0 .4cqw .8cqw rgba(0,0,0,.3))}
+.m-crest-y{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
 .m-crest img,.m-crest svg{max-width:100%;max-height:100%;object-fit:contain}
 .m-photo{position:absolute;left:-1cqw;bottom:0;width:31cqw;height:54cqw;display:flex;align-items:flex-end;justify-content:center;z-index:1}
 .m-photo img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 1cqw 2cqw rgba(0,0,0,.35))}

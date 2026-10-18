@@ -255,6 +255,7 @@ export const es: Messages = {
   'anim.single': 'Una carta cada vez',
   'anim.off': 'Sin presentación',
   'anim.manager': 'Presentación del entrenador',
+  'anim.openingLights': 'Transición inicial de colores',
   'anim.intro': 'Presentación con título',
   'anim.timing': 'Tiempos',
   'anim.per': 'Tiempo por jugador',

@@ -158,19 +158,20 @@ function introHTML(s: LineupState) {
     </div></div>`;
 }
 
-function mgrHTML({ s, videoURL }: MarkupContext) {
+function mgrHTML({ s }: MarkupContext) {
   const c = s.coach, t = s.text, ab = esc(shortName(s));
   const item = `<span>${ab}</span>`;
-  const media = (s.bg.mode === 'image' && s.bg.image) || (s.bg.mode === 'video' && videoURL);
   return `<div class="mgr">
-    ${media ? '' : '<i class="m-back"></i>'}<i class="m-sweep"></i>
-    <div class="m-panel"><div class="stripes-bg"></div></div>
+    <i class="m-sweep" aria-hidden="true"><i class="m-sweep-team"></i></i>
     <div class="m-photo${fullCls(c)}">${c.photo ? `<img src="${c.photo}" alt="" draggable="false" data-fit="coach:fit" style="${fitStyle(c.fit)}">` : coachSVG('mg')}</div>
-    ${s.look.crest ? `<div class="m-crest">${crestHTML(s)}</div>` : ''}
-    <div class="m-colw"><div class="m-col">${item.repeat(6)}<span class="m-gap">${ab}</span>${item.repeat(7)}</div></div>
-    <div class="m-solid"><i>${ab}</i></div>
+    <div class="m-panel"><div class="stripes-bg"></div></div>
+    ${s.look.crest ? `<div class="m-crest"><div class="m-crest-y">${crestHTML(s)}</div></div>` : ''}
+    <div class="m-titles">
+      <div class="m-colw"><div class="m-col">${item.repeat(7)}</div></div>
+      <div class="m-solid"><i>${ab}</i></div>
+      <div class="m-teamw"><div class="m-team up">${esc(s.team.name)}</div></div>
+    </div>
     ${t.subtitle ? `<div class="m-eye">${esc(t.subtitle)}</div>` : ''}
-    <div class="m-teamw"><div class="m-team up">${esc(s.team.name)}</div></div>
     <div class="m-name"><span>${esc(t.coachLabel)}</span><b class="up">${esc(c.name)}</b></div>
   </div>`;
 }

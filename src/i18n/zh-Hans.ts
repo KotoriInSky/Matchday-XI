@@ -274,6 +274,7 @@ export const zhHans: Messages = {
   'anim.single': '逐张大卡展示',
   'anim.off': '不展示',
   'anim.manager': '主教练开场',
+  'anim.openingLights': '彩色开场过渡',
   'anim.intro': '标题开场',
   'anim.timing': '时长',
   'anim.per': '每名球员时长',

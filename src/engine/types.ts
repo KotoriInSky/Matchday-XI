@@ -114,6 +114,7 @@ export interface LineupState {
     template: AnimationTemplate;
     intro: boolean;
     manager: boolean;
+    openingLights: boolean;
     style: RevealStyle;
     per: number;
     introLen: number;

@@ -273,6 +273,7 @@ export const en = {
   'anim.single': 'One card at a time',
   'anim.off': 'No reveal',
   'anim.manager': 'Manager intro',
+  'anim.openingLights': 'Coloured opening transition',
   'anim.intro': 'Title intro',
   'anim.timing': 'Timing',
   'anim.per': 'Time per player',

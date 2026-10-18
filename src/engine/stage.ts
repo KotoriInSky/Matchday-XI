@@ -7,6 +7,7 @@ import { colorOverrideStyles } from './color-overrides';
 import styles from './stage.module.css';
 import seasonStyles from './season2627.module.css';
 import { season2627HTML, season2627Timeline } from './season2627';
+import { classicOpeningTimeline } from './classic-opening';
 import { CW, STEP } from './constants';
 import { cjkFor, ensureFont, fontStack } from './fonts';
 import { boardLayout, fitStyle, proj, stageHTML, unproj } from './markup';
@@ -145,7 +146,7 @@ export class Stage {
     st.setProperty('--pat', patternURI(s));
     st.setProperty('--text-pat', textPatternURI(s));
     st.setProperty('--pats', patternURI(s, ['#dfe3e6', '#99a0a7']));
-    st.setProperty('--sweep', patternURI(s, [s.colors.c1, s.colors.c1], true));
+    st.setProperty('--sweep', patternURI(s, ['#ffffff', '#ffffff'], true));
     st.setProperty('--gz', (s.look.photoScale / 100).toFixed(2));
     st.setProperty('--ks', (s.look.smallSize / 100).toFixed(2));
     st.setProperty('--tgz', (s.look.tagSize / 100).toFixed(2));
@@ -308,7 +309,8 @@ export class Stage {
     let t = 0;
     const marks: { t: number; scene: SceneId }[] = [];
     if (s.anim.intro) marks.push({ t: 0, scene: 'intro' });
-    enter(q('.bg'), 0, { opacity: 0, transform: 'scale(1.08)' }, { opacity: 1, transform: 'scale(1)' }, 1, 'ease-out');
+    const liveOpening = s.anim.manager && !s.anim.intro && ((s.bg.mode === 'image' && s.bg.image) || (s.bg.mode === 'video' && this.videoURL));
+    enter(q('.bg'), 0, { opacity: liveOpening ? 1 : 0, transform: liveOpening ? 'scale(1)' : 'scale(1.08)' }, { opacity: 1, transform: 'scale(1)' }, 1, 'ease-out');
 
     if (s.anim.intro) {
       const L = s.anim.introLen, end = L - 0.35;
@@ -329,66 +331,12 @@ export class Stage {
     let fromMgr: number | false = false;
     let hazeAt: number | null = null;
     if (s.anim.manager) {
-      const P0 = t + (t ? 0.05 : 0.15), pre = 1.7;
-      marks.push({ t: P0, scene: 'manager' });
-      // opening: big kit-coloured bands drift and turn across the background
-      add(q('.m-sweep'), [
-        { opacity: 0, transform: 'translate(-7cqw,-5cqw) rotate(-6deg) scale(1.1)', offset: 0, easing: 'ease-out' },
-        { opacity: 1, offset: 0.18 },
-        { opacity: 1, transform: 'translate(3cqw,2cqw) rotate(1.5deg) scale(1.1)', offset: 0.8, easing: 'ease-in' },
-        { opacity: 0, transform: 'translate(6cqw,4cqw) rotate(3deg) scale(1.12)', offset: 1 }], P0, pre + 0.45);
-      add(q('.m-back'), [{ opacity: 1 }, { opacity: 1, offset: 0.8 }, { opacity: 0 }], P0, pre + 0.45);
-      const M = P0 + pre, len = Math.max(4.8, s.anim.mgrLen), end = M + len - 0.7, Fm = end + 0.8;
-      const open0 = M + 0.5, open1 = M + 1.4, land = M + 2.1;
-      hazeAt = open0; // a picture background turns pale behind the manager as the drawer opens
-      // the panel covers the frame, then opens like a drawer (the badge is its knob) to show the manager,
-      // and at the end springs on to the right edge, where it becomes the sidebar and the knob its badge
-      const T1 = Fm + 0.35;
-      const drawer: number[][] = [[M, -33, 0], [M + 0.35, -33, 1], [open0, -33, 1],
-        ...spring(-33, 0, open0, 1.1).map(([tt, v]) => [tt, v, 1]),
-        [end, 0, 1],
-        ...spring(0, 52, end, Fm - end, 6, 1.1).map(([tt, v]) => [tt, v, 1]),
-        [T1, 52, 0]];
-      const xf = (v: number) => `translateX(${v.toFixed(2)}cqw)`;
-      add(q('.m-panel'), track(drawer, xf, M, T1), M, T1 - M);
-      const nameIn = land + 1.1;
-      const lerpAt = (pts: number[][], tt: number, k: number) => {
-        if (tt <= pts[0][0]) return pts[0][k];
-        for (let i = 1; i < pts.length; i++)
-          if (tt <= pts[i][0]) {
-            const a = pts[i - 1], b = pts[i], u = (tt - a[0]) / Math.max(1e-6, b[0] - a[0]);
-            return a[k] + (b[k] - a[k]) * u;
-          }
-        return pts[pts.length - 1][k];
-      };
-      // the badge rises with the rolling short names from the first frame, on its own spring,
-      // while sideways it rides the drawer edge
-      const dPts = [...drawer].sort((a, b) => a[0] - b[0]);
-      const r0c = M + 0.15, riseC = land - r0c, yPts = spring(44, 0, r0c - 0.05, riseC - 0.1, 6.5, 0.9);
-      const yAt = (tt: number) => (tt < yPts[0][0] ? 44 : lerpAt(yPts, tt, 1));
-      const ck: Keyframe[] = [];
-      for (let tt = M; tt <= T1 + 1e-6; tt += 0.04)
-        ck.push({ transform: `translate(${lerpAt(dPts, tt, 1).toFixed(2)}cqw, ${yAt(tt).toFixed(2)}cqw)`, opacity: +lerpAt(dPts, tt, 2).toFixed(3), offset: clamp((tt - M) / (T1 - M), 0, 1) });
-      ck[ck.length - 1].offset = 1;
-      add(q('.m-crest'), ck, M, T1 - M);
-      const groupPts: number[][] = [];
-      for (let tt = nameIn; tt <= end + 0.001; tt += 0.2) groupPts.push([tt, 0]);
-      add(q('.m-teamw'), [{ transform: 'translateX(0)', opacity: 0, offset: 0 }, ...track(groupPts.map(([tt, v]) => [tt, v, 1]), xf, nameIn - 0.01, end + 0.4), { transform: 'translateX(0cqw)', opacity: 0, offset: 1 }], nameIn - 0.01, end + 0.41 - nameIn);
-      add(q('.m-team'), track(spring(-105, 0, nameIn, 0.9, 7.5, 0.7), (v) => `translateX(${v.toFixed(1)}%)`, nameIn, nameIn + 0.9), nameIn, 0.9);
-      // the outline column and the solid short name spring up together and settle with the solid name on the centre line
-      life(q('.m-colw'), M + 0.15, end, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }, 0.4, 0.45);
-      const rise = land - (M + 0.15), r0 = M + 0.15;
-      add(q('.m-col'), track(spring(16.55, -27.45, r0, rise, 6, 1), (v) => `translateY(${v.toFixed(2)}cqw)`, r0, r0 + rise), r0, rise);
-      const sEnd = r0 + rise + 1.3;
-      add(q('.m-solid'), [
-        ...track(spring(44, 0, r0, rise, 6, 1).map(([tt, v]) => [tt, v, 1]), (v) => `translate(0, ${v.toFixed(2)}cqw)`, r0, sEnd),
-        { transform: 'translate(0, 0)', opacity: 1, offset: (rise + 0.8) / (sEnd - r0), easing: 'cubic-bezier(.6,0,.4,1)' },
-        { transform: 'translate(45cqw, 0)', opacity: 0, offset: 1 }], r0, sEnd - r0);
-      add(q('.m-eye'), [{ opacity: 0, offset: 0 }, ...track(groupPts.map(([tt, v]) => [tt, v, tt < land + 1.5 ? 0 : 1]), xf, nameIn - 0.01, end + 0.4), { transform: 'translateX(0cqw)', opacity: 0, offset: 1 }], nameIn - 0.01, end + 0.41 - nameIn);
-      life(q('.m-photo'), open0 + 0.25, end, { opacity: 0, transform: 'translateX(-4cqw)' }, { opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(-8cqw)' }, 0.9, 0.5, { opacity: 1, transform: 'translateX(.6cqw)' });
-      life(q('.m-name'), open1 + 0.1, end, { opacity: 0, transform: 'translateY(2cqw)' }, { opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(1cqw)' }, 0.5, 0.3);
-      t = end + 0.3;
-      fromMgr = Fm;
+      const opening = classicOpeningTimeline(s, q, qa, reduced, t);
+      specs.push(...opening.specs);
+      marks.push({ t: opening.plan.start, scene: 'manager' });
+      hazeAt = opening.plan.open;
+      t = opening.plan.leave + .3;
+      fromMgr = opening.plan.handoff;
     }
 
     if (style === 'row') {

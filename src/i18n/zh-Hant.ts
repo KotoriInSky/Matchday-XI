@@ -274,6 +274,7 @@ export const zhHant: Messages = {
   'anim.single': '逐張大卡展示',
   'anim.off': '不展示',
   'anim.manager': '總教練開場',
+  'anim.openingLights': '彩色開場過渡',
   'anim.intro': '標題開場',
   'anim.timing': '時間長度',
   'anim.per': '每名球員時長',

@@ -20,6 +20,7 @@
     "test:season2627": "node tests/season2627.mjs",
     "test:season2627-motion": "node tests/season2627-motion.mjs",
     "test:classic-motion": "node tests/classic-motion.mjs",
+    "test:classic-opening": "node tests/classic-opening.mjs",
     "test:export": "node tests/export.mjs",
     "test:export-media": "node tests/export-media.mjs",
     "render:project": "node scripts/render-project.mjs",

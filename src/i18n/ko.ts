@@ -255,6 +255,7 @@ export const ko: Messages = {
   'anim.single': '한 장씩 크게',
   'anim.off': '등장 없음',
   'anim.manager': '감독 소개',
+  'anim.openingLights': '컬러 오프닝 전환',
   'anim.intro': '타이틀',
   'anim.timing': '시간',
   'anim.per': '선수당 시간',

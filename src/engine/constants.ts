@@ -100,5 +100,5 @@ export const SAMPLE: LineupState = {
   customFonts: { display: null, body: null, number: null },
   bg: { mode: 'stripes', image: null, dim: 45, fit: newFit() },
   look: { tagSize: 175, smallSize: 100, bigSize: 100, photoScale: 100, pattern: 'bolts', patColors: 'two', ratio: 50, shape: 'rounded', upper: false, crest: true, subs: true, lines: true, pitch: 'light', gk: 'top' },
-  anim: { template: 'classic', intro: false, manager: true, style: 'lines', per: 1, introLen: 3.2, mgrLen: 6, loop: false },
+  anim: { template: 'classic', intro: false, manager: true, openingLights: false, style: 'lines', per: 1, introLen: 3.2, mgrLen: 6, loop: false },
 };

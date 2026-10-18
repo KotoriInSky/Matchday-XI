@@ -255,6 +255,7 @@ export const ja: Messages = {
   'anim.single': '1 枚ずつ大きく',
   'anim.off': '登場なし',
   'anim.manager': '監督の紹介',
+  'anim.openingLights': 'カラーのオープニング演出',
   'anim.intro': 'タイトル',
   'anim.timing': 'タイミング',
   'anim.per': '選手 1 人あたりの時間',

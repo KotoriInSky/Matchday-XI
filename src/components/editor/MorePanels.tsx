@@ -41,6 +41,7 @@ export function AnimationPanel() {
           <Switch label={t('anim.manager')} checked={s.anim.manager} onCheckedChange={(v) => store.update((st) => (st.anim.manager = v))} />
           <Switch label={t(season ? 'anim.lead' : 'anim.intro')} checked={s.anim.intro} onCheckedChange={(v) => store.update((st) => (st.anim.intro = v))} />
         </div>
+        {!season && s.anim.manager && <Switch label={t('anim.openingLights')} checked={s.anim.openingLights} onCheckedChange={(v) => store.update((st) => (st.anim.openingLights = v))} />}
       </Section>
       <Section title={t('anim.timing')}>
         <Grid className="lg:grid-cols-2">
