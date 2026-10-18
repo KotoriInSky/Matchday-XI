@@ -256,6 +256,7 @@ function smallTagsHTML(s: LineupState, p: Player, index: number, season = false)
 
 export function smallCardsHTML(s: LineupState, season = false) {
   const t = s.text;
+  const numberOnly = !season && s.anim.style === 'lines';
   const L = boardLayout(s);
   return L.items
     .map((it) => {
@@ -266,7 +267,7 @@ export function smallCardsHTML(s: LineupState, season = false) {
       const cutout = !!pic && (p.photo2 ? p.cutS !== false : p.cut !== false);
       return `<div class="slot${season ? ' s26-slot' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;--s:${it.s.toFixed(3)};z-index:${Math.round(it.y)}"><div class="card"><div class="cvis"><div class="cflip">
       <div class="sm-face${season ? ' s26-small-face' : ''}">${season ? '<div class="s26-card-shadow" aria-hidden="true"><div></div></div>' : ''}<div class="sm-por${cutout ? ' cutout' : ''}${season && cutout ? ' s26-small-cutout' : ''}"><div class="ph">${ph}</div>${smallNameHTML(p)}</div>${badges}${cap}</div>
-      <div class="sm-num" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100};--small-number-x:${p.num.length > 2 ? .55 : .8}"><b>${esc(p.num)}</b><small>${esc(smallName(p))}</small></div>
+      <div class="sm-num" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100};--small-number-x:${p.num.length > 2 ? .55 : .8}"><b>${esc(p.num)}</b>${numberOnly ? '' : `<small>${esc(smallName(p))}</small>`}</div>
     </div></div></div></div>`;
     })
     .join('');

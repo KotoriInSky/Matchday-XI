@@ -195,6 +195,7 @@
 .sm-tags .tpic.square{width:calc(.6552cqw * var(--tgz,1))}
 .sm-num{position:absolute;inset:0;z-index:2;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--pat) center/cover}
 .sm-num b{position:absolute;left:50%;top:calc(var(--card-h) * .236 - var(--card-w) * .857 * .15);transform:translateX(-50%) scaleX(var(--small-number-x,.8));font-family:var(--fd);font-weight:800;font-size:calc(var(--card-w) * .857);line-height:1;font-variant-numeric:tabular-nums}
+.board:not(.noreveal) .sm-num b{top:50%;transform:translate(-50%,-50%) scaleX(var(--small-number-x,.8))}
 .sm-num small{position:absolute;left:0;right:0;bottom:0;background:var(--c1d);font-size:calc(var(--card-w) * .157 * var(--small-name-scale,1));font-weight:700;text-align:center;padding:calc(var(--card-w) * .035);padding-bottom:max(0px,calc(var(--card-h) * .05 - var(--card-w) * .157 * var(--small-name-scale,1) * .17));white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.08}
 .board.noreveal .sm-num{display:none}
 .stage[data-shape="rounded"] :is(.sm-por,.sm-num){border-radius:.7cqw}

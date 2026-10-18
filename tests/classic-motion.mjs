@@ -10,6 +10,7 @@ const errors = [], measurements = [];
 try {
   const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
   page.on('pageerror', error => errors.push(error.message));
+  const capturePNG = async () => Buffer.from(await page.evaluate(async () => (await window.exportRenderer.capture(innerWidth, innerHeight)).toDataURL().split(',')[1]), 'base64');
   await page.goto(base + '?render-export');
   await page.waitForFunction(() => !!window.exportRenderer);
   const sample = await page.evaluate(async base => {
@@ -55,6 +56,29 @@ try {
       return [...groups.values()];
     }, state);
     assert.ok(groups.length >= 3, 'The test must exercise every formation row');
+    if (caseIndex === 0) {
+      await page.evaluate(time => window.exportRenderer.frame(time), groups[0].landed - 1.2);
+      const pending = await page.locator('[class*="_slot_"]').evaluateAll(slots => slots.map(slot => {
+        const number = slot.querySelector('[class*="_sm-num_"]');
+        return {
+          face: getComputedStyle(slot.querySelector('[class*="_sm-face_"]')).opacity,
+          number: getComputedStyle(number).opacity,
+          label: number.textContent.trim(),
+          expected: number.querySelector('b').textContent,
+        };
+      }));
+      assert.ok(pending.every(card => card.face === '0' && card.number === '1'), 'Unrevealed players must show the number side');
+      assert.ok(pending.every(card => card.label === card.expected), 'Placeholders must contain only the shirt number until the player is revealed');
+      await page.screenshot({ path: `${output}/number-placeholders.png` });
+      const withNumbers = await capturePNG();
+      await page.locator('[class*="_sm-num_"] b').evaluateAll(numbers => numbers.forEach(number => { number.style.visibility = 'hidden'; }));
+      assert.ok(!withNumbers.equals(await capturePNG()), 'Browser video capture must render the waiting shirt numbers');
+      await page.locator('[class*="_sm-num_"] b').evaluateAll(numbers => numbers.forEach(number => { number.style.visibility = ''; }));
+      await writeFile(`${output}/number-placeholders-capture.png`, withNumbers);
+      // Seeking backward must restore every waiting number.
+      await page.evaluate(time => window.exportRenderer.frame(time), groups[0].landed - 1.2);
+      assert.ok(await page.locator('[class*="_sm-face_"]').evaluateAll(faces => faces.every(face => getComputedStyle(face).opacity === '0')), 'Seeking backward must restore the unrevealed state');
+    }
     let baseSize;
     for (const [groupIndex, group] of groups.entries()) {
       for (const time of [group.landed, group.landed + .4, group.leaving - .1]) {
@@ -89,6 +113,12 @@ try {
               'Within-row emphasis must remain close to the shared card size');
           }
         }
+        const revealed = groups.slice(0, groupIndex).flatMap(group => group.ids);
+        assert.ok(await page.locator('[class*="_slot_"]').evaluateAll((slots, revealed) => slots.every(slot => {
+          const face = getComputedStyle(slot.querySelector('[class*="_sm-face_"]')).opacity;
+          const number = getComputedStyle(slot.querySelector('[class*="_sm-num_"]')).opacity;
+          return revealed.includes(slot.dataset.i) ? face === '1' && number === '0' : face === '0' && number === '1';
+        }), revealed), 'Completed rows must show portraits while all waiting rows keep their shirt numbers');
       }
     }
     if (config.formation === '4-3-3' && config.width === 1280 && config.gk === 'top' && !config.moved) sizes.set(config.bigSize, baseSize.width);
@@ -96,6 +126,7 @@ try {
     if (sizes.has(140)) assert.ok(sizes.get(140) > sizes.get(100) * 1.3, 'Increasing the big-card slider must visibly enlarge cards');
     await page.evaluate(time => window.exportRenderer.frame(time), groups.at(-1).leaving + 1.5);
     assert.ok(await page.locator('[class*="_bigc_"]').evaluateAll(cards => cards.every(card => Number(getComputedStyle(card).opacity) === 0)), 'Big cards must return to the pitch after their reveal');
+    assert.ok(await page.locator('[class*="_sm-face_"]').evaluateAll(faces => faces.every(face => getComputedStyle(face).opacity === '1')), 'The final lineup must show every portrait');
   }
   const editor = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   editor.on('pageerror', error => errors.push(error.message));
@@ -153,7 +184,7 @@ try {
   await editor.getByRole('tab', { name: '样式', exact: true }).click();
   assert.equal(await editor.getByRole('slider', { name: '大卡大小', exact: true }).inputValue(), '140', 'The chosen size must survive a reload');
   assert.deepEqual(errors, []);
-  console.log(`Classic big-card rotation: ${cases.length} configurations, ${measurements.length} frames centered within 0.1px, consistent sizes across rows with within-row emphasis; size slider, undo/redo and return animation passed.`);
+  console.log(`Classic motion: number-only placeholders, portrait handoff, deterministic seeking and browser capture passed; ${cases.length} configurations, ${measurements.length} frames centered within 0.1px, consistent card sizes, size slider, undo/redo and return animation passed.`);
 } finally {
   await writeFile(`${output}/measurements.json`, JSON.stringify({ measurements, errors }, null, 2));
   await browser.close();
