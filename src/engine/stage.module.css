@@ -203,7 +203,7 @@
 .ph{position:relative;aspect-ratio:1/1.05;background:var(--pat) center/cover;overflow:hidden}
 .ph::after{content:"";position:absolute;inset:0;background:linear-gradient(125deg,rgba(255,255,255,.22),transparent 38%);pointer-events:none}
 .ph img.pp{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 4%;pointer-events:none}
-.nm{background:var(--small-name-bg,var(--c2));color:var(--small-name-text,var(--c4));padding:calc(var(--card-w) * .035);padding-bottom:max(0px,calc(var(--card-h) * .05 - var(--card-w) * .157 * var(--small-name-scale,1) * .17));display:flex;flex-direction:column;align-items:center;gap:.1cqw}
+.nm{box-sizing:border-box;background:var(--small-name-bg,var(--c2));color:var(--small-name-text,var(--c4));padding:calc(var(--card-w) * .035);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.1cqw}
 .nm b{font-family:var(--fd);font-weight:700;font-size:calc(var(--card-w) * .157 * var(--small-name-scale,1));line-height:1.08;display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-align:center}
 .nm small{font-size:.66cqw;font-weight:700;letter-spacing:.1em;opacity:.72}
 .bpanel{position:absolute;top:0;right:0;bottom:0;width:15cqw;z-index:4}
@@ -283,10 +283,10 @@
 .stage .sm-por.cutout{overflow:visible;clip-path:none}
 .sm-por.cutout .ph{overflow:visible;background:none}
 .sm-por.cutout .ph::before{content:"";position:absolute;inset:0;background:var(--pat) center/cover}
-.stage[data-shape="rounded"] .sm-por.cutout .ph::before{border-radius:.7cqw .7cqw 0 0}
-.stage[data-shape="angled"] .sm-por.cutout .ph::before{clip-path:polygon(0 0,76% 0,100% 16%,100% 100%,0 100%)}
+.stage[data-shape="rounded"] .sm-por.cutout .ph::before{border-radius:.7cqw}
+.stage[data-shape="angled"] .sm-por.cutout .ph::before{clip-path:polygon(0 0,76% 0,100% 13%,100% 100%,0 100%)}
 .sm-por.cutout .ph::after{display:none}
-.sm-por.cutout .ph img.pp{position:absolute;bottom:0;height:118%;object-fit:contain;object-position:50% 100%;transform-origin:50% 100%;clip-path:inset(-100% 0 0)}
+.sm-por.cutout .ph img.pp{position:absolute;bottom:1.6cqw;height:calc(var(--card-w) * 1.239);object-fit:contain;object-position:50% 100%;transform-origin:50% 100%;clip-path:inset(-100% 0 0)}
 .sm-por.cutout .nm{position:relative;z-index:1}
 .stage[data-shape="rounded"] .sm-por.cutout .nm{border-radius:0 0 .7cqw .7cqw}
 
@@ -333,6 +333,9 @@
 /* Preserve manual line breaks and grow names upward from a stable baseline. */
 .rc-name :is(span,b),.h-first,.h-last,.nm b{white-space:pre-wrap;overflow-wrap:anywhere;text-wrap:wrap;overflow:visible;line-height:1.08}
 .h-info{top:auto;bottom:8cqw}
-.sm-por{position:relative;padding-bottom:1.6cqw}
+/* Fill the fixed frame behind a bottom-anchored name bar, including at small text sizes. */
+.sm-por{position:relative;height:var(--card-h)}
+.sm-por .ph{position:absolute;inset:0;aspect-ratio:auto}
+.sm-por .ph svg.person{bottom:calc(1.6cqw - var(--card-w) * .063)}
 .sm-por .nm,.sm-por.cutout .nm{position:absolute;left:0;right:0;bottom:0;z-index:1}
 .inspector [data-card-text]{pointer-events:auto;cursor:text;user-select:text}

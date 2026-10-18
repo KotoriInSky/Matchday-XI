@@ -104,6 +104,43 @@ try {
     assert.ok(Math.abs(ratios[0] - .157) < .003, `${template}/${size}: live name ratio ${ratios}`);
     assert.ok(Math.abs(ratios[1] - .857) < .015, `${template}/${size}: live number ratio ${ratios}`);
   }
+  // The small-card name bar grows upward while keeping its width, bottom edge and text centre.
+  const smallNameLayouts = [];
+  for (const template of ['classic', 'season2627']) for (const cutout of [false, true]) for (const name of ['Dias', 'Alexander-\nArnold', '鲁本·迪亚斯']) {
+    let originalFrame, previousHeight = 0;
+    for (const size of [30, 100, 250]) {
+      const smallState = structuredClone(state);
+      smallState.anim.template = template;
+      Object.assign(smallState.players[0], { nameLine2: name, nameSizeSmall: size, cut: cutout });
+      await renderer.evaluate(state => window.cardRenderer.init(state, 'zh-Hans'), smallState);
+      await renderer.evaluate(() => window.cardRenderer.show(0, 'small'));
+      const layout = await renderer.evaluate(() => {
+        const frame = document.querySelector('[class*="_sm-por_"]').getBoundingClientRect();
+        const photo = document.querySelector('[class*="_sm-por_"] [class*="_ph_"]').getBoundingClientRect();
+        const bar = document.querySelector('[class*="_nm_"]').getBoundingClientRect();
+        const text = document.querySelector('[class*="_nm_"] b').getBoundingClientRect();
+        return {
+          frameWidth: frame.width, frameHeight: frame.height, height: bar.height,
+          width: bar.width / frame.width, left: (bar.left - frame.left) / frame.width,
+          bottom: (bar.bottom - frame.bottom) / frame.width,
+          photoOverlap: (photo.bottom - bar.top) / frame.width,
+          centerX: (text.left + text.width / 2 - bar.left - bar.width / 2) / frame.width,
+          centerY: (text.top + text.height / 2 - bar.top - bar.height / 2) / frame.width,
+        };
+      });
+      const context = `${template}/${cutout ? 'cut-out' : 'opaque'}/${JSON.stringify(name)}/${size}: ${JSON.stringify(layout)}`;
+      originalFrame ??= [layout.frameWidth, layout.frameHeight];
+      assert.deepEqual([layout.frameWidth, layout.frameHeight], originalFrame, `Changing the small name size must preserve the card frame: ${context}`);
+      assert.ok(Math.abs(layout.width - 1) < .001 && Math.abs(layout.left) < .001, `The name bar must match the card width: ${context}`);
+      assert.ok(Math.abs(layout.bottom) < .001, `The name bar bottom must stay anchored: ${context}`);
+      assert.ok(layout.photoOverlap >= -.001, `The photo and name bar must meet without a transparent gap: ${context}`);
+      assert.ok(Math.abs(layout.centerX) < .001 && Math.abs(layout.centerY) < .001, `The text must remain centred in the name bar: ${context}`);
+      assert.ok(layout.height > previousHeight, `The name bar must grow with the selected font size: ${context}`);
+      previousHeight = layout.height;
+      smallNameLayouts.push({ template, cutout, name, size, ...layout });
+      if (template === 'classic' && !cutout && name === 'Dias') await renderer.screenshot({ path: `${output}/small-name-size-${size}.png` });
+    }
+  }
   // Long and localized names keep the card frame fixed even at maximum text size.
   for (const template of ['classic', 'season2627']) for (const kind of ['small', 'big']) {
     state.anim.template = template;
@@ -116,7 +153,7 @@ try {
     }
     widths.forEach(width => assert.deepEqual(width, widths[0]));
   }
-  await writeFile(`${output}/measurements.json`, JSON.stringify(measurements, null, 2));
+  await writeFile(`${output}/measurements.json`, JSON.stringify({ measurements, smallNameLayouts }, null, 2));
   console.log('Card typography: legacy migration, independent controls, 30–250% persistence, both templates/Highlight, resolution scaling and stable frames for long/CJK names passed.');
   console.log(JSON.stringify(measurements.filter(item => item.kind !== 'key').map(item => ({ template: item.template, kind: item.kind, text: item.original.text }))));
 } finally { await browser.close(); }
