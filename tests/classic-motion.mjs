@@ -75,7 +75,57 @@ try {
       assert.ok(!withNumbers.equals(await capturePNG()), 'Browser video capture must render the waiting shirt numbers');
       await page.locator('[class*="_sm-num_"] b').evaluateAll(numbers => numbers.forEach(number => { number.style.visibility = ''; }));
       await writeFile(`${output}/number-placeholders-capture.png`, withNumbers);
-      // Seeking backward must restore every waiting number.
+      assert.equal(await page.locator('[class*="_wipe_"]').count(), 0, 'Line-by-line reveals must keep the colour transition inside the sidebar');
+      const transitions = await page.locator('[class*="_pflash_"]').evaluateAll(flashes => flashes.map(flash => {
+        const animation = flash.getAnimations()[0], timing = animation?.effect.getTiming();
+        return timing ? { start: timing.delay / 1000, duration: timing.duration / 1000 } : null;
+      }));
+      assert.equal(transitions.length, await page.locator('[class*="_secw_"]').count(), 'Each new position label needs one sidebar colour transition');
+      assert.ok(transitions.every(Boolean), 'Every colour transition must use the shared seekable timeline');
+      for (const [index, transition] of transitions.entries()) {
+        const time = transition.start + transition.duration * .38;
+        await page.evaluate(time => window.exportRenderer.frame(time), time);
+        const bounds = await page.locator('[class*="_pflash_"]').nth(index).evaluate(flash => {
+          const box = flash.getBoundingClientRect(), panel = flash.parentElement.getBoundingClientRect();
+          const crest = document.querySelector('[class*="_pcrest_"]').getBoundingClientRect();
+          return { top: box.top, bottom: box.bottom, panelTop: panel.top, panelBottom: panel.bottom, panelLeft: panel.left, background: getComputedStyle(flash).backgroundImage, overflow: getComputedStyle(flash.parentElement).overflow, crest: { x: crest.x, y: crest.y } };
+        });
+        assert.ok(bounds.bottom > bounds.panelTop && bounds.top < bounds.panelBottom, 'The colour wash must cross the visible sidebar');
+        assert.equal(bounds.overflow, 'hidden', 'The sidebar must clip the colour wash to its rounded panel');
+        assert.match(bounds.background, /linear-gradient/, 'The sidebar must retain its fixed cyan/violet wash');
+        if (index === 1) {
+          const paletteIndependence = await page.evaluate(() => {
+            const stage = document.querySelector('[class*="_stage_"]');
+            const sweeps = [...stage.querySelectorAll('[class*="_pflash_"]')];
+            const before = sweeps.map(sweep => getComputedStyle(sweep).backgroundImage);
+            const original = stage.getAttribute('style');
+            stage.style.setProperty('--c1', '#001f5b');
+            stage.style.setProperty('--c2', '#ffffff');
+            stage.style.setProperty('--c3', '#ff8800');
+            const after = sweeps.map(sweep => getComputedStyle(sweep).backgroundImage);
+            stage.setAttribute('style', original);
+            return { before, after };
+          });
+          assert.deepEqual(paletteIndependence.after, paletteIndependence.before, 'Changing the team palette must preserve the fixed cyan/violet wash');
+          await page.screenshot({ path: `${output}/colour-transition.png` });
+          const withSweep = await capturePNG();
+          const pitchClip = { x: 0, y: 0, width: Math.floor(bounds.panelLeft - 1), height: 720 };
+          const pitch = await page.screenshot({ clip: pitchClip });
+          await page.locator('[class*="_pflash_"]').nth(index).evaluate(flash => { flash.style.visibility = 'hidden'; });
+          assert.ok(!withSweep.equals(await capturePNG()), 'Browser video capture must include the sidebar colour wash');
+          assert.ok(pitch.equals(await page.screenshot({ clip: pitchClip })), 'The sidebar colour wash must leave all pitch pixels untouched');
+          await page.locator('[class*="_pflash_"]').nth(index).evaluate(flash => { flash.style.visibility = ''; });
+          await writeFile(`${output}/colour-transition-capture.png`, withSweep);
+          await page.evaluate(time => window.exportRenderer.frame(time), time + 2);
+          await page.evaluate(time => window.exportRenderer.frame(time), time);
+          assert.ok(withSweep.equals(await capturePNG()), 'Seeking backward must restore the exact colour transition frame');
+        }
+        await page.evaluate(time => window.exportRenderer.frame(time), transition.start + transition.duration + .01);
+        assert.ok(await page.locator('[class*="_pflash_"]').nth(index).evaluate(flash => flash.getBoundingClientRect().top >= flash.parentElement.getBoundingClientRect().bottom), 'The wash must clear the panel and restore the team colours after the transition');
+        const crest = await page.locator('[class*="_pcrest_"]').evaluate(crest => { const box = crest.getBoundingClientRect(); return { x: box.x, y: box.y }; });
+        assert.deepEqual(crest, bounds.crest, 'The crest must stay fixed while the position label and colour wash move');
+      }
+      // Seeking backward must restore every waiting number and the exact same colour phase.
       await page.evaluate(time => window.exportRenderer.frame(time), groups[0].landed - 1.2);
       assert.ok(await page.locator('[class*="_sm-face_"]').evaluateAll(faces => faces.every(face => getComputedStyle(face).opacity === '0')), 'Seeking backward must restore the unrevealed state');
     }
@@ -128,6 +178,10 @@ try {
     assert.ok(await page.locator('[class*="_bigc_"]').evaluateAll(cards => cards.every(card => Number(getComputedStyle(card).opacity) === 0)), 'Big cards must return to the pitch after their reveal');
     assert.ok(await page.locator('[class*="_sm-face_"]').evaluateAll(faces => faces.every(face => getComputedStyle(face).opacity === '1')), 'The final lineup must show every portrait');
   }
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.evaluate(state => window.exportRenderer.init(state, 'en', null), sample);
+  assert.ok(await page.locator('[class*="_wipe_"], [class*="_pflash_"]').evaluateAll(sweeps => sweeps.every(sweep => sweep.getAnimations().length === 0)), 'Reduced motion must suppress the colour sweeps');
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   const editor = await browser.newPage({ viewport: { width: 1440, height: 1000 } });
   editor.on('pageerror', error => errors.push(error.message));
   await editor.addInitScript(() => localStorage.setItem('matchday-xi-lang', 'zh-Hans'));
@@ -184,7 +238,7 @@ try {
   await editor.getByRole('tab', { name: '样式', exact: true }).click();
   assert.equal(await editor.getByRole('slider', { name: '大卡大小', exact: true }).inputValue(), '140', 'The chosen size must survive a reload');
   assert.deepEqual(errors, []);
-  console.log(`Classic motion: number-only placeholders, portrait handoff, deterministic seeking and browser capture passed; ${cases.length} configurations, ${measurements.length} frames centered within 0.1px, consistent card sizes, size slider, undo/redo and return animation passed.`);
+  console.log(`Classic motion: number-only placeholders, portrait handoff, fixed cyan/violet sidebar transitions with untouched pitch and stationary crest, deterministic seeking, browser capture and reduced-motion sweeps passed; ${cases.length} configurations, ${measurements.length} frames centered within 0.1px, consistent card sizes, size slider, undo/redo and return animation passed.`);
 } finally {
   await writeFile(`${output}/measurements.json`, JSON.stringify({ measurements, errors }, null, 2));
   await browser.close();

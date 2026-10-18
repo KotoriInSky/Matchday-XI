@@ -233,6 +233,7 @@ export class Stage {
     }
     const specs: Spec[] = [];
     const s = this.s;
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const q = (x: string) => this.q(x), qa = (x: string) => this.qa(x);
     const in$ = (x: string, root: Element | null) => (root ? this.q(x, root) : null);
     const add = (el: Element | null | undefined, frames: Frames, start: number, dur: number) => { if (el) specs.push({ el, frames, start, dur }); };
@@ -245,8 +246,10 @@ export class Stage {
       const span = tOut + dOut - tIn;
       add(el, [{ ...from, offset: 0, easing: EASE }, { ...to, offset: dIn / span }, { ...(hold || to), offset: (tOut - tIn) / span, easing: EASE_OUT }, { ...out, offset: 1 }], tIn, span);
     };
-    const wipe = (el: Element | null | undefined, at: number) =>
-      add(el, [{ transform: 'translateX(-150%) skewX(-16deg)', easing: 'cubic-bezier(.7,0,.3,1)' }, { transform: 'translateX(170%) skewX(-16deg)' }], at, 0.58);
+    // Orientation: coloured bands bridge the optional card scenes on the shared clock.
+    const wipe = (el: Element | null | undefined, at: number) => {
+      if (!reduced) add(el, [{ transform: 'translateX(-150%) skewX(-16deg)', easing: 'cubic-bezier(.7,0,.3,1)' }, { transform: 'translateX(170%) skewX(-16deg)' }], at, 0.58);
+    };
 
     // captain and key-player cards
     const upgrade = (card: Element | null, at: number, popEl?: Element | null, until?: number) => {
@@ -489,8 +492,9 @@ export class Stage {
       L.labels.forEach((lb, li) => {
         const a = span[lb.groups[0]][0], b = span[lb.groups[lb.groups.length - 1]][1];
         marks.push({ t: a, scene: SCENE[lb.role] || 'players' });
-        add(flashes[li], [{ transform: 'translateY(0)', easing: 'cubic-bezier(.6,0,.4,1)' }, { transform: 'translateY(210%)' }], a - 0.2, 0.75);
-        life(secws[li], a, b, { transform: 'translateY(-100%)' }, { transform: 'translateY(0)' }, { transform: 'translateY(100%)' }, 0.65, 0.5);
+        // Orientation: a short cyan-to-violet wash travels down the rail as its new label arrives.
+        if (!reduced) add(flashes[li], [{ transform: 'translateY(0)', easing: 'cubic-bezier(.4,0,.3,1)' }, { transform: 'translateY(210%)' }], a - 0.06, 0.52);
+        life(secws[li], a, b, { transform: 'translateY(-100%)' }, { transform: 'translateY(0)' }, { transform: 'translateY(100%)' }, 0.45, 0.5);
       });
       fin = tg;
     }

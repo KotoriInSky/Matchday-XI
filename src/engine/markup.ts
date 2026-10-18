@@ -306,7 +306,7 @@ function boardHTML(s: LineupState) {
         })
         .join('')
     : '';
-  const flashes = lines ? '<i class="pflash"></i>'.repeat(L.labels.length) : '';
+  const flashes = lines ? '<i class="pflash" aria-hidden="true"></i>'.repeat(L.labels.length) : '';
   const fin = substitutesHTML(s);
   return `<div class="board${lines ? '' : ' noreveal'}">
     <div class="field">${pitchSVG(s)}<div class="cards">${cards}</div>${bigs}</div>
@@ -319,7 +319,7 @@ export function stageHTML(ctx: MarkupContext) {
   const { s, videoURL } = ctx, style = s.anim.style;
   const hasMedia = (s.bg.mode === 'image' && s.bg.image) || (s.bg.mode === 'video' && videoURL);
   const mode = hasMedia ? s.bg.mode : ['image', 'video'].includes(s.bg.mode) ? 'stripes' : s.bg.mode;
-  const wipes = '<i class="wipe"></i>'.repeat(style === 'single' ? 12 : style === 'row' ? 1 : 0);
+  const wipes = '<i class="wipe" aria-hidden="true"></i>'.repeat(style === 'single' ? 12 : style === 'row' ? 1 : 0);
   const players = style === 'row' ? rowHTML(s) + bugHTML(s) : style === 'single' ? heroesHTML(s) + bugHTML(s) : '';
   return `<div class="bg" data-mode="${mode}"></div><div class="fx"><i class="beam"></i><i class="beam b2"></i></div>${hasMedia ? '<i class="haze"></i>' : ''}
     ${boardHTML(s)}${s.anim.intro ? introHTML(s) : ''}${s.anim.manager ? mgrHTML(ctx) : ''}${players}${wipes}<i class="vignette"></i>`;
