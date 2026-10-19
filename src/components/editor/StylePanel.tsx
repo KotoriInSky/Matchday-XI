@@ -216,7 +216,7 @@ export function StylePanel() {
           <Choice label={t('style.gk')} value={L.gk} onChange={(v) => look('gk', v)} options={[['top', 'style.gkTop'], ['bottom', 'style.gkBottom']]} />
           <Choice label={t('style.shape')} value={L.shape} onChange={(v) => look('shape', v)} options={[['rounded', 'style.rounded'], ['angled', 'style.angled'], ['sharp', 'style.sharp']]} />
           <Slider label={t('style.smallSize')} min={70} max={150} step={5} value={L.smallSize} format={(v) => `${v}%`} onChange={(v) => look('smallSize', v)} />
-          <Slider label={t('style.bigSize')} min={70} max={140} step={5} value={L.bigSize} format={(v) => `${v}%`} onChange={(v) => look('bigSize', v)} />
+          {s.anim.template === 'classic' && s.anim.style === 'lines' && <Slider label={t('style.bigSize')} min={70} max={140} step={5} value={L.bigSize} format={(v) => `${v}%`} onChange={(v) => look('bigSize', v)} />}
           <Slider label={t('style.photoScale')} min={60} max={140} step={5} value={L.photoScale} format={(v) => `${v}%`} onChange={(v) => look('photoScale', v)} />
         </Grid>
       </Section>

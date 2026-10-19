@@ -4,6 +4,7 @@ import { contrastRatio, mixHex, readableText, textSurfaceColors } from './patter
 import type { BoardGroup } from './markup';
 import type { Fit, LineupState, Player } from './types';
 import type { SceneId } from './stage';
+import { HIGHLIGHT_CUT_FRACTION, seasonGroupHold } from './reveal-timing';
 
 export interface SeasonGroup extends BoardGroup {
   start: number;
@@ -23,8 +24,6 @@ export interface SeasonPlan {
 
 const SCENES: Record<BoardGroup['role'], SceneId> = { GK: 'gk', DEF: 'def', MID: 'mid', FWD: 'fwd' };
 const columnDelay = (count: number) => Math.min(.1, .48 / Math.max(1, count - 1));
-const HIGHLIGHT_CUT_FRACTION = .55;
-const MIN_HIGHLIGHT_HOLD = 3.5;
 
 /** One timing plan for markup, preview and frame-by-frame export. No timers or frame-rate assumptions. */
 export function planSeason2627(s: LineupState): SeasonPlan {
@@ -37,10 +36,9 @@ export function planSeason2627(s: LineupState): SeasonPlan {
   let start = manager?.end ?? lead;
   const groups = s.anim.style === 'off' ? [] : boardLayout(s).groups.map((group) => {
     const settled = start + .64 + (group.items.length - 1) * columnDelay(group.items.length);
-    const baseHold = Math.max(1.6, s.anim.per * 4);
     const hasHighlight = group.items.some((item) => s.players[item.i].key);
     // Reserve a readable Highlight hold without moving the cut into the first half of the scene.
-    const hold = hasHighlight ? Math.max(baseHold, MIN_HIGHLIGHT_HOLD / (1 - HIGHLIGHT_CUT_FRACTION)) : baseHold;
+    const hold = seasonGroupHold(s.anim.per, hasHighlight);
     const leave = settled + hold;
     const scene = { ...group, start, settled, cut: settled + hold * HIGHLIGHT_CUT_FRACTION, leave, end: leave + .4 };
     marks.push({ t: start, scene: SCENES[group.role] });

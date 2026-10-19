@@ -8,6 +8,7 @@ import styles from './stage.module.css';
 import seasonStyles from './season2627.module.css';
 import { season2627HTML, season2627Timeline } from './season2627';
 import { classicOpeningTimeline } from './classic-opening';
+import { classicLineDuration, classicRowInterval } from './reveal-timing';
 import { CW, STEP } from './constants';
 import { cjkFor, ensureFont, fontStack } from './fonts';
 import { boardLayout, fitStyle, proj, stageHTML, unproj } from './markup';
@@ -342,7 +343,7 @@ export class Stage {
     if (style === 'row') {
       fromMgr = false;
       const cards = qa('.rc').filter((c) => !c.classList.contains(cn('bigc'))), n = cards.length;
-      const S = t + 0.1, startX = 100, endX = 50 - ((n - 1) * STEP + CW / 2), rp = Math.max(1.4, per * 1.8);
+      const S = t + 0.1, startX = 100, endX = 50 - ((n - 1) * STEP + CW / 2), rp = classicRowInterval(per);
       marks.push({ t: S, scene: 'players' });
       const run = ((startX - endX) / STEP) * rp, tail = 0.6;
       add(q('.strip'), [{ transform: `translateX(${startX}cqw)`, opacity: 1, offset: 0, easing: 'linear' },
@@ -356,27 +357,6 @@ export class Stage {
       });
       wipe(q('.wipe'), S + run - 0.1);
       t = S + run + 0.2;
-    }
-
-    if (style === 'single') {
-      fromMgr = false;
-      const S = t + 0.15, heroes = qa('.hero'), wipes = qa('.wipe'), n = heroes.length, sp = Math.max(1.8, per * 2.4);
-      marks.push({ t: S, scene: 'players' });
-      life(q('.bug'), S + 0.1, S + n * sp - 0.3, { opacity: 0, transform: 'translateY(-2cqw)' }, { opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-2cqw)' }, 0.45, 0.3);
-      heroes.forEach((h, i) => {
-        const ti = S + i * sp, to = ti + sp - 0.32, g = (x: string) => in$(x, h);
-        wipe(wipes[i], ti - 0.24);
-        life(g('.h-num'), ti + 0.05, to, { opacity: 0, transform: 'translateX(12cqw)' }, { opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(-8cqw)' }, 0.6, 0.3, { opacity: 1, transform: 'translateX(-2.5cqw)' });
-        life(g('.h-photo'), ti + 0.1, to, { opacity: 0, transform: 'translateX(6cqw) scale(1.05)' }, { opacity: 1, transform: 'translateX(0) scale(1)' }, { opacity: 0, transform: 'translateX(-4cqw) scale(1.04)' }, 0.55, 0.28, { opacity: 1, transform: 'translateX(-.6cqw) scale(1.035)' });
-        life(g('.h-chip'), ti + 0.14, to, { opacity: 0, transform: 'translateX(-3cqw)' }, { opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(-2cqw)' }, 0.45, 0.25);
-        life(g('.h-tags'), ti + 0.18, to, { opacity: 0, transform: 'translateX(-3cqw)' }, { opacity: 1, transform: 'translateX(0)' }, { opacity: 0, transform: 'translateX(-2cqw)' }, 0.45, 0.25);
-        life(g('.h-first'), ti + 0.2, to, { opacity: 0, transform: 'translateY(1.2cqw)' }, { opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-1cqw)' }, 0.45, 0.25);
-        life(g('.h-last'), ti + 0.26, to, { clipPath: 'inset(0 100% 0 0)', transform: 'translateX(-2cqw)' }, { clipPath: 'inset(0 0% 0 0%)', transform: 'translateX(0)' }, { clipPath: 'inset(0 0% 0 100%)', transform: 'translateX(1.5cqw)' }, 0.55, 0.28, { clipPath: 'inset(0 0% 0 0%)', transform: 'translateX(.6cqw)' });
-        life(g('.h-bar'), ti + 0.42, to, { transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }, { transform: 'scaleX(0)' }, 0.45, 0.22);
-        life(g('.h-count'), ti + 0.2, to, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }, 0.4, 0.25);
-      });
-      wipe(wipes[n], S + n * sp - 0.24);
-      t = S + n * sp;
     }
 
     /* Pitch board: small number cards, then each line grows into big cards, then the full lineup with substitutes. */
@@ -402,7 +382,7 @@ export class Stage {
       const span: [number, number][] = [];
       L.groups.forEach((g, gi) => {
         const special = g.items.some((it) => s.players[it.i].captain || s.players[it.i].key);
-        const k = g.items.length, hold = Math.max(3.2, 1.5 + per * k) + (special ? 1.2 : 0);
+        const hold = classicLineDuration(per, g.items.length, special);
         span[gi] = [tg, tg + hold];
         g.items.forEach((it) => {
           const big = bigEl(it.i), slot = slotEl(it.i);

@@ -16,9 +16,9 @@ Classic: player reveals by position, followed by the starting lineup and substit
 
 ![Classic lineup animation](docs/demos/classic-demo.gif)
 
-26/27: split-panel player reveals, with manager, captain and key-player highlights.
+Broadcast Columns: split-panel player reveals, with manager, captain and key-player highlights.
 
-![26/27 lineup animation](docs/demos/season2627-demo.gif)
+![Broadcast Columns lineup animation](docs/demos/season2627-demo.gif)
 
 Both demos use the sample lineup and original placeholder artwork, played at 2.5× speed. You can supply your own images and frame the pitch, player and highlight cards separately. Template names describe styles and do not imply official affiliation.
 
@@ -28,7 +28,7 @@ Both demos use the sample lineup and original placeholder artwork, played at 2.5
 | --- | --- |
 | Lineup editor | Choose a preset or custom formation, drag players into position, and add substitutes. |
 | Player cards | Edit pitch, player and highlight cards with separate photos, image framing and name layouts. |
-| Animation | Use Classic or 26/27, with a manager introduction, player reveal order and scene timing. |
+| Animation | Use Classic or Broadcast Columns, with a manager introduction, grouped or scrolling player reveals and scene timing. Old projects using the removed one-card-at-a-time mode automatically use grouped reveals. |
 | Club styling | Set badges, colours, kit patterns, card shapes, and background images or video. |
 | Fonts and tags | Choose bundled fonts or upload your own. Search 211 FIFA member-association flags by Chinese / English name or FIFA / IOC code, or add custom image tags. |
 | Preview | Play, pause, scrub the timeline or jump between scenes, with undo and redo. |

@@ -55,7 +55,8 @@ export function ClubPanel() {
   const s = useLineup();
   const style = s.anim.style;
   const langName = languages.find((l) => l.code === lang)?.name ?? lang;
-  const showHeadline = s.anim.intro || style === 'row' || style === 'single';
+  const season = s.anim.template === 'season2627';
+  const showHeadline = !season && (s.anim.intro || style === 'row');
   return (
     <div className="flex flex-col gap-4">
       <Section title={t('tab.club')}>
@@ -87,11 +88,10 @@ export function ClubPanel() {
         }
       >
         <Grid>
-          <TextField label={t('club.subtitle')} k="subtitle" hint={t('club.subtitleHint')} />
+          {!season && <TextField label={t('club.subtitle')} k="subtitle" hint={t('club.subtitleHint')} />}
           {showHeadline && <TextField label={t('club.headline')} k="title" />}
           <TextField label={t('club.subsLabel')} k="subsLabel" />
           <TextField label={t('club.captainLabel')} k="captainLabel" />
-          {style === 'single' && <TextField label={t('club.keyLabel')} k="keyLabel" />}
         </Grid>
         {style === 'lines' && (
           <fieldset className="flex flex-col gap-3">
@@ -101,17 +101,6 @@ export function ClubPanel() {
               <TextField label={t('club.def')} k="grpDEF" />
               <TextField label={t('club.mid')} k="grpMID" />
               <TextField label={t('club.fwd')} k="grpFWD" />
-            </Grid>
-          </fieldset>
-        )}
-        {style === 'single' && (
-          <fieldset className="flex flex-col gap-3">
-            <legend className="editor-subsection-title mb-3">{t('club.roleWords')}</legend>
-            <Grid className="lg:grid-cols-4">
-              <TextField label={t('club.roleGK')} k="roleGK" />
-              <TextField label={t('club.roleDEF')} k="roleDEF" />
-              <TextField label={t('club.roleMID')} k="roleMID" />
-              <TextField label={t('club.roleFWD')} k="roleFWD" />
             </Grid>
           </fieldset>
         )}

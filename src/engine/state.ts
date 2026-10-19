@@ -61,7 +61,9 @@ export function normalize(input: unknown): LineupState {
   });
   if (!isObj(d.slotPos)) d.slotPos = {};
   d.anim.template = oneOf(d.anim.template, ['classic', 'season2627'] as const, 'classic');
-  d.anim.style = oneOf(d.anim.style, ['lines', 'row', 'single', 'off'] as const, 'lines');
+  // Removed reveal modes in saved projects migrate to the grouped reveal.
+  d.anim.style = oneOf(d.anim.style, ['lines', 'row', 'off'] as const, 'lines');
+  if (d.anim.template === 'season2627' && d.anim.style !== 'off') d.anim.style = 'lines';
   d.look.pitch = oneOf(d.look.pitch, ['light', 'dark'] as const, 'light');
   d.look.gk = oneOf(d.look.gk, ['top', 'bottom'] as const, 'top');
   d.look.pattern = oneOf(d.look.pattern, ['bolts', 'diagonal', 'stripes', 'halves', 'plain'] as const, 'bolts');

@@ -3,6 +3,8 @@ import { ClipboardPaste, Copy, Download, Upload, RotateCcw } from 'lucide-react'
 import type { AnimationTemplate, RevealStyle } from '@/engine/types';
 import { useI18n } from '@/i18n';
 import { registerFont } from '@/engine/fonts';
+import { boardLayout } from '@/engine/markup';
+import { classicLineDuration, classicRowInterval, seasonGroupHold } from '@/engine/reveal-timing';
 import { store, useLineup } from '@/lib/store';
 import { copyText } from '@/lib/utils';
 import { pickFile } from '@/lib/images';
@@ -18,21 +20,31 @@ export function AnimationPanel() {
   const s = useLineup();
   const season = s.anim.template === 'season2627';
   const sec = (v: number) => t('anim.seconds', { n: v.toFixed(1) });
+  const duration = (per: number) => {
+    if (!season && s.anim.style === 'row') return sec(classicRowInterval(per));
+    const values = boardLayout(s).groups.map(g => season
+      ? seasonGroupHold(per, g.items.some(it => s.players[it.i].key))
+      : classicLineDuration(per, g.items.length, g.items.some(it => s.players[it.i].key || s.players[it.i].captain)));
+    const min = Math.min(...values), max = Math.max(...values);
+    return Math.abs(max - min) < .01 ? sec(min) : `${sec(min)} – ${sec(max)}`;
+  };
   return (
     <div className="flex flex-col gap-4">
       <Section title={t('anim.scenes')}>
         <Field label={t('anim.template')} className="max-w-sm">
-          {({ id }) => <Select id={id} value={s.anim.template} onChange={(e) => store.update((st) => (st.anim.template = e.target.value as AnimationTemplate))}>
+          {({ id }) => <Select id={id} value={s.anim.template} onChange={(e) => store.update((st) => {
+            st.anim.template = e.target.value as AnimationTemplate;
+            if (st.anim.template === 'season2627' && st.anim.style !== 'off') st.anim.style = 'lines';
+          })}>
             <option value="classic">{t('anim.classic')}</option>
-            <option value="season2627">26/27</option>
+            <option value="season2627">{t('anim.broadcast')}</option>
           </Select>}
         </Field>
         <Field label={t('anim.reveal')} className="max-w-sm">
           {({ id }) => (
-            <Select id={id} value={season && s.anim.style !== 'off' ? 'lines' : s.anim.style} onChange={(e) => store.update((st) => (st.anim.style = e.target.value as RevealStyle))}>
+            <Select id={id} value={s.anim.style} onChange={(e) => store.update((st) => (st.anim.style = e.target.value as RevealStyle))}>
               <option value="lines">{t(season ? 'anim.columns' : 'anim.lines')}</option>
               {!season && <option value="row">{t('anim.row')}</option>}
-              {!season && <option value="single">{t('anim.single')}</option>}
               <option value="off">{t('anim.off')}</option>
             </Select>
           )}
@@ -45,10 +57,11 @@ export function AnimationPanel() {
       </Section>
       <Section title={t('anim.timing')}>
         <Grid className="lg:grid-cols-2">
-          {s.anim.style !== 'off' && <Slider label={t(season ? 'anim.groupHold' : 'anim.per')} min={0.4} max={3} step={0.1} value={s.anim.per} format={(v) => sec(season ? v * 4 : v)} onChange={(v) => store.update((st) => (st.anim.per = v))} />}
+          {s.anim.style !== 'off' && <Slider label={t(season ? 'anim.groupHold' : s.anim.style === 'row' ? 'anim.cardInterval' : 'anim.lineDuration')} min={0.4} max={3} step={0.1} value={s.anim.per} format={duration} onChange={(v) => store.update((st) => (st.anim.per = v))} />}
           {s.anim.manager && <Slider label={t('anim.mgrLen')} min={4} max={10} step={0.5} value={s.anim.mgrLen} format={sec} onChange={(v) => store.update((st) => (st.anim.mgrLen = v))} />}
           {s.anim.intro && <Slider label={t(season ? 'anim.leadLen' : 'anim.introLen')} min={2} max={6} step={0.5} value={s.anim.introLen} format={sec} onChange={(v) => store.update((st) => (st.anim.introLen = v))} />}
         </Grid>
+        {s.anim.style === 'lines' && <Note>{t('anim.timingHint')}</Note>}
       </Section>
     </div>
   );

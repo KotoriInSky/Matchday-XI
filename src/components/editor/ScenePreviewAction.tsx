@@ -15,7 +15,7 @@ export function ScenePreviewAction({ kind }: { kind: 'club' | 'manager' }) {
   const season = s.anim.template === 'season2627';
   const scene = kind === 'manager' || (kind === 'club' && s.anim.manager) ? 'manager' : 'intro';
   const mark = pb.marks.find((item) => item.scene === scene);
-  // The 26/27 intro is only a background lead-in; the club title lives with the manager.
+  // Broadcast Columns uses a background lead-in; the club title lives with the manager.
   const available = !!mark && !(season && scene === 'intro');
   const showPreview = () => {
     const stage = getStage();

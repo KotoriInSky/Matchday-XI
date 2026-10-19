@@ -2,7 +2,7 @@
  * HTML for the broadcast frame. Class names here are the plain names from stage.module.css;
  * the stage maps them to the module's generated names before inserting the markup.
  */
-import { CW, FH, FW, ROLE_OF, SMALL, STEP } from './constants';
+import { CW, FH, FW, SMALL, STEP } from './constants';
 import { slotsFor, type Role } from './formation';
 import { broadcastName, playerNameLines, clamp, parseSubs, shortName, splitName, fitRef, playerTagPath } from './state';
 import type { Fit, LineupState, Player } from './types';
@@ -11,7 +11,6 @@ export const esc = (s: unknown) =>
   String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
 export const fitStyle = (f?: Fit | null) => (f ? `--fz:${(+f.z).toFixed(3)};--fx:${(+f.x).toFixed(2)}%;--fy:${(+f.y).toFixed(2)}%` : '');
 const fullCls = (o: { photo: string | null; cut: boolean }) => (o.photo && o.cut === false ? ' full' : '');
-const pad2 = (n: number) => String(n).padStart(2, '0');
 
 /* ---------- Pitch perspective ---------- */
 export const depth = (y: number) => 0.8 + 0.2 * (y / 100);
@@ -220,34 +219,6 @@ function rowHTML(s: LineupState) {
   return `<div class="rowscene"><div class="strip">${cards}</div></div>`;
 }
 
-function roleWord(s: LineupState, pos: string) {
-  const r = ROLE_OF[String(pos).toUpperCase()];
-  return r ? s.text[`role${r}` as const] : '';
-}
-
-function heroesHTML(s: LineupState) {
-  const t = s.text;
-  return seqPlayers(s)
-    .map((p, k) => {
-      const role = roleWord(s, p.pos), [first, last] = playerNameLines(p);
-      const tags = tagHTML(s, p.tag1, p.idx) + tagHTML(s, p.tag2, p.idx);
-      const ticks = Array.from({ length: 11 }, (_, j) => `<i class="${j <= k ? 'on' : ''}"></i>`).join('');
-      return `<div class="hero">
-      <div class="h-num">${esc(p.num)}</div>
-      <div class="h-photo${p.key ? ' key' : ''}${fullCls(p)}">${p.photo ? `<img src="${p.photo}" alt="" data-fit="p:${p.idx}:fit" style="${fitStyle(p.fit)}">` : personSVG(p.num, 'hg' + k)}</div>
-      <div class="h-info" style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100}">
-        <div class="h-chip">${p.num ? `<b>${esc(p.num)}</b>` : ''}<span>${esc(role ? role + ' · ' + p.pos : p.pos)}</span>${p.captain ? `<em>${esc(t.captainLabel)}</em>` : ''}${p.key ? `<em class="k">★ ${esc(t.keyLabel)}</em>` : ''}</div>
-        ${tags ? `<div class="h-tags">${tags}</div>` : ''}
-        ${first ? `<div class="h-first up">${esc(first)}</div>` : ''}
-        ${last ? `<div class="h-last up">${esc(last)}</div>` : ''}
-        <i class="h-bar"></i>
-      </div>
-      <div class="h-count"><b>${pad2(k + 1)}</b><span>/ 11</span><div class="ticks">${ticks}</div></div>
-    </div>`;
-    })
-    .join('');
-}
-
 const CJK_RE = /[぀-ヿ㐀-鿿가-힯]/;
 
 // Both faces use the final pitch label, preserving manually mixed case and line breaks.
@@ -324,8 +295,8 @@ export function stageHTML(ctx: MarkupContext) {
   const { s, videoURL } = ctx, style = s.anim.style;
   const hasMedia = (s.bg.mode === 'image' && s.bg.image) || (s.bg.mode === 'video' && videoURL);
   const mode = hasMedia ? s.bg.mode : ['image', 'video'].includes(s.bg.mode) ? 'stripes' : s.bg.mode;
-  const wipes = '<i class="wipe" aria-hidden="true"></i>'.repeat(style === 'single' ? 12 : style === 'row' ? 1 : 0);
-  const players = style === 'row' ? rowHTML(s) + bugHTML(s) : style === 'single' ? heroesHTML(s) + bugHTML(s) : '';
+  const wipes = '<i class="wipe" aria-hidden="true"></i>'.repeat(style === 'row' ? 1 : 0);
+  const players = style === 'row' ? rowHTML(s) + bugHTML(s) : '';
   return `<div class="bg" data-mode="${mode}"></div><div class="fx"><i class="beam"></i><i class="beam b2"></i></div>${hasMedia ? '<i class="haze"></i>' : ''}
     ${boardHTML(s)}${s.anim.intro ? introHTML(s) : ''}${s.anim.manager ? mgrHTML(ctx) : ''}${players}${wipes}<i class="vignette"></i>`;
 }

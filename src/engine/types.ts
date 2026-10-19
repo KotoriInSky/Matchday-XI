@@ -53,7 +53,7 @@ export interface Tag {
 }
 
 export type PatternKind = 'bolts' | 'diagonal' | 'stripes' | 'halves' | 'plain';
-export type RevealStyle = 'lines' | 'row' | 'single' | 'off';
+export type RevealStyle = 'lines' | 'row' | 'off';
 export type AnimationTemplate = 'classic' | 'season2627';
 export type CjkScript = 'auto' | 'sc' | 'tc' | 'jp' | 'kr';
 
