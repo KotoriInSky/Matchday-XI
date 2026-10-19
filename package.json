@@ -27,6 +27,7 @@
     "test:browser-export": "node tests/browser-export.mjs",
     "test:static-export": "node tests/static-export.mjs",
     "test:card-sizing": "node tests/card-sizing.mjs",
+    "test:card-compositing": "node tests/card-compositing.mjs",
     "test:header-theme": "node tests/header-theme.mjs"
   },
   "dependencies": {

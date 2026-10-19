@@ -1,5 +1,6 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
+import { pixelDifference } from './pixel-difference.mjs';
 import { mkdir, writeFile } from 'node:fs/promises';
 
 const base = process.env.TEST_URL || 'http://127.0.0.1:5173/matchday-xi/';
@@ -292,7 +293,8 @@ try {
         document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = 'hidden'; });
       });
       const withoutPhotos = await page.screenshot({ clip });
-      if (!withPhotos.equals(withoutPhotos)) {
+      const difference = await pixelDifference(page, withPhotos, withoutPhotos);
+      if (difference.maxDelta > 2) {
         await writeFile(`${output}/clip-with.png`, withPhotos);
         await writeFile(`${output}/clip-without.png`, withoutPhotos);
         await writeFile(`${output}/clip-diagnostic.json`, JSON.stringify(await page.evaluate(({ full, time, clip }) => ({
@@ -303,7 +305,7 @@ try {
           })),
         }), { full, time, clip }), null, 2));
       }
-      assert.ok(withPhotos.equals(withoutPhotos), `Photo escaped its column (${full ? 'opaque' : 'cut-out'}, ${time})`);
+      assert.ok(difference.maxDelta <= 2, `Photo escaped its column (${full ? 'opaque' : 'cut-out'}, ${time})`);
       await page.evaluate(() => {
         document.querySelectorAll('[data-group="1"] [class*="s26-column-position_"]:last-child [class*="s26-photo_"]').forEach(photo => { photo.style.visibility = ''; });
       });

@@ -1,6 +1,7 @@
 import { chromium } from 'playwright';
 import assert from 'node:assert/strict';
 import { mkdir, writeFile } from 'node:fs/promises';
+import { pixelDifference } from './pixel-difference.mjs';
 
 const base = process.env.TEST_URL || 'http://127.0.0.1:5173/matchday-xi/';
 const output = 'test-results/classic-motion';
@@ -118,7 +119,13 @@ try {
           await writeFile(`${output}/colour-transition-capture.png`, withSweep);
           await page.evaluate(time => window.exportRenderer.frame(time), time + 2);
           await page.evaluate(time => window.exportRenderer.frame(time), time);
-          assert.ok(withSweep.equals(await capturePNG()), 'Seeking backward must restore the exact colour transition frame');
+          const seeked = await capturePNG();
+          const difference = await pixelDifference(page, withSweep, seeked);
+          if (difference.maxDelta > 2) {
+            await writeFile(`${output}/seek-before.png`, withSweep);
+            await writeFile(`${output}/seek-after.png`, seeked);
+          }
+          assert.ok(difference.maxDelta <= 2, 'Seeking backward must restore the colour transition frame within compositor rounding');
         }
         await page.evaluate(time => window.exportRenderer.frame(time), transition.start + transition.duration + .01);
         assert.ok(await page.locator('[class*="_pflash_"]').nth(index).evaluate(flash => flash.getBoundingClientRect().top >= flash.parentElement.getBoundingClientRect().bottom), 'The wash must clear the panel and restore the team colours after the transition');

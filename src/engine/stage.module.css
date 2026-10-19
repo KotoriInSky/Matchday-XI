@@ -16,6 +16,8 @@
   --fd:"Outfit", system-ui, sans-serif; --fb:"Outfit", system-ui, sans-serif;
   --c1l:color-mix(in srgb,var(--c1) 62%,#fff); --c1d:color-mix(in srgb,var(--c1) 55%,#000);
   --gold1:#fff3c4; --gold2:#e0aa3e; --gold-ink:#3a2700;
+  /* Fixed to the frame: free above the lower third, contained below it. */
+  --portrait-clip:polygon(-100vmax -100vmax,100vmax -100vmax,100vmax 66.667%,100% 66.667%,100% 100%,0 100%,0 66.667%,-100vmax 66.667%);
   position:relative;aspect-ratio:16/9;width:100%;overflow:hidden;isolation:isolate;
   font-family:var(--fb);color:var(--c3);background:var(--c1);user-select:none;-webkit-user-select:none
 }
@@ -78,13 +80,16 @@
 .rowscene{position:absolute;inset:0;z-index:3;pointer-events:none;overflow:hidden}
 .strip{position:absolute;left:0;top:7.5cqw;height:44.5cqw;width:1px;transform:translateX(100cqw)}
 .rc{--card-w:29cqw;--card-h:44.5cqw;position:absolute;top:0;width:var(--card-w);height:var(--card-h);border-radius:1.6cqw;isolation:isolate}
-.rc-in{position:absolute;inset:0;border-radius:inherit;overflow:hidden;background:linear-gradient(170deg,var(--c1l),var(--c1) 55%,var(--c1d));box-shadow:0 1.2cqw 2.4cqw rgba(0,0,0,.35),inset 0 0 0 .12cqw color-mix(in srgb,var(--c3) 18%,transparent)}
+.rc-in{position:absolute;inset:0;border-radius:inherit;overflow:visible}
+.rc-surface{position:absolute;inset:0;z-index:0;border-radius:inherit;overflow:hidden;background:linear-gradient(170deg,var(--c1l),var(--c1) 55%,var(--c1d));box-shadow:0 1.2cqw 2.4cqw rgba(0,0,0,.35),inset 0 0 0 .12cqw color-mix(in srgb,var(--c3) 18%,transparent)}
+.rc-photo-window{position:absolute;inset:0;z-index:2;pointer-events:none;clip-path:var(--portrait-clip)}
+.rc-photo-window.full{clip-path:inset(0 round 1.6cqw)}
 .rc-num{position:absolute;left:calc(var(--card-w) * .045);top:calc(var(--card-h) * .03 - var(--card-w) * .479 * .15);font-family:var(--fd);font-weight:800;font-size:calc(var(--card-w) * .479);line-height:1;color:transparent;-webkit-text-stroke:.2cqw var(--number-color,color-mix(in srgb,var(--c3) 62%,transparent));letter-spacing:-.02em;font-variant-numeric:tabular-nums}
 .rc-photo{position:absolute;left:0;right:0;bottom:7cqw;height:37cqw;display:flex;align-items:flex-end;justify-content:center}
 .rc-photo img{max-width:100%;max-height:100%;object-fit:contain;filter:drop-shadow(0 .8cqw 1.2cqw rgba(0,0,0,.35))}
 .rc-photo svg{height:25cqw;width:auto;margin-bottom:4cqw}
-.rc-shade{position:absolute;left:0;right:0;bottom:0;height:17cqw;background:linear-gradient(to top,var(--c1d) 28%,transparent)}
-.rc-name{color:var(--name-color,var(--c3));position:absolute;left:6%;right:6%;bottom:calc(var(--card-h) * .03 - var(--card-w) * .153 * var(--name-scale-2,1) * .17);z-index:3;display:flex;flex-direction:column}
+.rc-shade{position:absolute;left:0;right:0;bottom:0;z-index:3;height:17cqw;border-radius:0 0 1.6cqw 1.6cqw;background:linear-gradient(to top,var(--c1d) 28%,transparent)}
+.rc-name{color:var(--name-color,var(--c3));position:absolute;left:6%;right:6%;bottom:calc(var(--card-h) * .03 - var(--card-w) * .153 * var(--name-scale-2,1) * .17);z-index:4;display:flex;flex-direction:column}
 .rc-name span{font-family:var(--fd);font-weight:400;font-size:calc(var(--card-w) * .083 * var(--name-scale-1,1));line-height:1.08}
 .rc-name b{font-family:var(--fd);font-weight:700;font-size:calc(var(--card-w) * .153 * var(--name-scale-2,1));line-height:1.08;white-space:nowrap;overflow:hidden}
 /* Compensate Outfit's line-box whitespace to keep the visible name gap near 1.1% H. */
@@ -117,8 +122,10 @@
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .sheen{position:absolute;top:-10%;bottom:-10%;left:0;width:40%;z-index:4;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);mix-blend-mode:screen;transform:translateX(-150%) skewX(-18deg)}
 .bigc{z-index:300;opacity:0;perspective:110cqw;pointer-events:none}
-.stage[data-shape="sharp"] :is(.rc,.rc-in,.fface,.fback){border-radius:0}
-.stage[data-shape="angled"] :is(.rc-in,.fback){border-radius:0;clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
+.stage[data-shape="sharp"] :is(.rc,.rc-in,.rc-surface,.rc-shade,.fface,.fback){border-radius:0}
+.stage[data-shape="sharp"] .rc-photo-window.full{clip-path:inset(0)}
+.stage[data-shape="angled"] :is(.rc-surface,.fback,.rc-photo-window.full){border-radius:0;clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
+.stage[data-shape="angled"] .rc-shade{border-radius:0}
 .flip{position:absolute;inset:0;transform-style:preserve-3d}
 .fface,.fback{position:absolute;inset:0;border-radius:1.6cqw;-webkit-backface-visibility:hidden;backface-visibility:hidden}
 .fback{transform:rotateY(180deg);overflow:hidden;display:grid;place-items:center;background:var(--pat) center/cover;box-shadow:0 1.2cqw 2.4cqw rgba(0,0,0,.35),inset 0 0 0 .3cqw color-mix(in srgb,var(--c2) 70%,transparent)}
@@ -183,11 +190,9 @@
 .ph svg.person{position:absolute;left:8%;bottom:-6%;width:84%;height:auto}
 .rc-photo svg.person{height:36cqw;margin-bottom:-6.5cqw}
 .h-photo svg.person{height:46cqw;margin-bottom:0}
-.rc-kphoto{position:absolute;inset:0;z-index:2;opacity:0;pointer-events:none;display:flex;align-items:flex-end;justify-content:center;
-  clip-path:inset(-45% 0 0 0 round 0 0 1.6cqw 1.6cqw)}
+.rc-kphoto{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;align-items:flex-end;justify-content:center}
 .rc-kphoto img{height:50cqw;max-width:125%;object-fit:contain;object-position:50% 100%;margin-bottom:4cqw;-webkit-mask-image:linear-gradient(to top,transparent 0,#000 18%);mask-image:linear-gradient(to top,transparent 0,#000 18%);filter:drop-shadow(0 .8cqw 1.4cqw rgba(0,0,0,.4));transform-origin:50% 100%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(var(--fz,1))}
 .rc-kphoto svg{height:44cqw;width:auto;margin-bottom:-3cqw}
-.rc-kphoto.full{clip-path:inset(0 round 1.6cqw)}
 .rc-kphoto.full img{width:100%;height:100%;max-width:none;margin:0;object-fit:cover;object-position:50% 15%;filter:none}
 .rc-flash{position:absolute;inset:0;z-index:4;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 42%,#fff,rgba(255,255,255,.9) 35%,rgba(225,232,238,.55))}
 .sm-cap{position:absolute;right:-.25cqw;top:46%;z-index:6;height:1.45cqw;min-width:1.7cqw;box-sizing:border-box;display:grid;place-items:center;background:var(--c3);color:var(--c1d);font-family:var(--fd);font-weight:800;font-size:1cqw;border-radius:.2cqw;box-shadow:inset 0 .2cqw 0 var(--c1d),inset 0 -.2cqw 0 var(--c1d),0 .1cqw .4cqw rgba(0,0,0,.4)}
@@ -265,29 +270,22 @@
 
 .inspector :is(.rc-shade,.rc-name,.rc-metal,.rc-num,.sheen){pointer-events:none}
 
-.inspector .small-preview{--card-w:5.7cqw;--card-h:calc(var(--card-w) * 1.05 + 1.6cqw);position:absolute;left:50%;top:50%;width:var(--card-w);transform:translate(-50%,-50%) scale(7)}
-.inspector .small-preview .sm-por{overflow:hidden;box-shadow:0 .2cqw .6cqw rgba(0,0,0,.2)}
+.inspector .small-preview{--card-w:calc(6.9cqw * var(--ks,1));--card-h:calc(var(--card-w) * 1.05 + 1.6cqw);position:absolute;left:50%;top:50%;width:var(--card-w);transform:translate(-50%,-50%) scale(7)}
 .inspector .small-preview .ph{width:100%}
 .inspector .small-preview img.pp{pointer-events:auto}
+.inspector .rc-photo-window [data-fit]{pointer-events:auto}
 .inspector .key-preview .rc-kphoto{pointer-events:auto}
 
-/* Clip the artwork independently so transparent portraits can cross the top edge. */
-.rc-in.cutout{overflow:visible}
-.rc-in.cutout :is(.stripes-bg,.rc-metal,.rc-holo,.sheen,.rc-flash,.rc-shade){border-radius:inherit;clip-path:inset(0 round 1.6cqw)}
-.rc-in.cutout .rc-photo{height:42cqw;clip-path:inset(-45% 0 0)}
-.inspector .rc-in.cutout .rc-photo,.inspector .rc-kphoto:not(.full),.inspector .sm-por.cutout .ph img.pp{clip-path:none}
-/* Shape the frame backing, so the portrait can extend outside an angled card. */
-.inspector[data-shape="angled"] .rc-in.cutout{clip-path:none;background:none;box-shadow:none}
-.inspector[data-shape="angled"] .rc-in.cutout::before{content:"";position:absolute;inset:0;background:linear-gradient(170deg,var(--c1l),var(--c1) 55%,var(--c1d));clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
-.inspector[data-shape="angled"] .rc-in.cutout :is(.stripes-bg,.rc-metal,.rc-holo,.sheen,.rc-flash){border-radius:0;clip-path:polygon(0 0,80% 0,100% 9%,100% 100%,0 100%)}
-.inspector[data-shape="angled"] .rc-in.cutout .rc-shade{border-radius:0;clip-path:none}
-.stage .sm-por.cutout{overflow:visible;clip-path:none}
+/* Crop fixed windows rather than transformed images, identically in every renderer. */
+.rc-in.cutout .rc-photo{height:42cqw}
+.stage .sm-por.cutout{overflow:visible;clip-path:inset(-100vmax 0 0 round 0 0 var(--small-radius,0px) var(--small-radius,0px))}
+.stage[data-shape="rounded"] .sm-por.cutout{--small-radius:.7cqw}
 .sm-por.cutout .ph{overflow:visible;background:none}
 .sm-por.cutout .ph::before{content:"";position:absolute;inset:0;background:var(--pat) center/cover}
 .stage[data-shape="rounded"] .sm-por.cutout .ph::before{border-radius:.7cqw}
 .stage[data-shape="angled"] .sm-por.cutout .ph::before{clip-path:polygon(0 0,76% 0,100% 13%,100% 100%,0 100%)}
 .sm-por.cutout .ph::after{display:none}
-.sm-por.cutout .ph img.pp{position:absolute;bottom:1.6cqw;height:calc(var(--card-w) * 1.239);object-fit:contain;object-position:50% 100%;transform-origin:50% 100%;clip-path:inset(-100% 0 0)}
+.sm-por.cutout .ph img.pp{position:absolute;bottom:1.6cqw;height:calc(var(--card-w) * 1.239);object-fit:contain;object-position:50% 100%;transform-origin:50% 100%}
 .sm-por.cutout .nm{position:relative;z-index:1}
 .stage[data-shape="rounded"] .sm-por.cutout .nm{border-radius:0 0 .7cqw .7cqw}
 

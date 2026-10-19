@@ -184,7 +184,8 @@ type SeqPlayer = Player & { idx: number };
 /** Key player: a second, larger portrait that takes over when the card turns silver; cut-outs break out over the top edge. */
 function keyPhotoHTML(p: SeqPlayer, gid: string) {
   const own = !!p.photoK, pic = p.photoK || p.photo, cut = own ? p.cutK !== false : p.cut !== false;
-  return `<div class="rc-kphoto${pic && !cut ? ' full' : ''}">${pic ? `<img src="${pic}" alt="" draggable="false" data-fit="p:${p.idx}:fitK" style="${fitStyle(p.fitK)}">` : personSVG(p.num, 'k' + gid)}</div>`;
+  const full = pic && !cut ? ' full' : '';
+  return `<div class="rc-photo-window${full}"><div class="rc-kphoto${full}">${pic ? `<img src="${pic}" alt="" draggable="false" data-fit="p:${p.idx}:fitK" style="${fitStyle(p.fitK)}">` : personSVG(p.num, 'k' + gid)}</div></div>`;
 }
 
 function rcInner(s: LineupState, p: SeqPlayer, gid: string) {
@@ -194,14 +195,17 @@ function rcInner(s: LineupState, p: SeqPlayer, gid: string) {
   const badge = p.captain && tag1 ? `<div class="roll"><div class="roll-in"><div class="roll-a">${tag1}</div><div class="roll-b">${ticker}</div></div></div>` : ticker || tag1;
   const tags = (p.captain ? badge : tag1) + tagHTML(s, p.tag2, p.idx);
   return `<div class="rc-in${p.photo && p.cut !== false ? ' cutout' : ''}">
-    <div class="stripes-bg"></div>
-    ${p.key ? '<div class="rc-metal"></div><div class="rc-holo"></div>' : ''}
-    <div class="rc-num" data-card-text>${esc(p.num)}</div>
-    <div class="rc-photo${fullCls(p)}">${p.photo ? `<img src="${p.photo}" alt="" draggable="false" data-fit="p:${p.idx}:fit" style="${fitStyle(p.fit)}">` : personSVG(p.num, gid)}</div>
+    <div class="rc-surface">
+      <div class="stripes-bg"></div>
+      ${p.key ? '<div class="rc-metal"></div><div class="rc-holo"></div>' : ''}
+      <div class="rc-num" data-card-text>${esc(p.num)}</div>
+      <i class="sheen"></i>${p.key ? '<i class="rc-flash"></i>' : ''}
+    </div>
+    <div class="rc-photo-window${fullCls(p)}"><div class="rc-photo${fullCls(p)}">${p.photo ? `<img src="${p.photo}" alt="" draggable="false" data-fit="p:${p.idx}:fit" style="${fitStyle(p.fit)}">` : personSVG(p.num, gid)}</div></div>
+    ${p.key ? keyPhotoHTML(p, gid) : ''}
     <div class="rc-shade"></div>
     <div class="rc-name" data-card-text style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100}">${first ? `<span class="up">${esc(first)}</span>` : ''}${last ? `<b class="up">${esc(last)}</b>` : ''}</div>
-    <i class="sheen"></i>${p.key ? '<i class="rc-flash"></i>' : ''}
-  </div>${p.key ? keyPhotoHTML(p, gid) : ''}${tags ? `<div class="rc-tags">${tags}</div>` : ''}`;
+  </div>${tags ? `<div class="rc-tags">${tags}</div>` : ''}`;
 }
 
 const seqPlayers = (s: LineupState): SeqPlayer[] => {
