@@ -29,6 +29,7 @@
     "test:card-sizing": "node tests/card-sizing.mjs",
     "test:card-compositing": "node tests/card-compositing.mjs",
     "test:playback-pause": "node tests/playback-pause.mjs",
+    "test:render-consistency": "node tests/render-consistency.mjs",
     "test:header-theme": "node tests/header-theme.mjs"
   },
   "dependencies": {

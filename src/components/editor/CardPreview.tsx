@@ -1,5 +1,6 @@
 import { playerNameLines, splitName, playerTagPath } from '@/engine/state';
 import { cardArtwork } from '@/engine/card-artwork';
+import { settleCardCaption } from '@/engine/card-still';
 import { useEffect, useRef, useState, type PointerEvent } from 'react';
 import { ArrowDown, ArrowUp, ChevronLeft, ChevronRight, Undo2, Redo2, Plus, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
@@ -84,6 +85,17 @@ export function CardPreview({ playerIndex, tagId, onPlayerChange, onClose, onSce
   const canvas = useRef<HTMLDivElement>(null);
   const art = cardArtwork(shown, playerIndex, tag ? 'big' : variant, lang);
   const html = tag ? art.html.replaceAll(`data-fit="${esc(playerTagPath(playerIndex, tag.id))}"`, `data-fit="${esc(path)}"`) : art.html;
+  useEffect(() => {
+    const root = canvas.current;
+    if (!root) return;
+    let active = true;
+    const settle = () => { if (active) settleCardCaption(root, s.text.captainLabel); };
+    const observer = new ResizeObserver(settle);
+    observer.observe(root);
+    settle();
+    void document.fonts.ready.then(settle);
+    return () => { active = false; observer.disconnect(); };
+  }, [html, s.text.captainLabel, lang, s.fonts.display, s.customFonts.display, s.look.tagSize]);
   const adjustmentControls = fit && <div className="flex flex-col gap-4 border-t border-border pt-4">
         {active.startsWith('tag:') && <p className="text-xs text-muted-foreground">{tag ? (zh ? '共享默认位置 · 未单独调整的球员会同步' : 'Shared default · applies to players without overrides') : (zh ? '位置仅用于当前球员' : 'Position applies to this player only')}</p>}
         <Slider label={t('framer.size')} min={30} max={300} value={Math.round(fit.z * 100)} format={(v) => `${v}%`} onChange={(v) => change('z', clamp(v / 100, .3, 3))} />

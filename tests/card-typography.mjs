@@ -49,6 +49,8 @@ try {
     window.measureCardType = kind => {
       const frame = document.querySelector(kind === 'small' ? '[class*="_sm-por_"]' : '[class*="s26-preview-column_"]') || document.querySelector('[class*="_rc_"]');
       const rect = frame.getBoundingClientRect();
+      const columns = frame.matches('[class*="s26-preview-column_"]');
+      const typeWidth = columns ? rect.height * 22.5 / 56.25 : rect.width;
       const nodes = kind === 'small' ? [...frame.querySelectorAll('[data-card-text] b')] : [...frame.querySelectorAll('[data-card-text] span, [data-card-text] b')];
       const measure = node => {
         const style = getComputedStyle(node), box = node.getBoundingClientRect(), font = parseFloat(style.fontSize), line = parseFloat(style.lineHeight);
@@ -56,10 +58,11 @@ try {
         const context = document.createElement('canvas').getContext('2d'); context.font = `${style.fontWeight} ${font}px ${style.fontFamily}`;
         const m = context.measureText(node.textContent);
         const baseline = box.y + ((line - m.fontBoundingBoxAscent - m.fontBoundingBoxDescent) / 2 + m.fontBoundingBoxAscent) * scale;
-        return { text: node.textContent, ratio: font * scale / rect.width, left: (box.x - m.actualBoundingBoxLeft * scale - rect.x) / rect.width, top: (baseline - m.actualBoundingBoxAscent * scale - rect.y) / rect.height, bottom: (rect.bottom - baseline - m.actualBoundingBoxDescent * scale) / rect.height };
+        return { text: node.textContent, ratio: font * scale / typeWidth, left: (box.x - m.actualBoundingBoxLeft * scale - rect.x) / rect.width, top: (baseline - m.actualBoundingBoxAscent * scale - rect.y) / rect.height, bottom: (rect.bottom - baseline - m.actualBoundingBoxDescent * scale) / rect.height };
       };
       const number = frame.querySelector('[class*="_rc-num_"], [class*="s26-number_"]');
-      return { width: rect.width, height: rect.height, text: nodes.map(measure), ...(number ? { number: measure(number) } : {}) };
+      const badge = frame.querySelector('[class*="s26-tags_"]')?.getBoundingClientRect();
+      return { width: rect.width, height: rect.height, text: nodes.map(measure), ...(number ? { number: measure(number) } : {}), ...(badge ? { badge: { top: (badge.top - rect.top) / rect.height, bottom: (rect.bottom - badge.bottom) / rect.height } } : {}) };
     };
     return s;
   }, base);
@@ -75,7 +78,11 @@ try {
       assert.ok(Math.abs(original.text[0].bottom - .05) < .006, `${template}: small name bottom`);
     } else {
       const [first, last] = original.text;
-      assert.ok(Math.abs(last.bottom - .03) < .006, `${template}/${kind}: surname bottom`);
+      if (template === 'classic') assert.ok(Math.abs(last.bottom - .03) < .006, `${template}/${kind}: surname bottom`);
+      else {
+        assert.ok(last.bottom > 1 - original.badge.top, 'Name must sit above the reserved badge row');
+        assert.ok(Math.abs(original.badge.bottom - .03) < .002, 'Badge row must stay at the global bottom inset');
+      }
       const gap = last.top - (1 - first.bottom);
       assert.ok(Math.abs(gap - .011) < .006, `${template}/${kind}: visible name gap ${gap}`);
       assert.ok(Math.abs(original.number.ratio - .479) < .002, `${template}/${kind}: number size`);

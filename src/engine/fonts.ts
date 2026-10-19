@@ -26,10 +26,10 @@ export const CJK: Record<Exclude<CjkScript, 'auto'>, { font: string; tag: string
 };
 const LANG_CJK: Record<string, Exclude<CjkScript, 'auto'>> = { 'zh-Hans': 'sc', 'zh-Hant': 'tc', ja: 'jp', ko: 'kr' };
 
-/** Picks the writing system: the user's choice, otherwise the interface language, otherwise Simplified Chinese. */
-export function cjkFor(choice: CjkScript, uiLang: string, browserLang = 'en') {
-  void choice;
-  return CJK[LANG_CJK[uiLang] || LANG_CJK[browserLang] || 'sc'];
+/** One resolver for the live stage, card inspector and both export renderers. */
+export function cjkFor(choice: CjkScript, uiLang: string, browserLang = typeof navigator === 'undefined' ? 'en' : navigator.language) {
+  const scriptFor = (lang: string) => LANG_CJK[lang] || (/^zh-(TW|HK|MO|Hant)/i.test(lang) ? 'tc' : /^zh/i.test(lang) ? 'sc' : LANG_CJK[lang.split('-')[0]]);
+  return CJK[choice !== 'auto' && CJK[choice] ? choice : scriptFor(uiLang) || scriptFor(browserLang) || 'sc'];
 }
 export const uiCjk = (uiLang: string) => (LANG_CJK[uiLang] ? CJK[LANG_CJK[uiLang]] : null);
 

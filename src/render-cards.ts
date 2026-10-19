@@ -5,6 +5,7 @@ import type { LineupState } from './engine/types';
 import styles from './engine/stage.module.css';
 import seasonStyles from './engine/season2627.module.css';
 import { createBrowserCapture } from './lib/browser-capture';
+import { settleCardCaption } from './engine/card-still';
 
 declare global {
   interface Window {
@@ -27,8 +28,7 @@ export function mountCardRenderer() {
   // Freeze from the first style calculation, before compositor animations start.
   // Pausing after image/font loading can otherwise preserve a fractional frame.
   const stillStyle = document.createElement('style');
-  stillStyle.textContent = `*,*::before,*::after{animation-play-state:paused!important;animation-delay:0s!important;transition:none!important}
-    .${styles.inspector} .${styles['roll-in']},.${seasonStyles['s26-badge-rotor']}{animation-delay:-3s!important}`;
+  stillStyle.textContent = `*,*::before,*::after{animation-play-state:paused!important;animation-delay:0s!important;transition:none!important}`;
   document.head.append(stillStyle);
   let state: LineupState, language: string;
   let capture: ReturnType<typeof createBrowserCapture>;
@@ -63,15 +63,7 @@ export function mountCardRenderer() {
       stage.getBoundingClientRect();
       await document.fonts.ready;
       await Promise.all([...canvas.querySelectorAll('img')].map(image => image.decode()));
-      // A still image cannot communicate a scrolling label: show the complete caption.
-      for (const ticker of stage.querySelectorAll<HTMLElement>(`.${styles['rc-ticker']} span, .${seasonStyles['s26-captain-text']}`)) {
-        ticker.textContent = state.text.captainLabel || 'Captain';
-        ticker.style.padding = '0'; ticker.style.width = '100%'; ticker.style.textAlign = 'center';
-        let size = parseFloat(getComputedStyle(ticker).fontSize) / 600 * 100;
-        for (let tries = 0; tries < 20 && ticker.scrollWidth > ticker.clientWidth; tries++) {
-          size *= .9; ticker.style.fontSize = `${size}cqw`;
-        }
-      }
+      settleCardCaption(stage, state.text.captainLabel);
       await settle();
       const frame = stage.querySelector<HTMLElement>(kind === 'small' ? `.${styles['sm-por']}`
         : state.anim.template === 'season2627' ? `.${seasonStyles['s26-preview-column']}` : `.${styles.rc}`);

@@ -112,12 +112,6 @@
 .rc-ticker{position:relative;width:10cqw;height:3.3cqw;overflow:hidden;display:flex;align-items:center;background:var(--c3);color:var(--c1d);border-radius:.3cqw;transform-origin:left center;
   box-shadow:inset 0 .45cqw 0 var(--c1d),inset 0 -.45cqw 0 var(--c1d),0 .3cqw .8cqw rgba(0,0,0,.35)}
 .rc-ticker::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(0,0,0,.18),rgba(255,255,255,.25) 32%,transparent 55%,rgba(0,0,0,.18))}
-.roll{position:relative;height:3.3cqw;width:10cqw;perspective:20cqw}
-.roll-in{position:absolute;inset:0;transform-style:preserve-3d;transform:translateZ(-1.65cqw)}
-.roll-a,.roll-b{position:absolute;left:0;top:0;height:3.3cqw;display:flex;align-items:center;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.roll-a{transform:rotateX(0deg) translateZ(1.65cqw)}
-.roll-b{transform:rotateX(-90deg) translateZ(1.65cqw)}
-.roll .tag{height:3.3cqw;box-sizing:border-box;padding-block:0}
 .rc-ticker span{display:inline-block;white-space:nowrap;font-family:var(--fd);font-weight:800;font-size:1.85cqw;letter-spacing:.03em;padding-left:.7cqw;animation:tick 6s linear infinite}
 @keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .sheen{position:absolute;top:-10%;bottom:-10%;left:0;width:40%;z-index:4;pointer-events:none;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);mix-blend-mode:screen;transform:translateX(-150%) skewX(-18deg)}
@@ -132,31 +126,6 @@
 .fback .bk{position:relative;width:42%;aspect-ratio:1;display:flex;align-items:center;justify-content:center}
 .fback .bk img,.fback .bk svg{max-width:100%;max-height:100%;object-fit:contain}
 
-/* One big card at a time (optional style) */
-.hero{position:absolute;inset:0;z-index:3;pointer-events:none}
-.h-num{position:absolute;right:1cqw;top:-1cqw;font-family:var(--fd);font-weight:800;font-size:46cqw;line-height:.8;color:color-mix(in srgb,var(--c2) 6%,transparent);-webkit-text-stroke:.22cqw var(--number-color,color-mix(in srgb,var(--c2) 75%,transparent));letter-spacing:-.02em;font-variant-numeric:tabular-nums}
-.h-photo{position:absolute;right:7cqw;bottom:0;width:40cqw;height:52cqw;display:flex;align-items:flex-end;justify-content:center}
-.h-photo.key{filter:drop-shadow(0 0 1.6cqw rgba(255,210,110,.55))}
-.h-photo img{max-width:100%;max-height:100%;object-fit:contain;-webkit-mask-image:linear-gradient(to top,transparent,#000 16%);mask-image:linear-gradient(to top,transparent,#000 16%)}
-.h-photo svg{height:38cqw;width:auto;margin-bottom:7cqw}
-.h-info{position:absolute;left:7cqw;top:14cqw;width:48cqw;display:flex;flex-direction:column;align-items:flex-start;gap:.7cqw}
-.h-chip{display:flex;align-items:stretch;flex-wrap:wrap;font-weight:700;font-size:1.25cqw;letter-spacing:.14em;text-transform:uppercase}
-.h-chip b{background:var(--c2);color:var(--c4);padding:.3cqw .9cqw;font-family:var(--fd);font-size:1.7cqw;letter-spacing:0;display:flex;align-items:center}
-.h-chip span{background:color-mix(in srgb,var(--c3) 14%,transparent);padding:.3cqw 1cqw;display:flex;align-items:center}
-.h-chip em{font-style:normal;background:var(--c3);color:var(--c1);padding:.3cqw .8cqw;display:flex;align-items:center}
-.h-chip em.k{background:linear-gradient(135deg,var(--gold1),var(--gold2));color:var(--gold-ink)}
-.h-tags{display:flex;gap:.6cqw;flex-wrap:wrap}
-.h-tags .tag{border-radius:.5cqw}
-.h-first{color:var(--name-color,var(--c3));font-family:var(--fd);font-weight:500;font-size:2.9cqw;line-height:1;letter-spacing:.03em;opacity:.92;margin-top:.4cqw}
-.h-last{color:var(--name-color,var(--c3));font-family:var(--fd);font-weight:800;font-size:8.6cqw;line-height:.88;width:100%;text-wrap:balance}
-.h-meta{font-size:1.3cqw;font-weight:600;opacity:.8;letter-spacing:.04em}
-.h-bar{display:block;width:9cqw;height:.55cqw;background:var(--c2);transform-origin:left center;margin-top:.4cqw}
-.h-count{position:absolute;left:7cqw;bottom:4cqw;display:flex;align-items:center;gap:.6cqw;font-family:var(--fd);font-variant-numeric:tabular-nums}
-.h-count b{font-size:3cqw;color:var(--c2);line-height:1}
-.h-count span{font-size:1.4cqw;opacity:.7}
-.ticks{display:flex;gap:.35cqw;margin-left:1cqw}
-.ticks i{width:1.6cqw;height:.35cqw;background:color-mix(in srgb,var(--c3) 22%,transparent)}
-.ticks i.on{background:var(--c2)}
 .bug{position:absolute;left:2.4cqw;top:2cqw;z-index:5;display:flex;align-items:center;gap:.9cqw;pointer-events:none}
 .bug .bc{height:3.6cqw;width:3.6cqw;display:flex;align-items:center;justify-content:center}
 .bug .bc img,.bug .bc svg{max-height:100%;max-width:100%}
@@ -189,7 +158,6 @@
 .sm-por{display:flex;flex-direction:column;overflow:hidden}
 .ph svg.person{position:absolute;left:8%;bottom:-6%;width:84%;height:auto}
 .rc-photo svg.person{height:36cqw;margin-bottom:-6.5cqw}
-.h-photo svg.person{height:46cqw;margin-bottom:0}
 .rc-kphoto{position:absolute;inset:0;opacity:0;pointer-events:none;display:flex;align-items:flex-end;justify-content:center}
 .rc-kphoto img{height:50cqw;max-width:125%;object-fit:contain;object-position:50% 100%;margin-bottom:4cqw;-webkit-mask-image:linear-gradient(to top,transparent 0,#000 18%);mask-image:linear-gradient(to top,transparent 0,#000 18%);filter:drop-shadow(0 .8cqw 1.4cqw rgba(0,0,0,.4));transform-origin:50% 100%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(var(--fz,1))}
 .rc-kphoto svg{height:44cqw;width:auto;margin-bottom:-3cqw}
@@ -197,8 +165,8 @@
 .rc-flash{position:absolute;inset:0;z-index:4;opacity:0;pointer-events:none;background:radial-gradient(circle at 50% 42%,#fff,rgba(255,255,255,.9) 35%,rgba(225,232,238,.55))}
 .sm-cap{position:absolute;right:-.25cqw;top:46%;z-index:6;height:1.45cqw;min-width:1.7cqw;box-sizing:border-box;display:grid;place-items:center;background:var(--c3);color:var(--c1d);font-family:var(--fd);font-weight:800;font-size:1cqw;border-radius:.2cqw;box-shadow:inset 0 .2cqw 0 var(--c1d),inset 0 -.2cqw 0 var(--c1d),0 .1cqw .4cqw rgba(0,0,0,.4)}
 .sm-tags{position:absolute;left:-.25cqw;top:46%;z-index:6;display:flex;flex-direction:column;gap:.2cqw}
-.sm-tags .tpic{height:calc(.6552cqw * var(--tgz,1));width:calc(.9828cqw * var(--tgz,1))}
-.sm-tags .tpic.square{width:calc(.6552cqw * var(--tgz,1))}
+.sm-tags .tpic{height:calc(.6552cqw * var(--small-tgz,var(--tgz,1)));width:calc(.9828cqw * var(--small-tgz,var(--tgz,1)))}
+.sm-tags .tpic.square{width:calc(.6552cqw * var(--small-tgz,var(--tgz,1)))}
 .sm-num{position:absolute;inset:0;z-index:2;transform:rotateY(180deg);-webkit-backface-visibility:hidden;backface-visibility:hidden;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--pat) center/cover}
 .sm-num b{position:absolute;left:50%;top:calc(var(--card-h) * .236 - var(--card-w) * .857 * .15);transform:translateX(-50%) scaleX(var(--small-number-x,.8));font-family:var(--fd);font-weight:800;font-size:calc(var(--card-w) * .857);line-height:1;font-variant-numeric:tabular-nums}
 .board:not(.noreveal) .sm-num b{top:50%;transform:translate(-50%,-50%) scaleX(var(--small-number-x,.8))}
@@ -232,11 +200,10 @@
 @media (prefers-reduced-motion: reduce){ .beam,.rc-holo,.rc-ticker span{animation:none!important} .beam{display:none} .slot{transition:none} }
 
 /* photo framing: each photo carries its own size and position; cut-outs sit on the card, ordinary photos fill it */
-.rc-photo img,.h-photo img,.m-photo img{transform-origin:50% 100%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(calc(var(--fz,1) * var(--gz,1)))}
+.rc-photo img,.m-photo img{transform-origin:50% 100%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(calc(var(--fz,1) * var(--gz,1)))}
 .rc-photo.full{top:0;bottom:0;height:auto}
-.h-photo.full{top:0;right:4cqw;width:44cqw;height:auto}
 .m-photo.full{top:0;width:34cqw;height:auto}
-:is(.rc-photo,.h-photo,.m-photo).full img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:50% 15%;transform-origin:50% 30%;filter:none}
+:is(.rc-photo,.m-photo).full img{width:100%;height:100%;max-width:none;max-height:none;object-fit:cover;object-position:50% 15%;transform-origin:50% 30%;filter:none}
 .ph img.pp{transform-origin:50% 25%;transform:translate(var(--fx,0%),var(--fy,0%)) scale(var(--fz,1))}
 
 
@@ -264,7 +231,7 @@
 .inspector > .rc{left:50%;top:50%;transform:translate(-50%,-50%) scale(1.8)}
 .inspector .key-preview .rc-metal,.inspector .key-preview .rc-kphoto{opacity:1}
 .inspector .key-preview .rc-photo{opacity:0}
-.inspector .rc-ticker span{animation:tick 6s linear infinite}
+.inspector .rc-ticker span{animation:none;transform:none;width:100%;padding:0;text-align:center}
 .inspector .sheen{display:none}
 .inspector [data-fit]{cursor:grab}
 
@@ -289,20 +256,11 @@
 .sm-por.cutout .nm{position:relative;z-index:1}
 .stage[data-shape="rounded"] .sm-por.cutout .nm{border-radius:0 0 .7cqw .7cqw}
 
-/* The captain armband straddles the card edge, independent of the tag stack. */
-.rc > .rc-ticker{position:absolute;left:-6cqw;top:17cqw;z-index:6;width:12cqw;height:4.8cqw;background:var(--captain-bg,#fff);color:var(--captain-text,#111);border-radius:.5cqw;box-shadow:inset 0 .65cqw 0 var(--captain-text,#111),inset 0 -.65cqw 0 var(--captain-text,#111),0 .3cqw .8cqw #0005}
-.rc-ticker span{font-weight:900;font-size:2.7cqw;letter-spacing:-.02em}
-.rc-ticker::after{display:none}
-.sm-cap{background:var(--captain-bg,#fff);color:var(--captain-text,#111);box-shadow:inset 0 .2cqw 0 var(--captain-text,#111),inset 0 -.2cqw 0 var(--captain-text,#111),0 .1cqw .4cqw #0006}
-@media(prefers-reduced-motion:reduce){.inspector .rc-ticker span{animation:none}}
-
 /* Independent number typography and opaque contrast on striped artwork. */
-:is(.rc-num,.h-num,.sm-num b){font-family:var(--fn,var(--fd));color:var(--number-ink,#fff);-webkit-text-stroke:.16cqw var(--number-color,#111);paint-order:stroke fill}
+:is(.rc-num,.sm-num b){font-family:var(--fn,var(--fd));color:var(--number-ink,#fff);-webkit-text-stroke:.16cqw var(--number-color,#111);paint-order:stroke fill}
 .sm-num b{-webkit-text-stroke:.1cqw var(--number-color,#111)}
 .person text{font-family:var(--fn,var(--fd))!important;fill:var(--number-ink,#fff)!important;stroke:var(--number-color,#111);stroke-width:1.5px;paint-order:stroke fill}
 
-.h-first{font-size:calc(2.9cqw * var(--name-scale-1,1))}
-.h-last{font-size:calc(8.6cqw * var(--name-scale-2,1))}
 
 /* Text-bearing surfaces use a quiet tonal pattern; portrait artwork retains kit colours. */
 .bg[data-mode="stripes"]{background:var(--text-pat) center/cover}
@@ -310,31 +268,29 @@
 :is(.m-panel,.bpanel-bg) > .stripes-bg::after{display:none}
 .rc-shade{background:linear-gradient(to top,#101820 28%,transparent)}
 .rc-name{color:var(--name-color,#FFFFFF)}
-.h-info{background:var(--text-pat) center/cover;padding:1.2cqw;border-radius:.4cqw}
 
 .subs .sub-position{font-size:.72em;font-weight:400;line-height:1.2;flex-shrink:0}
 
-/* Flag and captain share the same footprint and pivot around the card edge. */
-.rc-tags > :is(.roll,.rc-ticker){transform:translateX(-50%)}
+/* Independent flags and captain share one edge alignment and badge height. */
+.rc-tags > .rc-ticker{transform:translateX(-50%)}
 .rc-tags{--badge-w:calc(3.15cqw * var(--tgz,1));--badge-h:calc(2.1cqw * var(--tgz,1))}
-.rc-tags .roll{width:var(--badge-w);height:var(--badge-h)}
-.rc-tags :is(.roll-a,.roll-b){width:var(--badge-w);height:var(--badge-h)}
-.rc-tags .roll-in{transform:translateZ(calc(-1.05cqw * var(--tgz,1)))}
-.rc-tags .roll-a{transform:rotateX(0deg) translateZ(calc(1.05cqw * var(--tgz,1)))}
-.rc-tags .roll-b{transform:rotateX(-90deg) translateZ(calc(1.05cqw * var(--tgz,1)))}
-.rc-tags .roll .tag{height:var(--badge-h)}
-.rc-tags .rc-ticker{width:var(--badge-w);height:var(--badge-h);background:var(--captain-bg,#fff);color:var(--captain-text,#111);box-shadow:inset 0 .35cqw 0 var(--captain-text,#111),inset 0 -.35cqw 0 var(--captain-text,#111),0 .2cqw .5cqw #0004}
-.rc-tags .rc-ticker span{font-size:calc(1.3cqw * var(--tgz,1));font-weight:900}
-.inspector .roll-in{animation:badge-preview 5s ease-in-out infinite}
-@keyframes badge-preview{0%,30%{transform:translateZ(calc(-1.05cqw * var(--tgz,1))) rotateX(0deg)}45%,85%{transform:translateZ(calc(-1.05cqw * var(--tgz,1))) rotateX(90deg)}100%{transform:translateZ(calc(-1.05cqw * var(--tgz,1))) rotateX(0deg)}}
-@media(prefers-reduced-motion:reduce){.inspector .roll-in{animation:none}}
+.rc-tags .rc-ticker{width:var(--badge-w);height:var(--badge-h)}
+.rc-tags .rc-ticker span{font-size:calc(1.3cqw * var(--tgz,1) * var(--caption-scale,1));font-weight:900}
+
 
 /* Preserve manual line breaks and grow names upward from a stable baseline. */
-.rc-name :is(span,b),.h-first,.h-last,.nm b{white-space:pre-wrap;overflow-wrap:anywhere;text-wrap:wrap;overflow:visible;line-height:1.08}
-.h-info{top:auto;bottom:8cqw}
+.rc-name :is(span,b),.nm b{white-space:pre-wrap;overflow-wrap:anywhere;text-wrap:wrap;overflow:visible;line-height:1.08}
 /* Fill the fixed frame behind a bottom-anchored name bar, including at small text sizes. */
 .sm-por{position:relative;height:var(--card-h)}
 .sm-por .ph{position:absolute;inset:0;aspect-ratio:auto}
 .sm-por .ph svg.person{bottom:calc(1.6cqw - var(--card-w) * .063)}
 .sm-por .nm,.sm-por.cutout .nm{position:absolute;left:0;right:0;bottom:0;z-index:1}
 .inspector [data-card-text]{pointer-events:auto;cursor:text;user-select:text}
+
+/* One armband face: white centre, matching coloured bands and optically centred type. */
+.stage .armband{box-sizing:border-box;background:linear-gradient(to bottom,var(--captain-text,#111) 0 14%,var(--captain-bg,#fff) 14% 86%,var(--captain-text,#111) 86%);color:var(--captain-text,#111);border-radius:0;box-shadow:0 .06cqw .09cqw #10182033;line-height:1}
+.stage .armband::after{display:none}
+.rc-ticker span{line-height:1;letter-spacing:0}
+/* Keep the two edge badges apart even at minimum card size and maximum badge size. */
+.slot,.small-preview{--small-tgz:min(var(--tgz,1),calc((6.9 * var(--ks,1) + .3) / 1.9656))}
+.stage .sm-cap{height:calc(.6552cqw * var(--small-tgz,var(--tgz,1)));width:calc(.9828cqw * var(--small-tgz,var(--tgz,1)));min-width:0;font-size:calc(.44cqw * var(--small-tgz,var(--tgz,1)))}

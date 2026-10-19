@@ -27,14 +27,14 @@ export function colorOverrideStyles(s: LineupState): Record<string, string> {
   const values = normalizeColorOverrides(s.colorOverrides);
   const font = s.numberStyle?.font || s.fonts.display;
   ensureFont(font);
-  return { '--fn': fontStack(font, 'sans-serif'), '--number-ink': s.numberStyle?.mode === 'outline' ? 'transparent' : 'var(--number-fill,#FFFFFF)', ...Object.fromEntries(Object.entries(COLOR_OVERRIDE_VARS).map(([key, variable]) => [variable, values[key as ColorOverrideKey] ?? (key === 'smallText' ? readableText(values.smallBackground || s.colors.c2, s.colors.c4) : '')])),
+  return { '--fn': fontStack(font, 'sans-serif'), '--number-ink': s.numberStyle?.mode === 'outline' ? 'transparent' : 'var(--number-fill,#FFFFFF)', ...Object.fromEntries(Object.entries(COLOR_OVERRIDE_VARS).map(([key, variable]) => [variable, values[key as ColorOverrideKey] ?? (key === 'smallText' ? readableText(values.smallBackground || s.colors.c2, s.colors.c4) : key === 'captainText' ? readableText(values.captainBackground || '#ffffff', s.colors.c1) : '')])),
     '--turf-opacity': values.turf ? '1' : '', '--pitch-line-opacity': values.lines ? '1' : '' };
 }
 
 export function defaultOverrideColor(s: LineupState, key: ColorOverrideKey): string {
   if (key === 'numberFill') return '#FFFFFF';
   if (key === 'number') return '#111111';
-  if (key === 'captainText') return '#111111';
+  if (key === 'captainText') return readableText(s.colorOverrides?.captainBackground || '#ffffff', s.colors.c1);
   if (key === 'captainBackground') return '#FFFFFF';
   if (key === 'smallBackground') return s.colors.c2;
   if (key === 'smallText') return readableText(s.colorOverrides?.smallBackground || s.colors.c2, s.colors.c4);

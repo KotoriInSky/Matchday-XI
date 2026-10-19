@@ -189,10 +189,8 @@ function keyPhotoHTML(p: SeqPlayer, gid: string) {
 
 function rcInner(s: LineupState, p: SeqPlayer, gid: string) {
   const t = s.text, [first, last] = playerNameLines(p);
-  const ticker = p.captain ? `<div class="rc-ticker"><span>${Array(8).fill(esc(t.captainLabel)).join('&emsp;')}&emsp;</span></div>` : '';
-  const tag1 = tagHTML(s, p.tag1, p.idx);
-  const badge = p.captain && tag1 ? `<div class="roll"><div class="roll-in"><div class="roll-a">${tag1}</div><div class="roll-b">${ticker}</div></div></div>` : ticker || tag1;
-  const tags = (p.captain ? badge : tag1) + tagHTML(s, p.tag2, p.idx);
+  const ticker = p.captain ? `<div class="rc-ticker armband"><span>${Array(8).fill(esc(t.captainLabel)).join('&emsp;')}&emsp;</span></div>` : '';
+  const tags = tagHTML(s, p.tag1, p.idx) + tagHTML(s, p.tag2, p.idx) + ticker;
   return `<div class="rc-in${p.photo && p.cut !== false ? ' cutout' : ''}">
     <div class="rc-surface">
       <div class="stripes-bg"></div>
@@ -223,30 +221,31 @@ const CJK_RE = /[぀-ヿ㐀-鿿가-힯]/;
 
 // Both faces use the final pitch label, preserving manually mixed case and line breaks.
 const smallName = (p: Player) => broadcastName(playerNameLines(p)[1]);
-const smallNameHTML = (p: Player) => `<div class="nm" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100}"><b>${esc(smallName(p))}</b></div>`;
+const smallNameHTML = (p: Player) => `<div class="nm" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100}"><b class="up">${esc(smallName(p))}</b></div>`;
 
 function smallTagsHTML(s: LineupState, p: Player, index: number, season = false) {
   const badges = tagHTML(s, p.tag1, index) + tagHTML(s, p.tag2, index);
   return badges ? `<div class="sm-tags${season ? ' s26-small-tags' : ''}">${badges}</div>` : '';
 }
 
+/** Same printed face in the pitch, card inspector and PNG export. */
+function smallFaceHTML(s: LineupState, index: number, season = s.anim.template === 'season2627', id = 'sp') {
+  const p = s.players[index], pic = p.photo2 || p.photo;
+  const ph = pic ? `<img class="pp" src="${pic}" alt="" draggable="false" data-fit="p:${index}:fitS" style="${fitStyle(p.fitS)}">` : personSVG(p.num, id + index);
+  const cap = p.captain ? `<span class="sm-cap armband${season ? ' s26-small-captain' : ''}" data-small-captain>${esc((s.text.captainLabel || 'C').trim().charAt(0).toUpperCase())}</span>` : '';
+  const cutout = !!pic && (p.photo2 ? p.cutS !== false : p.cut !== false);
+  return `${season ? '<div class="s26-card-shadow" aria-hidden="true"><div></div></div>' : ''}<div class="sm-por${cutout ? ' cutout' : ''}${season && cutout ? ' s26-small-cutout' : ''}"><div class="ph">${ph}</div>${smallNameHTML(p)}</div>${smallTagsHTML(s, p, index, season)}${cap}`;
+}
+
 export function smallCardsHTML(s: LineupState, season = false) {
-  const t = s.text;
   const numberOnly = !season && s.anim.style === 'lines';
-  const L = boardLayout(s);
-  return L.items
-    .map((it) => {
-      const p = s.players[it.i], pic = p.photo2 || p.photo;
-      const ph = pic ? `<img class="pp" src="${pic}" alt="" draggable="false" data-fit="p:${it.i}:fitS" style="${fitStyle(p.fitS)}">` : personSVG(p.num, 'sp' + it.i);
-      const cap = p.captain ? `<span class="sm-cap${season ? ' s26-small-captain' : ''}" data-small-captain>${esc((t.captainLabel || 'C').trim().charAt(0).toUpperCase())}</span>` : '';
-      const badges = smallTagsHTML(s, p, it.i, season);
-      const cutout = !!pic && (p.photo2 ? p.cutS !== false : p.cut !== false);
-      return `<div class="slot${season ? ' s26-slot' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;--s:${it.s.toFixed(3)};z-index:${Math.round(it.y)}"><div class="card"><div class="cvis"><div class="cflip">
-      <div class="sm-face${season ? ' s26-small-face' : ''}">${season ? '<div class="s26-card-shadow" aria-hidden="true"><div></div></div>' : ''}<div class="sm-por${cutout ? ' cutout' : ''}${season && cutout ? ' s26-small-cutout' : ''}"><div class="ph">${ph}</div>${smallNameHTML(p)}</div>${badges}${cap}</div>
+  return boardLayout(s).items.map((it) => {
+    const p = s.players[it.i];
+    return `<div class="slot${season ? ' s26-slot' : ''}" data-i="${it.i}" style="left:${it.sx}%;top:${it.sy}%;--s:${it.s.toFixed(3)};z-index:${Math.round(it.y)}"><div class="card"><div class="cvis"><div class="cflip">
+      <div class="sm-face${season ? ' s26-small-face' : ''}">${smallFaceHTML(s, it.i, season)}</div>
       <div class="sm-num" data-card-text style="--small-name-scale:${p.nameSizeSmall / 100};--small-number-x:${p.num.length > 2 ? .55 : .8}"><b>${esc(p.num)}</b>${numberOnly ? '' : `<small>${esc(smallName(p))}</small>`}</div>
     </div></div></div></div>`;
-    })
-    .join('');
+  }).join('');
 }
 
 export function substitutesHTML(s: LineupState, broadcast = false) {
@@ -305,10 +304,7 @@ export function stageHTML(ctx: MarkupContext) {
 export function playerCardHTML(s: LineupState, index: number, variant: 'small' | 'big' | 'key' = 'big') {
   const p = s.players[index];
   if (variant === 'small') {
-    const pic = p.photo2 || p.photo;
-    const ph = pic ? `<img class="pp" src="${pic}" alt="" draggable="false" data-fit="p:${index}:fitS" style="${fitStyle(p.fitS)}">` : personSVG(p.num, 'inspector-small-' + index);
-    const cap = p.captain ? `<span class="sm-cap">${esc((s.text.captainLabel || 'C').trim().charAt(0).toUpperCase())}</span>` : '';
-    return `<div class="small-preview"><div class="sm-por${(p.photo2 ? p.cutS !== false : p.cut !== false) && pic ? ' cutout' : ''}"><div class="ph">${ph}</div>${smallNameHTML(p)}</div>${smallTagsHTML(s, p, index)}${cap}</div>`;
+    return `<div class="small-preview sm-face${s.anim.template === 'season2627' ? ' s26-small-face' : ''}">${smallFaceHTML(s, index, s.anim.template === 'season2627', 'inspector-small-')}</div>`;
   }
   return `<div class="rc${variant === 'key' ? ' key-preview' : ''}">${rcInner(s, { ...p, key: variant === 'key', idx: index }, 'inspector-' + index)}</div>`;
 }

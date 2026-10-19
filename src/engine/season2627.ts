@@ -61,12 +61,10 @@ function tagHTML(s: LineupState, id: string, index: number) {
 
 function playerTags(s: LineupState, p: Player, index: number) {
   const tag1 = tagHTML(s, p.tag1, index), tag2 = tagHTML(s, p.tag2, index);
-  const captain = `<span class="s26-captain"><span class="s26-captain-text">${Array(8).fill(esc(s.text.captainLabel || 'Captain')).join('&emsp;')}&emsp;</span></span>`;
-  const square = s.tags.find((tag) => tag.id === p.tag1)?.shape === 'square';
-  const first = !p.captain ? tag1 : tag1
-    ? `<span class="s26-badge${square ? ' s26-square' : ''}"><span class="s26-badge-rotor"><span class="s26-badge-front">${tag1}</span><span class="s26-badge-back">${captain}</span></span></span>`
-    : `<span class="s26-badge">${captain}</span>`;
-  return first || tag2 ? `<div class="s26-tags">${first}${tag2}</div>` : '';
+  const captain = `<span class="s26-captain armband"><span class="s26-captain-text">${Array(8).fill(esc(s.text.captainLabel || 'Captain')).join('&emsp;')}&emsp;</span></span>`;
+  const badges = tag1 + tag2 + (p.captain ? `<span class="s26-badge">${captain}</span>` : '');
+  // Reserve the same footer row even without badges, keeping every name on the same baseline.
+  return `<div class="s26-tags">${badges}</div>`;
 }
 
 function portrait(photo: string | null, cut: boolean, fit: Fit, path: string, num: string, id: string, key = false) {
@@ -86,18 +84,22 @@ export function seasonPlayerHTML(s: LineupState, index: number, count = 1, previ
     const tone = mixHex(keySurface, toward, amount);
     return contrastRatio(keyInk, tone) >= 4.5 ? tone : keySurface;
   };
-  return `<div class="s26-column${preview ? ' s26-preview-column' : ''}" data-player="${index}" data-key="${key}" style="--card-w:${preview ? 64 : 90 / count}cqw;--card-h:${preview ? 106 : 56.25}cqw;--s26-name-bg:${normalSurface};--s26-key-name-bg:${keySurface};--s26-key-name-light:${foilTone('#ffffff', .24)};--s26-key-name-dark:${foilTone('#263547', .08)}">
+  return `<div class="s26-column${preview ? ' s26-preview-column' : ''}" data-player="${index}" data-key="${key}" style="--card-w:${90 / count}cqw;--card-h:56.25cqw;--s26-name-bg:${normalSurface};--s26-key-name-bg:${keySurface};--s26-key-name-light:${foilTone('#ffffff', .24)};--s26-key-name-dark:${foilTone('#263547', .08)}">
     <div class="s26-column-bg"></div>${key ? '<div class="s26-metal"><div class="s26-foil-relief"></div><div class="s26-reflection"></div></div>' : ''}<div class="s26-entry-light" aria-hidden="true"></div>
     <div class="s26-number" data-card-text>${esc(p.num)}</div>
     ${key ? '<div class="s26-key-coat"><div class="s26-reflection"></div></div>' : ''}
-    ${portrait(p.photo, p.cut !== false, p.fit, `p:${index}:fit`, p.num, 'season-' + index)}
-    ${key ? portrait(p.photoK || p.photo, (p.photoK ? p.cutK : p.cut) !== false, p.fitK, `p:${index}:fitK`, p.num, 'season-key-' + index, true) : ''}
+    ${portrait(p.photo, p.cut !== false, p.fit, `p:${index}:fit`, p.num, (preview ? 'inspector-' : '') + 'season-' + index)}
+    ${key ? portrait(p.photoK || p.photo, (p.photoK ? p.cutK : p.cut) !== false, p.fitK, `p:${index}:fitK`, p.num, (preview ? 'inspector-' : '') + 'season-key-' + index, true) : ''}
     <div class="s26-veil"></div>${key ? '<div class="s26-key-veil"></div>' : ''}
     <div class="s26-info" style="--name-scale-1:${p.nameSize1 / 100};--name-scale-2:${p.nameSize2 / 100}">
-      <div class="s26-name" data-card-text>${first ? `<span>${esc(broadcastName(first))}</span>` : ''}${last ? `<b>${esc(broadcastName(last))}</b>` : ''}</div>
+      <div class="s26-name" data-card-text>${first ? `<span class="up">${esc(broadcastName(first))}</span>` : ''}${last ? `<b class="up">${esc(broadcastName(last))}</b>` : ''}</div>
+      ${playerTags(s, p, index)}
     </div>
-    ${playerTags(s, p, index)}
   </div>`;
+}
+
+export function seasonColumnTone(s: LineupState, column: number) {
+  return mixHex(textSurfaceColors(s)[0], column % 2 ? '#000000' : '#ffffff', .055 + column * .009);
 }
 
 export function season2627HTML(s: LineupState, videoURL: string | null) {
@@ -112,15 +114,15 @@ export function season2627HTML(s: LineupState, videoURL: string | null) {
     <div class="s26-wash"></div>
     ${plan.manager ? `<div class="s26-manager">
       <div class="s26-coach-photo${s.coach.photo && !s.coach.cut ? ' s26-full-photo' : ''}">${s.coach.photo ? `<img src="${esc(s.coach.photo)}" alt="" draggable="false" data-fit="coach:fit" style="${fitStyle(s.coach.fit)}">` : coachSVG('season-coach')}</div>
-      <div class="s26-coach-name"><span>${esc(s.text.coachLabel)}</span><b>${esc(s.coach.name)}</b></div>
+      <div class="s26-coach-name"><span>${esc(s.text.coachLabel)}</span><b class="up">${esc(s.coach.name)}</b></div>
     </div>` : ''}
     ${plan.groups.map((g, gi) => `<div class="s26-group" data-group="${gi}" style="--s26-count:${g.items.length}">${g.items.map((item, j) =>
-      `<div class="s26-column-position" style="left:${j * 100 / g.items.length}%;width:${100 / g.items.length}%;z-index:${g.items.length - j};--s26-tone:${mixHex(background, j % 2 ? '#000000' : '#ffffff', .055 + j * .009)}">${seasonPlayerHTML(s, item.i, g.items.length)}</div>`).join('')}</div>`).join('')}
+      `<div class="s26-column-position" style="left:${j * 100 / g.items.length}%;width:${100 / g.items.length}%;z-index:${g.items.length - j};--s26-tone:${seasonColumnTone(s, j)}">${seasonPlayerHTML(s, item.i, g.items.length)}</div>`).join('')}</div>`).join('')}
     <div class="s26-panel-track">
       <div class="s26-panel"></div>
       ${plan.manager ? `<div class="s26-title">
         <div class="s26-outline-window"><div class="s26-outline">${Array.from({ length: 8 }, (_, i) => `<span data-title-row="${i}">${ab}</span>`).join('')}</div></div>
-        <div class="s26-solid">${ab}</div><div class="s26-team">${esc(s.team.name)}</div>
+        <div class="s26-solid">${ab}</div><div class="s26-team up">${esc(s.team.name)}</div>
       </div>` : ''}
       <div class="s26-role-window">${plan.groups.map((g, gi) => `<div class="s26-role${/[぀-ヿ㐀-鿿가-힯]/.test(s.text[`grp${g.role}`]) ? ' s26-cjk' : ''}" data-role="${gi}"><span>${esc(s.text[`grp${g.role}`])}</span></div>`).join('')}</div>
       ${s.look.crest ? `<div class="s26-crest"><div class="s26-crest-y">${crestHTML(s)}</div></div>` : ''}
@@ -294,11 +296,6 @@ export function season2627Timeline(s: LineupState, q: Query, qa: QueryAll, reduc
           { backgroundPosition: '-120% 0' },
         ], group.cut + .14, Math.min(1.25, group.leave - group.cut - .18)));
       }
-      const rotor = q('.s26-badge-rotor', column);
-      if (rotor) add(rotor, [
-        { transform: 'translateZ(calc(-.5 * var(--s26-tag-h))) rotateX(0deg)', easing: ease },
-        { transform: 'translateZ(calc(-.5 * var(--s26-tag-h))) rotateX(90deg)' },
-      ], group.cut + .12, reduced ? .01 : .65);
       add(q('.s26-captain-text', column), [{ transform: 'translateX(0)' }, { transform: `translateX(${reduced ? '0' : '-50%'})` }], group.start, group.end - group.start);
     });
     // Consecutive midfield rows share one uninterrupted position label.

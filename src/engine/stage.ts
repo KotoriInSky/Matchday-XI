@@ -289,10 +289,7 @@ export class Stage {
         enter(in$('.rc-kphoto', card), peak, { opacity: 0, transform: 'scale(1.12)' }, { opacity: 1, transform: 'scale(1)' }, 0.35, 'cubic-bezier(.5,0,.3,1.3)');
         enter(in$('.rc-holo', card), peak + 0.3, { opacity: 0 }, { opacity: 1 }, 0.5, 'ease-out');
       }
-      // captain: the first tag rolls over to a scrolling armband (or the armband slides out when there is no tag)
-      const roll = in$('.roll-in', card), tick = in$('.rc-ticker', card);
-      if (roll) add(roll, [{ transform: 'translateZ(calc(-1.05cqw * var(--tgz,1))) rotateX(0deg)', easing: 'cubic-bezier(.55,0,.3,1.25)' }, { transform: 'translateZ(calc(-1.05cqw * var(--tgz,1))) rotateX(90deg)' }], at + 0.3, 0.75);
-      else if (tick) enter(tick, at + 0.3, { opacity: 0, transform: 'scaleX(0)' }, { opacity: 1, transform: 'scaleX(1)' }, 0.5);
+      // Captain and both tags stay visible together throughout the card's life.
     };
     // damped spring: moves fast, overshoots a little and settles; returns [time, value] samples
     const spring = (from: number, to: number, t0: number, dur: number, k = 5.5, cyc = 1.2, n = 26) => {
