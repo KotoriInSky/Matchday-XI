@@ -3,10 +3,12 @@ import { Download, ImageDown } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import { useLineup, store } from '@/lib/store';
 import { exportCards } from '@/lib/card-export';
+import { releaseDownload } from '@/lib/export-file';
 import type { CardKind } from '@/engine/card-artwork';
 import { Button } from '../ui/button';
 import { Field, Select } from '../ui/form';
 import { Section, Subsection } from '../ui/section';
+import { ExportTiming, useExportProgress } from './ExportTiming';
 
 const kinds: CardKind[] = ['small', 'big', 'key'];
 
@@ -19,25 +21,27 @@ export function CardExport({ playerIndex, kind = 'big' }: { playerIndex?: number
   const [players, setPlayers] = useState(() => s.players.map((_, i) => i));
   const [types, setTypes] = useState<CardKind[]>(['big']);
   const [busy, setBusy] = useState(false), [progress, setProgress] = useState(0), [error, setError] = useState('');
+  const [status, setStatus] = useState('preparing');
+  const timing = useExportProgress(busy);
   const [result, setResult] = useState<{ url: string; filename: string; description: string } | null>(null);
   const controller = useRef<AbortController | null>(null), mounted = useRef(false);
   const download = useRef('');
-  useEffect(() => { mounted.current = true; return () => { mounted.current = false; controller.current?.abort(); URL.revokeObjectURL(download.current); }; }, []);
+  useEffect(() => { mounted.current = true; return () => { mounted.current = false; controller.current?.abort(); void releaseDownload(download.current); }; }, []);
   const count = batch ? players.length * types.length : 1;
   const start = async () => {
     const ctrl = new AbortController(); controller.current = ctrl;
     const selected = batch ? players : [playerIndex];
     const variants = batch ? types : [kind];
     const description = batch ? `${count} PNG` : `${s.players[playerIndex].name} · ${labels[kind]}`;
-    setBusy(true); setError(''); setProgress(0);
+    setBusy(true); setError(''); setProgress(0); setStatus('preparing'); timing.start();
     try {
       const file = await exportCards({ state: structuredClone(store.state), lang, size: Number(size), batch,
         cards: selected.flatMap(index => variants.map(kind => ({ index, kind }))), signal: ctrl.signal,
-        onProgress: value => { if (mounted.current) setProgress(value); } });
+        onProgress: (value, phase) => { if (mounted.current) { setProgress(value); setStatus(phase); timing.update(value, phase); } } });
       if (mounted.current) {
-        URL.revokeObjectURL(download.current); download.current = file.url;
+        void releaseDownload(download.current); download.current = file.url;
         setResult({ ...file, description: `${description} · ${file.dimensions ? `${file.dimensions.width} × ${file.dimensions.height} px` : text(`卡框长边 ${size} px`, `Card frame long edge ${size} px`)}` });
-      } else URL.revokeObjectURL(file.url);
+      } else void releaseDownload(file.url);
     } catch (error) {
       if (mounted.current && !ctrl.signal.aborted) setError(error instanceof Error && error.message === 'busy'
         ? text('已有导出任务，请完成或取消后重试。', 'Another export is running. Finish or cancel it first.')
@@ -57,7 +61,7 @@ export function CardExport({ playerIndex, kind = 'big' }: { playerIndex?: number
     <p className="text-xs text-muted-foreground">{batch ? `${count} PNG` : labels[kind]} · {text('透明背景', 'Transparent background')}</p>
     <p className="text-xs text-muted-foreground">{text('同类卡框尺寸一致，出框人物、标签和阴影会扩展透明画布；PNG 实际尺寸可能超过所选长边。', 'Frames of the same type keep a consistent size. Portraits, tags and shadows extend the transparent canvas, so the PNG may exceed the selected frame size.')}</p>
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
-    {busy ? <div role="status" className="space-y-3"><p className="text-sm">{progress ? text('生成卡片', 'Rendering cards') : text('准备素材', 'Preparing assets')} · {progress}%</p><progress className="w-full accent-primary" max={100} value={progress} />{!batch && <p className="text-xs text-muted-foreground">{text('关闭窗口将取消本次导出。', 'Closing this window cancels this export.')}</p>}<Button variant="outline" onClick={() => controller.current?.abort()}>{text('取消卡片导出', 'Cancel card export')}</Button></div>
+    {busy ? <div role="status" className="space-y-3"><p className="text-sm">{status === 'preparing' ? text('准备素材', 'Preparing assets') : status === 'finishing' ? text('打包文件', 'Packaging files') : text('生成卡片', 'Rendering cards')} · {progress}%</p><progress className="w-full accent-primary" max={100} value={progress} /><ExportTiming timing={timing.timing} phase={status} />{!batch && <p className="text-xs text-muted-foreground">{text('关闭窗口将取消本次导出。', 'Closing this window cancels this export.')}</p>}<Button variant="outline" onClick={() => controller.current?.abort()}>{text('取消卡片导出', 'Cancel card export')}</Button></div>
       : <Button disabled={!count} onClick={start}><ImageDown />{batch ? text('导出卡片 ZIP', 'Export cards ZIP') : text('导出卡片 PNG', 'Export card PNG')}</Button>}
     {result && <div className="space-y-1"><p className="text-xs text-muted-foreground">{result.description}</p><a href={result.url} download={result.filename} className="inline-flex min-h-11 items-center gap-2 text-sm font-semibold underline underline-offset-4"><Download className="size-4" />{batch ? text('下载 ZIP', 'Download ZIP') : text('下载 PNG', 'Download PNG')}</a><p className="text-xs text-muted-foreground">{text(batch ? '刷新页面前请保存文件。' : '关闭窗口前请保存文件。', batch ? 'Save before refreshing the page.' : 'Save before closing this window.')}</p></div>}
   </>;

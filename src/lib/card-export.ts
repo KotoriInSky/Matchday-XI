@@ -5,14 +5,14 @@ import { browserCards } from './browser-export';
 
 export async function exportCards(options: {
   state: LineupState; lang: string; size: number; cards: { index: number; kind: CardKind }[]; batch: boolean;
-  signal: AbortSignal; onProgress(progress: number): void;
+  signal: AbortSignal; onProgress(progress: number, status: string): void;
 }): Promise<{ url: string; filename: string; dimensions?: { width: number; height: number } }> {
   return browserCards(options);
 }
 
 export async function exportCardsLocally(options: {
   state: LineupState; lang: string; size: number; cards: { index: number; kind: CardKind }[]; batch: boolean;
-  signal: AbortSignal; onProgress(progress: number): void;
+  signal: AbortSignal; onProgress(progress: number, status: string): void;
 }): Promise<{ url: string; filename: string; dimensions?: { width: number; height: number } }> {
   const { signal, onProgress, ...payload } = options;
   let id: string | null = null;
@@ -29,7 +29,7 @@ export async function exportCardsLocally(options: {
       const response = await fetch(`${exportEndpoint}/${id}`, { signal });
       if (!response.ok) throw new Error('failed');
       const job = await response.json();
-      onProgress(job.progress);
+      onProgress(job.progress, job.status);
       if (job.status === 'complete') return { url: `${exportEndpoint}/${id}/file`, filename: job.filename, dimensions: job.outputs?.length === 1 ? job.outputs[0] : undefined };
       if (job.status === 'failed') throw new Error('failed');
       await new Promise(resolve => setTimeout(resolve, 300));

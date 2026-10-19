@@ -1,7 +1,11 @@
-import { realpath, readFile, mkdir, writeFile, stat } from 'node:fs/promises';
+import { realpath, readFile, mkdir, writeFile, stat, rename, rm } from 'node:fs/promises';
 import { resolve, relative, isAbsolute } from 'node:path';
 import { spawn } from 'node:child_process';
 import { once } from 'node:events';
+import { openAsBlob, createWriteStream } from 'node:fs';
+import { Readable } from 'node:stream';
+import { pipeline } from 'node:stream/promises';
+import { randomUUID } from 'node:crypto';
 
 // Workflow inputs are data, never interpolated into a shell command.
 const root = await realpath(process.cwd());
@@ -29,7 +33,7 @@ if (kind === 'video' && state.bg?.mode === 'video') {
   if (!process.env.BACKGROUND_VIDEO) throw new Error('This project uses a session-only background video. Set BACKGROUND_VIDEO to its repository-relative path.');
   const file = await projectFile(process.env.BACKGROUND_VIDEO);
   const mime = /\.webm$/i.test(file) ? 'video/webm' : /\.mov$/i.test(file) ? 'video/quicktime' : 'video/mp4';
-  video = `data:${mime};base64,${(await readFile(file)).toString('base64')}`;
+  video = await openAsBlob(file, { type: mime });
 }
 const port = Number(process.env.RENDER_PORT || 4179);
 if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('Invalid render port');
@@ -50,10 +54,16 @@ try {
     if (Date.now() - started > 30000) throw new Error('Renderer startup timed out');
     await new Promise(resolve => setTimeout(resolve, 250));
   }
-  const payload = kind === 'cards' ? { kind, state, lang, size, batch: true, cards: [...new Set(indices)].flatMap(index => types.map(kind => ({ index, kind }))) } : { state, lang, height, fps, video };
-  const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: JSON.stringify(payload), signal: controller.signal });
+  const payload = kind === 'cards' ? { kind, state, lang, size, batch: true, cards: [...new Set(indices)].flatMap(index => types.map(kind => ({ index, kind }))) } : { state, lang, height, fps, videoUpload: !!video };
+  // Obtain the ID even if cancelled during creation, so finally can remove the job.
+  const response = await fetch(endpoint, { method: 'POST', headers: { 'Content-Type': 'application/json', Origin: origin }, body: JSON.stringify(payload) });
   if (!response.ok) throw new Error(`Export rejected: ${response.status}`);
   ({ id } = await response.json());
+  controller.signal.throwIfAborted();
+  if (video) {
+    const upload = await fetch(`${endpoint}/${id}/video`, { method: 'POST', headers: { 'Content-Type': video.type, Origin: origin }, body: video, signal: controller.signal });
+    if (!upload.ok) throw new Error(`Video upload rejected: ${upload.status}`);
+  }
   let reported = -1;
   for (;;) {
     controller.signal.throwIfAborted();
@@ -69,7 +79,11 @@ try {
       if (!response.ok) throw new Error('Could not download output');
       await mkdir('.export-output', { recursive: true });
       const filename = kind === 'cards' ? 'matchday-cards.zip' : 'matchday-lineup.mp4';
-      await writeFile(resolve('.export-output', filename), Buffer.from(await response.arrayBuffer()));
+      const output = resolve('.export-output', filename), partial = `${output}.${randomUUID()}.part`;
+      try {
+        await pipeline(Readable.fromWeb(response.body), createWriteStream(partial, { flags: 'wx' }), { signal: controller.signal });
+        await rename(partial, output);
+      } finally { await rm(partial, { force: true }); }
       await writeFile('.export-output/render.json', JSON.stringify({ kind, lang, ...(kind === 'cards' ? { size, outputs: job.outputs } : { height, fps }), createdAt: new Date().toISOString() }, null, 2));
       console.log(`Saved .export-output/${filename}`); break;
     }

@@ -6,25 +6,41 @@ import { fileURLToPath } from 'node:url';
 await mkdir(new URL('../test-results/', import.meta.url), { recursive: true });
 execFileSync('ffmpeg', ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'testsrc=size=128x72:rate=30:duration=2', '-pix_fmt', 'yuv420p', fileURLToPath(new URL('../test-results/background.mp4', import.meta.url))]);
 const browser = await chromium.launch({ channel: 'chrome', headless: true });
+const base = process.env.TEST_URL || 'http://127.0.0.1:5173/matchday-xi/';
+let jobUrl;
 try {
   const page = await browser.newPage();
   await page.routeWebSocket('**/*', socket => socket.close());
   await page.addInitScript(() => localStorage.setItem('matchday-xi-lang', 'zh-Hans'));
-  await page.goto('http://127.0.0.1:5173/matchday-xi/');
+  await page.goto(base);
   const video = 'data:video/mp4;base64,' + (await readFile(new URL('../test-results/background.mp4', import.meta.url))).toString('base64');
   await page.evaluate(async (video) => {
     const { store } = await import(performance.getEntriesByType('resource').find(e => new URL(e.name).pathname.endsWith('/src/lib/store.ts')).name);
     const { getStage } = await import(performance.getEntriesByType('resource').find(e => new URL(e.name).pathname.endsWith('/src/lib/stage-instance.ts')).name);
     await store.ready;
     getStage().setVideo(URL.createObjectURL(await (await fetch(video)).blob()));
-    store.update((s) => { s.bg.mode = 'video'; Object.assign(s.anim, { intro: true, manager: true, per: .4, introLen: 2, mgrLen: 4 }); });
+    store.update((s) => { s.bg.mode = 'video'; Object.assign(s.anim, { intro: false, manager: false, style: 'off', per: .4 }); });
   }, video);
   await page.getByRole('tab', { name: '备份', exact: true }).click();
+  await page.getByLabel('导出方式', { exact: true }).selectOption('local');
   await page.getByLabel('分辨率', { exact: true }).selectOption('720');
   const request = page.waitForRequest(r => r.url().endsWith('/api/export') && r.method() === 'POST');
+  const upload = page.waitForRequest(r => r.url().endsWith('/video') && r.method() === 'POST');
+  const uploaded = page.waitForResponse(r => r.url().endsWith('/video') && r.request().method() === 'POST');
+  upload.catch(() => {}); uploaded.catch(() => {});
+  const created = page.waitForResponse(r => r.url().endsWith('/api/export') && r.request().method() === 'POST');
   await page.getByRole('button', { name: '导出视频', exact: true }).click();
   const payload = (await request).postDataJSON();
-  assert.ok(payload.video.startsWith('data:video/'));
+  assert.equal(payload.video, undefined);
+  assert.equal(payload.videoUpload, true);
+  const creation = await created; assert.equal(creation.status(), 202, await creation.text());
+  const { id } = await creation.json(); jobUrl = base + 'api/export/' + id;
+  const binary = await upload;
+  assert.equal(binary.headers()['content-type'], 'video/mp4');
+  assert.equal((await uploaded).status(), 202);
+  const media = await page.request.get(`${jobUrl}/media`);
+  assert.ok(media.ok());
+  assert.ok((await media.body()).equals(await readFile(new URL('../test-results/background.mp4', import.meta.url))), 'Renderer media must preserve the uploaded bytes');
   assert.equal(payload.state.anim.per, .4);
   await page.getByRole('button', { name: '取消导出' }).waitFor();
   await page.getByRole('tab', { name: '样式', exact: true }).click();
@@ -37,5 +53,10 @@ try {
   const response = await page.request.get(new URL(url, page.url()).href);
   assert.ok(response.ok());
   await writeFile(new URL('../test-results/export-with-background.mp4', import.meta.url), await response.body());
-  console.log('Full scene sequence, background video and export persistence across tab changes passed');
-} finally { await browser.close(); }
+  const file = fileURLToPath(new URL('../test-results/export-with-background.mp4', import.meta.url));
+  const info = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,r_frame_rate,nb_frames,duration,codec_name', '-of', 'json', file], { encoding: 'utf8' })).streams[0];
+  assert.equal(info.width, 1280); assert.equal(info.height, 720); assert.equal(info.r_frame_rate, '30/1'); assert.equal(info.codec_name, 'h264');
+  assert.ok(Number(info.duration) > 2, 'The exported video must exercise background looping');
+  assert.equal((await page.request.get(`${jobUrl}/media`)).status(), 405, 'Completed jobs should release their input media');
+  console.log('Binary background upload, looping H.264 MP4 and export persistence across tab changes passed', info);
+} finally { if (jobUrl) await fetch(jobUrl, { method: 'DELETE' }); await browser.close(); }

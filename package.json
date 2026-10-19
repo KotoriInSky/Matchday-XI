@@ -23,6 +23,10 @@
     "test:classic-opening": "node tests/classic-opening.mjs",
     "test:export": "node tests/export.mjs",
     "test:export-media": "node tests/export-media.mjs",
+    "test:export-upload": "node tests/export-upload.mjs",
+    "test:export-upload-client": "node tests/export-upload-client.mjs",
+    "test:export-styles": "node tests/export-styles.mjs",
+    "bench:export-upload": "node scripts/benchmark-export-upload.mjs",
     "render:project": "node scripts/render-project.mjs",
     "test:browser-export": "node tests/browser-export.mjs",
     "test:static-export": "node tests/static-export.mjs",
@@ -30,6 +34,9 @@
     "test:card-compositing": "node tests/card-compositing.mjs",
     "test:playback-pause": "node tests/playback-pause.mjs",
     "test:render-consistency": "node tests/render-consistency.mjs",
+    "test:export-progress": "node tests/export-progress.mjs",
+    "test:export-resources": "node tests/export-resources.mjs",
+    "test:export-storage": "node tests/export-storage.mjs",
     "test:header-theme": "node tests/header-theme.mjs"
   },
   "dependencies": {

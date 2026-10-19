@@ -1,12 +1,13 @@
 import { chromium } from 'playwright';
 const ffmpeg = process.env.FFMPEG_PATH || 'ffmpeg';
 import { spawn } from 'node:child_process';
-import { mkdtemp, rm, stat } from 'node:fs/promises';
+import { mkdtemp, rm, stat, writeFile } from 'node:fs/promises';
 import { createReadStream } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { randomUUID } from 'node:crypto';
 import { renderCards, validCards } from './card-renderer.mjs';
+import { receiveVideo, serveVideo } from './export-media.mjs';
 
 // Local-only companion renderer. Never accepts a destination URL or a filesystem path.
 export function exportPlugin(base) {
@@ -14,11 +15,22 @@ export function exportPlugin(base) {
   let active = null;
   const prefix = `${base}api/export`;
   const json = (res, status, body) => { res.writeHead(status, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' }); res.end(JSON.stringify(body)); };
-  const remove = async (job) => { job.cancelled = true; job.encoder?.kill(); await job.browser?.close().catch(() => {}); if (job.dir) await rm(job.dir, { recursive: true, force: true }); jobs.delete(job.id); };
+  const remove = (job) => job.removal ||= (async () => {
+    clearTimeout(job.timer); job.cancelled = true; job.controller.abort(); job.encoder?.kill();
+    await job.browser?.close().catch(() => {});
+    if (job.dir) await rm(job.dir, { recursive: true, force: true });
+    job.payload = null; jobs.delete(job.id); if (active === job) active = null;
+  })();
+  const cancel = async (job) => {
+    job.cancelled = true; job.controller.abort(); job.encoder?.kill(); await job.browser?.close().catch(() => {});
+    // Renderers must close their file handles before Windows can remove the job.
+    await job.done; await remove(job);
+  };
+  const expire = (job) => { clearTimeout(job.timer); job.timer = setTimeout(() => void cancel(job), 30 * 60 * 1000); job.timer.unref(); };
   async function render(job, payload, origin) {
     try {
-      job.dir = await mkdtemp(join(tmpdir(), 'matchday-export-'));
       job.file = join(job.dir, 'lineup.mp4');
+      if (job.cancelled) return;
       try { job.browser = await chromium.launch({ channel: 'chrome', headless: true }); }
       catch { job.browser = await chromium.launch({ headless: true }); }
       if (job.cancelled) return;
@@ -63,14 +75,34 @@ export function exportPlugin(base) {
       if (!job.cancelled) { job.status = 'failed'; job.error = 'Render failed. Check local Chrome and restart the export service.'; console.error('[video export]', e); }
     } finally {
       job.encoder?.kill(); await job.browser?.close().catch(() => {});
+      job.encoder = null; job.browser = null;
+      // The renderer has finished reading the source; only the output needs retention.
+      job.videoReady = false; job.controller.abort();
+      await Promise.allSettled(job.mediaReads || []);
+      if (job.videoFile) await rm(job.videoFile, { force: true });
       if (active === job) active = null;
       if (!job.cancelled && job.status === 'finishing') { job.status = 'complete'; job.progress = 100; }
       if (job.cancelled) await remove(job);
-      else { const timer = setTimeout(() => void remove(job), 30 * 60 * 1000); timer.unref(); }
+      else expire(job);
+    }
+  }
+  async function upload(job, req, res, origin) {
+    try {
+      await receiveVideo(req, job.videoFile, { signal: job.controller.signal });
+      if (job.cancelled) return;
+      clearTimeout(job.timer);
+      job.videoReady = true;
+      const payload = job.payload; job.payload = null;
+      payload.video = `${origin}${prefix}/${job.id}/media`;
+      json(res, 202, { id: job.id });
+      await render(job, payload, origin);
+    } catch (error) {
+      await remove(job);
+      if (!res.destroyed && !res.headersSent) json(res, error.status || 400, { error: 'Video upload failed' });
     }
   }
   const install = (server) => {
-    server.httpServer?.once('close', () => { for (const job of jobs.values()) void remove(job); });
+    server.httpServer?.once('close', () => { for (const job of jobs.values()) void cancel(job); });
     server.middlewares.use(async (req, res, next) => {
       const path = (req.url || '').split('?')[0];
       if (!path.startsWith(prefix)) return next();
@@ -82,7 +114,7 @@ export function exportPlugin(base) {
       if (req.method === 'POST' && path === prefix) {
         if (active) return json(res, 409, { error: 'An export is already running' });
         // Reserve a slot before reading large uploads.
-        const job = { id: randomUUID(), status: 'preparing', progress: 0, cancelled: false };
+        const job = { id: randomUUID(), status: 'preparing', progress: 0, cancelled: false, controller: new AbortController() };
         active = job;
         try {
           if (!String(req.headers['content-type']).includes('application/json')) throw new Error('JSON required');
@@ -92,16 +124,40 @@ export function exportPlugin(base) {
           if (!payload.state || typeof payload.lang !== 'string') throw new Error('Invalid export settings');
           if (payload.kind === 'cards' ? !validCards(payload) : payload.kind != null || ![720, 1080, 1440, 2160].includes(payload.height) || ![30, 60].includes(payload.fps)) throw new Error('Invalid export settings');
           if (payload.video && !/^data:video\/[\w.+-]+;base64,/.test(payload.video)) throw new Error('Invalid video');
+          if (payload.videoUpload != null && typeof payload.videoUpload !== 'boolean') throw new Error('Invalid upload settings');
+          if (payload.videoUpload && (payload.kind != null || payload.video || payload.state.bg?.mode !== 'video')) throw new Error('Invalid upload settings');
+          job.dir = await mkdtemp(join(tmpdir(), 'matchday-export-'));
+          job.videoFile = join(job.dir, 'background-video');
+          // Older JSON clients remain supported, but the renderer also reads their video from disk.
+          if (payload.video) {
+            job.videoMime = /^data:([^;]+)/.exec(payload.video)[1];
+            await writeFile(job.videoFile, Buffer.from(payload.video.slice(payload.video.indexOf(',') + 1), 'base64'));
+            job.videoReady = true; payload.video = `${origin}${prefix}/${job.id}/media`;
+          }
           jobs.set(job.id, job);
+          if (payload.videoUpload) { job.payload = payload; expire(job); }
+          else job.done = render(job, payload, origin);
           json(res, 202, { id: job.id });
-          job.done = render(job, payload, origin);
-        } catch (e) { active = null; json(res, 400, { error: e.message }); }
+        } catch (e) { await remove(job); if (!res.destroyed) json(res, 400, { error: e.message }); }
         return;
       }
       const [id, action] = path.slice(prefix.length + 1).split('/');
       const job = jobs.get(id);
       if (!job) return json(res, 404, { error: 'Export unavailable. Please retry.' });
-      if (req.method === 'DELETE') { job.cancelled = true; await remove(job); await job.done; return json(res, 200, { cancelled: true }); }
+      if (req.method === 'DELETE' && !action) { await cancel(job); return json(res, 200, { cancelled: true }); }
+      if (req.method === 'POST' && action === 'video' && job.payload?.videoUpload && !job.uploading && !job.cancelled) {
+        const mime = String(req.headers['content-type'] || '').split(';')[0];
+        if (!/^video\/[\w.+-]+$/.test(mime) && mime !== 'application/octet-stream') return json(res, 400, { error: 'Video required' });
+        job.uploading = true; job.videoMime = mime; expire(job);
+        job.done = upload(job, req, res, origin);
+        return;
+      }
+      if (['GET', 'HEAD'].includes(req.method) && action === 'media' && job.videoReady && !job.cancelled) {
+        const reading = serveVideo(req, res, job.videoFile, job.videoMime, { signal: job.controller.signal });
+        (job.mediaReads ||= new Set()).add(reading);
+        try { await reading; } finally { job.mediaReads.delete(reading); }
+        return;
+      }
       if (req.method === 'GET' && action === 'file' && job.status === 'complete') {
         const info = await stat(job.file);
         res.writeHead(200, { 'Content-Type': job.mime, 'Content-Length': info.size, 'Content-Disposition': `attachment; filename="${job.mime === 'video/mp4' ? 'matchday-lineup.mp4' : job.mime === 'image/png' ? 'matchday-card.png' : 'matchday-cards.zip'}"; filename*=UTF-8''${encodeURIComponent(job.filename)}` });

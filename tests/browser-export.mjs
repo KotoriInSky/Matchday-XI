@@ -77,10 +77,10 @@ try {
   await cutout.close();
   async function cards(template, cards, size, batch = false) {
     return page.evaluate(async ({ base, template, cards, size, batch }) => {
-      const { browserCards } = await import(base + 'src/lib/browser-export.ts');
+      const { browserCards, releaseDownload } = await import(base + 'src/lib/browser-export.ts');
       const s = structuredClone(window.exportTestState); s.anim.template = template;
       const result = await browserCards({ state: s, lang: 'en', size, cards, batch, signal: new AbortController().signal, onProgress() {} });
-      const data = new Uint8Array(await (await fetch(result.url)).arrayBuffer()); URL.revokeObjectURL(result.url);
+      const data = new Uint8Array(await (await fetch(result.url)).arrayBuffer()); await releaseDownload(result.url);
       return { bytes: [...data], dimensions: result.dimensions };
     }, { base, template, cards, size, batch });
   }
@@ -130,9 +130,9 @@ try {
   } else {
   const height = Number(process.env.BROWSER_VIDEO_HEIGHT || 1440);
   const bytes = await page.evaluate(async ({ base, height }) => {
-    const { browserVideo } = await import(base + 'src/lib/browser-export.ts');
+    const { browserVideo, releaseDownload } = await import(base + 'src/lib/browser-export.ts');
     const url = await browserVideo({ state: window.exportTestState, lang: 'en', height, fps: 30, signal: new AbortController().signal, onProgress() {} });
-    const bytes = [...new Uint8Array(await (await fetch(url)).arrayBuffer())]; URL.revokeObjectURL(url); return bytes;
+    const bytes = [...new Uint8Array(await (await fetch(url)).arrayBuffer())]; await releaseDownload(url); return bytes;
   }, { base, height });
   const filename = `test-results/browser-export/browser-${height}.mp4`; await writeFile(filename, Buffer.from(bytes));
   const info = JSON.parse(execFileSync('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=width,height,codec_name,r_frame_rate,nb_frames', '-of', 'json', filename], { encoding: 'utf8' })).streams[0];
