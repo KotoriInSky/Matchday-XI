@@ -459,11 +459,13 @@ export class Stage {
 
   private installTimeline(specs: (Spec & { fill?: FillMode })[], marks: { t: number; scene: SceneId }[]) {
     const T = this.total * 1000;
+    // Keep short effects on the full clock, so play() cannot rewind a finished opening effect.
     this.anims = specs.map(({ el, frames, start, dur, fill = 'both' }) =>
-      el.animate(frames, { delay: start * 1000, duration: dur * 1000, endDelay: fill === 'none' ? 0 : Math.max(0, T - (start + dur) * 1000), fill }),
+      el.animate(frames, { delay: start * 1000, duration: dur * 1000, endDelay: Math.max(0, T - (start + dur) * 1000), fill }),
     );
     this.clock = this.clockEl.animate([{ opacity: 0 }, { opacity: 0 }], { duration: T, fill: 'forwards' });
-    this.anims.push(this.clock);
+    // CSS effects (including pseudo-elements) must share the playback clock too.
+    this.anims = [...new Set([...this.anims, ...this.stage.getAnimations({ subtree: true }), this.clock])];
     this.anims.forEach((a) => { a.pause(); a.playbackRate = this.rate; });
     this.clock.onfinish = () => this.onEnd();
     this.marks = marks.sort((x, y) => x.t - y.t);
