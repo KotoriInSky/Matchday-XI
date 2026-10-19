@@ -162,15 +162,17 @@ export class Stage {
 
   private mountBackground() {
     const s = this.s, bg = this.q('.bg');
+    this.videoEl?.pause();
     if (!bg) return;
     const tint = `color-mix(in srgb, var(--c1) ${Number(s.bg.dim)}%, transparent)`;
     if (s.bg.mode === 'video' && this.videoURL) {
       if (!this.videoEl) {
         const v = document.createElement('video');
-        Object.assign(v, { muted: true, loop: true, autoplay: true, playsInline: true });
+        Object.assign(v, { muted: true, loop: true, playsInline: true });
         v.setAttribute('muted', '');
         v.setAttribute('playsinline', '');
         v.addEventListener('error', () => this.opts.onNotice('videoError'));
+        v.addEventListener('loadedmetadata', () => this.syncVideo(true));
         this.videoEl = v;
       }
       const v = this.videoEl;
@@ -182,7 +184,7 @@ export class Stage {
       ti.className = cn('tint');
       ti.style.background = tint;
       bg.appendChild(ti);
-      v.play?.().catch(() => {});
+      this.syncVideo(true);
     } else if (s.bg.mode === 'image' && s.bg.image) {
       bg.insertAdjacentHTML(
         'beforeend',
@@ -453,12 +455,28 @@ export class Stage {
   }
 
   /* ---------- Playback ---------- */
+  /** Video uses the animation time, including pause, seeking, speed and replay. */
+  private syncVideo(seek = false) {
+    const v = this.videoEl;
+    if (!v) return;
+    if (this.s.bg.mode !== 'video' || !this.videoURL || !this.stage.contains(v)) { v.pause(); return; }
+    v.playbackRate = this.rate;
+    if (Number.isFinite(v.duration) && v.duration > 0) {
+      const target = this.curT() % v.duration;
+      const distance = Math.abs(v.currentTime - target);
+      const drift = Math.min(distance, v.duration - distance);
+      if ((seek && distance > .0001) || (!v.seeking && drift > .15)) v.currentTime = target;
+    }
+    if (this.playing) { if (v.paused) void v.play().catch(() => {}); }
+    else v.pause();
+  }
   private curT() {
     return this.clock ? Number(this.clock.currentTime || 0) / 1000 : this.total;
   }
   seek = (t: number) => {
     t = clamp(t, 0, this.total);
     this.anims.forEach((a) => { a.currentTime = t * 1000; });
+    this.syncVideo(true);
     this.emit();
   };
   play = () => {
@@ -466,11 +484,13 @@ export class Stage {
     if (this.curT() >= this.total - 0.05) this.seek(0);
     this.anims.forEach((a) => { a.playbackRate = this.rate; a.play(); });
     this.playing = true;
+    this.syncVideo(true);
     this.tick();
   };
   pause = () => {
     this.anims.forEach((a) => a.pause());
     this.playing = false;
+    this.syncVideo(true);
     cancelAnimationFrame(this.raf);
     this.emit();
   };
@@ -482,6 +502,7 @@ export class Stage {
   setRate = (r: number) => {
     this.rate = r;
     this.anims.forEach((a) => (a.playbackRate = r));
+    this.syncVideo(true);
     this.emit();
   };
   private onEnd() {
@@ -496,6 +517,7 @@ export class Stage {
     this.seek(this.total);
   }
   private tick = () => {
+    this.syncVideo();
     this.emit();
     if (this.playing) this.raf = requestAnimationFrame(this.tick);
   };
@@ -504,7 +526,7 @@ export class Stage {
   refresh = () => {
     clearTimeout(this.refreshTimer);
     const t = this.curT(), was = this.playing, atEnd = t >= this.total - 0.05;
-    if (was) this.anims.forEach((a) => a.pause());
+    if (was) this.pause();
     this.renderStage();
     this.buildTimeline();
     // resting on the final frame stays there, even when the animation gets longer or shorter
@@ -519,6 +541,7 @@ export class Stage {
 
   /** Background video: kept only for this visit, never saved. */
   setVideo(url: string | null) {
+    this.videoEl?.pause();
     if (this.videoURL && this.videoURL !== url) URL.revokeObjectURL(this.videoURL);
     this.videoURL = url;
     if (!url && this.videoEl) {
@@ -788,6 +811,7 @@ export class Stage {
     clearTimeout(this.refreshTimer);
     this.anims.forEach((a) => a.cancel());
     this.cleanup.forEach((f) => f());
+    if (this.videoEl) { this.videoEl.removeAttribute('src'); this.videoEl.load(); this.videoEl = null; }
     this.wrap.innerHTML = '';
   }
 }

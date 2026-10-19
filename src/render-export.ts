@@ -21,6 +21,7 @@ export function mountExportRenderer() {
   let capture: ReturnType<typeof createBrowserCapture>;
   window.exportRenderer = {
     async init(input, lang, video) {
+      stage?.destroy();
       const state = normalize(input);
       capture = createBrowserCapture(state);
       await Promise.all([registerFont('display', state.customFonts.display), registerFont('body', state.customFonts.body), registerFont('number', state.customFonts.number)]);
@@ -41,10 +42,15 @@ export function mountExportRenderer() {
       const v = root.querySelector('video');
       if (v) {
         v.pause();
-        if (v.readyState < 2) await new Promise<void>((resolve, reject) => {
-          v.addEventListener('loadeddata', () => resolve(), { once: true });
-          v.addEventListener('error', () => reject(new Error('Background video could not be decoded')), { once: true });
-          setTimeout(() => reject(new Error('Background video timed out')), 30000);
+        if (v.readyState < 2 || v.seeking) await new Promise<void>((resolve, reject) => {
+          const events = ['loadeddata', 'canplay', 'seeked'];
+          const cleanup = () => { clearTimeout(timer); events.forEach(event => v.removeEventListener(event, ready)); v.removeEventListener('error', failed); };
+          const ready = () => { if (v.readyState >= 2 && !v.seeking) { cleanup(); resolve(); } };
+          const failed = () => { cleanup(); reject(new Error('Background video could not be decoded')); };
+          const timer = setTimeout(() => { cleanup(); reject(new Error('Background video timed out')); }, 30000);
+          events.forEach(event => v.addEventListener(event, ready));
+          v.addEventListener('error', failed);
+          ready();
         });
       }
       return stage.getSnapshot().total;
@@ -58,10 +64,10 @@ export function mountExportRenderer() {
       video?.pause();
       if (video && Number.isFinite(video.duration) && video.duration > 0) {
         const target = time % video.duration;
-        if (Math.abs(video.currentTime - target) > .0001) await new Promise<void>((resolve, reject) => {
+        if (video.seeking || Math.abs(video.currentTime - target) > .0001) await new Promise<void>((resolve, reject) => {
           const timer = setTimeout(() => reject(new Error('Video seek timed out')), 15000);
           video.addEventListener('seeked', () => { clearTimeout(timer); resolve(); }, { once: true });
-          video.currentTime = target;
+          if (Math.abs(video.currentTime - target) > .0001) video.currentTime = target;
         });
       }
       await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
