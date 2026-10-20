@@ -1,0 +1,34 @@
+import assert from 'node:assert/strict';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
+import { mkdir, writeFile } from 'node:fs/promises';
+const module = await import('../server/video-encoder.mjs').catch(() => ({}));
+assert.equal(typeof module.selectVideoEncoder, 'function', 'Local video export must select and test a hardware encoder before rendering');
+const { selectVideoEncoder } = module;
+const exec = promisify(execFile);
+const ffmpeg = process.env.FFMPEG_PATH || 'ffmpeg';
+const settings = { ffmpeg, width: 3840, height: 2160, fps: 60 };
+const cpu = await selectVideoEncoder({ ...settings, mode: 'libx264' });
+assert.equal(cpu.name, 'libx264');
+const unavailable = { ...settings, ffmpeg: process.execPath };
+assert.equal((await selectVideoEncoder({ ...unavailable, mode: 'auto' })).name, 'libx264', 'An unusable NVENC build must fall back before frames are produced');
+await assert.rejects(selectVideoEncoder({ ...unavailable, mode: 'h264_nvenc' }), /NVENC/i, 'Explicit NVIDIA mode must report an incompatible driver');
+await assert.rejects(selectVideoEncoder({ ...settings, mode: 'unknown' }), /FFMPEG_ENCODER/);
+const abort = new AbortController(); abort.abort();
+await assert.rejects(selectVideoEncoder({ ...settings, mode: 'auto', signal: abort.signal }), { name: 'AbortError' });
+const selected = await selectVideoEncoder({ ...settings, mode: 'auto' });
+if (process.env.NVENC_EXPECT === '1') assert.equal(selected.name, 'h264_nvenc', 'The configured NVIDIA machine must actually pass the NVENC probe');
+await mkdir('test-results/video-encoder', { recursive: true });
+const outputs = [];
+for (const [encoder, width, height, fps, frames] of [[selected, 3840, 2160, 60, 120], [cpu, 1280, 720, 30, 12]]) {
+  const file = `test-results/video-encoder/${encoder.name}-${height}-${fps}.mp4`;
+  const start = performance.now();
+  await exec(ffmpeg, ['-hide_banner', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', `testsrc2=s=${width}x${height}:r=${fps}`, '-frames:v', String(frames), '-an', ...encoder.args, '-movflags', '+faststart', file], { windowsHide: true, timeout: 30000 });
+  const info = JSON.parse((await exec('ffprobe', ['-v', 'error', '-select_streams', 'v:0', '-show_entries', 'stream=codec_name,width,height,r_frame_rate,nb_frames', '-of', 'json', file], { windowsHide: true })).stdout).streams[0];
+  assert.equal(info.codec_name, 'h264'); assert.equal(info.width, width); assert.equal(info.height, height);
+  assert.equal(info.r_frame_rate, `${fps}/1`); assert.equal(Number(info.nb_frames), frames);
+  await exec(ffmpeg, ['-v', 'error', '-i', file, '-f', 'null', '-'], { windowsHide: true, timeout: 30000 });
+  outputs.push({ encoder: encoder.name, ...info, seconds: (performance.now() - start) / 1000 });
+}
+await writeFile('test-results/video-encoder/results.json', JSON.stringify(outputs, null, 2));
+console.log(JSON.stringify(outputs));
