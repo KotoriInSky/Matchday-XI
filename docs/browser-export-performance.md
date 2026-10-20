@@ -164,3 +164,66 @@ season2627 三次解码路径均快于三次原生路径，因此两套模板都
 ### 尚未覆盖
 
 HTML-in-Canvas 仍是开发者试用接口，属性名与行为可能变化；只在本机 Chrome 155 打开开关测过，未覆盖背景视频、其他 GPU 与系统。立绘缩小只用于视频帧；1080p 以上与 4K 的画面差异与收益未单独测量。字体子集化未覆盖字体集合（TTC）与 WOFF1，这两类直接嵌入原字体。
+
+## 第三轮：渲染进程内存（2026-10-21）
+
+### 发现
+
+基准新增内存采样：每秒经 CDP `SystemInfo.getProcessInfo` 取浏览器各进程 PID，按进程类型汇总 Windows 私有字节；编辑器页面的 JS 堆经 `Performance.getMetrics` 读取（同源导出 iframe 在同一进程，包含在内）。GPU 显存不在其中。
+
+真实项目 1080p／60 fps 完整导出时，渲染进程私有内存随帧数近似线性增长：classic 每秒约增 45 MB，3 分钟到约 9 GB；JS 堆峰值只有约 0.3～0.4 GB。导出完成、iframe 移除后内存不回落，下一次导出从约 9.5 GB 继续涨到 11 GB。
+
+逐项排除（`scripts/probe-capture-memory.mjs`，classic 前 360 帧）：跳过绘制、改用软件 Canvas 都同样增长到约 8.6 GB；只序列化 SVG 不解码则基本持平（约 0.5～0.9 GB）。最小复现（`scripts/probe-svg-image-memory.mjs`）表明：Chromium 每解码一张含 foreignObject 的 SVG data URL，约保留 0.2 MB 加上与 URL 长度相当的内存，直到渲染进程结束；与栅格尺寸、内嵌图片解码后的像素量无关，换新的 `Image`、轮换同源 iframe、闲置并强制 GC 均不释放。不含 foreignObject 的 SVG 闲置后可回收。
+
+已否决：把解码放到沙箱 `srcdoc` iframe（独立进程，移除后约 5 秒内全部释放）——不透明源中 foreignObject SVG 会污染位图，无法传回编码器（`crossOrigin` 无效；普通 PNG、普通 SVG 不受影响）。`createImageBitmap` 不能解码 SVG Blob。静态站点没有第二个真实源，进程隔离路线暂不可行。
+
+因此可做的是缩小每帧 SVG：保留量和解码耗时都随它下降。classic 每帧 SVG 13.25 MB，其中 27 张图片占 12.36 MB；卡片立绘显示约 280 px 高，3 倍余量需要约 850／1200 源像素，落入“保留原图”档位，以约 2 MB 的无损 PNG 原图嵌入。
+
+### 改动
+
+- **浏览器导出的图片改为 WebP**：`compactImages` 下，栅格图片按所需尺寸（不超过原图）重新编码为质量 0.9 的 WebP，包括原先保留原图的档位；结果不比原图小时仍用原图。浏览器不支持 WebP 编码（返回 PNG）时沿用原 PNG 规则。classic 每帧 SVG 从 13.25 MB 降到 3.02 MB。
+- **背景视频帧**：不透明视频改为 JPEG（0.92），可能透明（Mediabunny `canBeTransparent()`）的改为 WebP；原为每帧一张 PNG。
+- 两项只在渲染页位于 iframe 中（浏览器导出）时启用；本地渲染页是顶层页面，仍为无损像素。
+- **无 OPFS 时的内存输出**：顺序追加只添加分块，覆盖已写字节（如 MP4 预留头）时才合并，不再每块重建整个 Blob。
+
+### 测量
+
+机器同前（Windows 10.0.26300、Core Ultra 9 285H、Chrome 155.0.8059.85）。真实项目，1080p／60 fps，关闭开场、教练与逐排出场；同一浏览器内每套模板连续 3 次界面导出。基线为本轮改动前的生产构建（`BENCH_DIST=test-results/dist-browser-baseline`），结果 `mem-baseline-1080p60.json`／`mem-compact-1080p60.json`。
+
+| 模板 | 完整导出（3 次） | 中位数 | 渲染进程峰值（3 次） |
+| --- | --- | --- | --- |
+| classic 基线 | 191.4／184.9／183.6 秒 | 184.9 秒 | 9.0／11.1／10.8 GB |
+| classic 本轮 | 88.0／82.9／79.8 秒 | 82.9 秒 | 4.5／4.9／4.9 GB |
+| season2627 基线 | 72.3／76.3／81.1 秒 | 76.3 秒 | 3.4／4.0／3.7 GB |
+| season2627 本轮 | 46.5／43.0／43.4 秒 | 43.4 秒 | 2.2／2.6／2.8 GB |
+
+完整导出约快 55%／43%。GPU 进程峰值两边相近（约 1.0～1.25 GB），JS 堆峰值约 0.25～0.45 GB。第二、三次导出开始时浏览器总私有内存仍停留在上一次的水平（classic 基线约 9.6～10.1 GB，本轮约 4.7～4.8 GB）：泄漏量缩小了，但没有消除，导出后仍不释放。
+
+本轮按“合并实现、整体测量”进行，两项压缩未拆分各自收益；基准项目无背景视频，视频帧 JPEG 的收益未计入。
+
+### 画面差异
+
+`scripts/compare-compact-frames.mjs` 在同一构建中，对比 iframe 内（压缩）与顶层（无损）渲染页的同一输出帧，真实项目 1080p，每套模板 8 帧：
+
+| 模板 | 平均差 | 变化像素 | 差值 > 16 | 16×16 块最差均值 | 最大通道差 |
+| --- | --- | --- | --- | --- | --- |
+| classic | ≤ 0.152 | ≤ 10.6% | ≤ 0.23% | 8.0 | 90 |
+| season2627 | ≤ 0.142 | ≤ 10.5% | ≤ 0.18% | 7.5 | 91 |
+
+与上一轮立绘缩小相对原图的差异（变化像素 8.9%、块最差均值 13.5、最大 128）处于同一量级。最差块所在区域的 2 倍放大对照（`test-results/compact-frames/`）中，线稿、发丝、球衣条纹与队徽目视无差别。差异集中在立绘高频边缘。
+
+### 复现
+
+```powershell
+$env:BENCH_PROJECT = 'E:/Downloads/matchday-lineup (1).json'
+$env:BENCH_HEIGHT = '1080'; $env:BENCH_FPS = '60'
+$env:BENCH_SKIP_FRAMES = '1'; $env:BENCH_VIDEO_RUNS = '3'
+$env:BENCH_LABEL = 'mem-current-1080p60'
+node scripts/bench-lock.mjs browser-export -- node scripts/benchmark-browser-export.mjs
+```
+
+新增开关：`BENCH_DIST`（另一份生产构建目录）、`BENCH_SKIP_FRAMES`（跳过帧采样）、`BENCH_TEMPLATES`（如 `classic`）、`BENCH_MEMORY=0`（关闭内存采样）。每轮的 `memoryRounds[].series` 为每秒 `[秒, 渲染进程 MiB, GPU MiB, JS 堆 MiB]`。
+
+### 尚未覆盖
+
+泄漏仍与帧数成正比，长视频、4K 和低内存设备的峰值未测；Chrome 在内存压力下会回收一部分（基线第二次导出中途从约 10 GB 回落到约 6 GB），低内存机器上是回收还是崩溃未验证。背景视频项目、无 OPFS 的内存输出路径、Safari／Firefox 均未做完整对照。导出后释放内存需要独立进程，例如在单独的导出标签页中完成整个导出，尚待评估。
