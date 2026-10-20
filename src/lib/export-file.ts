@@ -53,7 +53,10 @@ export async function createExportFile() {
     release?.(); release = undefined; handle = undefined; file = undefined;
   }
 
-  let blob = new Blob(), cursor = 0;
+  // Without OPFS the output stays in memory. Appends (almost every chunk) only
+  // add a part; rewriting earlier bytes, e.g. the reserved MP4 header, flattens.
+  let parts: Blob[] = [], size = 0, cursor = 0;
+  const flatten = () => { const blob = new Blob(parts); parts = [blob]; return blob; };
   let writes = Promise.resolve();
   let closed = false, transferred = false, removed = false;
   const cleanup = async () => {
@@ -61,7 +64,7 @@ export async function createExportFile() {
     removed = true; pending.delete(cleanup);
     await writes.catch(() => {});
     if (!closed) { closed = true; await file?.abort().catch(() => {}); }
-    blob = new Blob();
+    parts = []; size = 0;
     try { if (handle) await directory?.removeEntry(name).catch(() => {}); }
     finally { release?.(); }
   };
@@ -72,9 +75,14 @@ export async function createExportFile() {
     cursor = position + data.byteLength;
     writes = writes.then(async () => {
       if (file) await file.write({ type: 'write', data, position });
-      else {
-        const gap = Math.max(0, position - blob.size);
-        blob = new Blob([blob.slice(0, position), ...(gap ? [new Uint8Array(gap)] : []), data, blob.slice(position + data.byteLength)]);
+      else if (position >= size) {
+        // Blob copies the bytes, so the caller may reuse its buffer.
+        parts.push(position > size ? new Blob([new Uint8Array(position - size), data]) : new Blob([data]));
+        size = position + data.byteLength;
+      } else {
+        const blob = flatten();
+        parts = [new Blob([blob.slice(0, position), data, blob.slice(position + data.byteLength)])];
+        size = Math.max(size, position + data.byteLength);
       }
     });
     // The caller still receives the rejection; cleanup may run before it awaits.
@@ -96,9 +104,9 @@ export async function createExportFile() {
     async finish(type: string) {
       if (transferred) throw new Error('Export output was already finalized');
       await close();
-      const result = handle ? await handle.getFile() : blob;
+      const result = handle ? await handle.getFile() : flatten();
       const url = URL.createObjectURL(result.slice(0, result.size, type));
-      transferred = true; blob = new Blob(); pending.delete(cleanup); downloads.set(url, cleanup);
+      transferred = true; parts = []; pending.delete(cleanup); downloads.set(url, cleanup);
       return url;
     },
     async dispose() { if (!transferred) await cleanup(); },
