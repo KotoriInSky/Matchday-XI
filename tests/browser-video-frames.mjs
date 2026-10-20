@@ -110,7 +110,8 @@ try {
         throw Error('Video export did not cancel');
       } catch (error) { if (error.name !== 'AbortError') throw error; }
       if (!disposed || document.querySelector('iframe[title="Export renderer"]')) throw Error('Cancellation must dispose the background decoder and iframe');
-      if (externalDecoder !== (template === 'classic')) throw Error(`Default decoder selection changed for ${template}`);
+      // Both templates decode background video with Mediabunny by default (1f55421).
+      if (!externalDecoder) throw Error(`Default decoder selection changed for ${template}`);
     }
   }, { base, video: 'data:video/mp4;base64,' + (await readFile(`${folder}/24.mp4`)).toString('base64') });
   await editor.close();
