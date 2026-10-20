@@ -4,6 +4,8 @@ import { once } from 'node:events';
 import { mkdir, readFile, readdir, writeFile } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
 import { cpus, platform, release } from 'node:os';
+import { spawn } from 'node:child_process';
+import { createInterface } from 'node:readline';
 import { performance } from 'node:perf_hooks';
 import { chromium } from 'playwright';
 
@@ -30,7 +32,8 @@ assert.ok(!reference || !background || nativeVideo, 'A full-capture reference wi
 assert.ok(!compareVideo || (!nativeVideo && !reference && background), 'Video comparison requires a background, BENCH_NATIVE_VIDEO=0 and BENCH_REFERENCE=0');
 const state = JSON.parse(await readFile(process.env.BENCH_PROJECT || 'test-results/export-resources/state.json', 'utf8'));
 const output = 'test-results/browser-performance'; await mkdir(output, { recursive: true });
-const root = resolve('dist'), prefix = '/matchday-xi/';
+// BENCH_DIST serves another production build, e.g. a baseline in test-results.
+const root = resolve(process.env.BENCH_DIST || 'dist'), prefix = '/matchday-xi/';
 let apiRequests = 0;
 const server = createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
@@ -47,6 +50,60 @@ server.listen(0, '127.0.0.1'); await once(server, 'listening');
 const base = `http://127.0.0.1:${server.address().port}${prefix}`;
 let browser;
 const median = values => { const sorted = [...values].sort((a, b) => a - b); const i = Math.floor(sorted.length / 2); return sorted.length % 2 ? sorted[i] : (sorted[i - 1] + sorted[i]) / 2; };
+const MiB = 1024 * 1024;
+// Samples every Chrome process of this browser (private bytes, by process type)
+// and the editor page's JS heap, which includes the same-origin export iframe.
+// One persistent PowerShell answers each PID list; GPU memory is not included.
+async function memorySampler(browser, page, intervalMs = 1000) {
+  const cdp = await browser.newBrowserCDPSession(), pageCdp = await page.context().newCDPSession(page);
+  await pageCdp.send('Performance.enable');
+  let shell, lines;
+  if (platform() === 'win32') {
+    // Reads one comma-separated PID list per line; answers "pid:privateBytes ..." per line.
+    const script = 'while ($null -ne ($line = [Console]::In.ReadLine())) { $ids = $line.Split(",") | ForEach-Object { [int]$_ }; '
+      + '[Console]::Out.WriteLine(((Get-Process -Id $ids -ErrorAction SilentlyContinue | ForEach-Object { "$($_.Id):$($_.PrivateMemorySize64)" }) -join " ")); [Console]::Out.Flush() }';
+    shell = spawn('powershell', ['-NoProfile', '-NonInteractive', '-Command', script], { stdio: ['pipe', 'pipe', 'ignore'] });
+    lines = createInterface({ input: shell.stdout })[Symbol.asyncIterator]();
+  }
+  const samples = [];
+  let stopped = false;
+  const loop = (async () => {
+    while (!stopped) {
+      const started = Date.now();
+      try {
+        const { processInfo } = await cdp.send('SystemInfo.getProcessInfo');
+        const { metrics } = await pageCdp.send('Performance.getMetrics');
+        const heap = metrics.find(m => m.name === 'JSHeapUsedSize')?.value || 0;
+        const byType = {};
+        if (shell) {
+          shell.stdin.write(processInfo.map(p => p.id).join(',') + '\n');
+          for (const pair of ((await lines.next()).value || '').split(' ').filter(Boolean)) {
+            const [id, bytes] = pair.split(':').map(Number);
+            const type = processInfo.find(p => p.id === id)?.type || 'other';
+            byType[type] = (byType[type] || 0) + bytes;
+          }
+        }
+        samples.push({ t: started, heap, byType, total: Object.values(byType).reduce((a, b) => a + b, 0) });
+      } catch { if (stopped) break; }
+      await new Promise(resolve => setTimeout(resolve, Math.max(0, intervalMs - (Date.now() - started))));
+    }
+  })();
+  return async () => {
+    stopped = true; await loop; shell?.stdin.end(); shell?.kill();
+    await pageCdp.detach().catch(() => {}); await cdp.detach().catch(() => {});
+    const peak = key => Math.max(0, ...samples.map(key));
+    const types = [...new Set(samples.flatMap(s => Object.keys(s.byType)))];
+    return {
+      samples: samples.length,
+      peakJsHeapMiB: +(peak(s => s.heap) / MiB).toFixed(1),
+      peakTotalPrivateMiB: +(peak(s => s.total) / MiB).toFixed(1),
+      peakPrivateMiBByType: Object.fromEntries(types.map(type => [type, +(peak(s => s.byType[type] || 0) / MiB).toFixed(1)])),
+      startTotalPrivateMiB: +((samples[0]?.total || 0) / MiB).toFixed(1),
+      // [seconds, renderer, GPU, JS heap] in MiB, to tell growth from a plateau.
+      series: samples.map(s => [Math.round((s.t - samples[0].t) / 1000), ...[s.byType.renderer || 0, s.byType.GPU || 0, s.heap].map(v => Math.round(v / MiB))]),
+    };
+  };
+}
 try {
   // BENCH_CHROME_ARGS, e.g. '--enable-blink-features=CanvasDrawElement' for HTML-in-Canvas.
   browser = await chromium.launch({ channel: 'chrome', args: process.env.BENCH_CHROME_ARGS?.split(' ').filter(Boolean) });
@@ -90,7 +147,9 @@ try {
     }, { captureURL, captureOptions, nativeVideo, compareVideo, background, fps });
   }
   const report = { label, reference, captureOptions, chromeArgs: process.env.BENCH_CHROME_ARGS || null, nativeVideo, compareVideo, background: background || null, date: new Date().toISOString(), platform: `${platform()} ${release()}`, cpu: cpus()[0]?.model, browser: browser.version(), height, fps, frameCount, runs, videoRuns, fullExportScenario: { style: fullStyle, intro: false, manager: false }, results: [] };
-  for (const template of ['classic', 'season2627']) {
+  for (const template of (process.env.BENCH_TEMPLATES || 'classic,season2627').split(',')) {
+    const result = { template };
+    if (process.env.BENCH_SKIP_FRAMES !== '1') {
     const page = await context.newPage(); await page.setViewportSize({ width: height * 16 / 9, height });
     await page.goto(base + '?render-export'); await page.waitForFunction(() => window.exportRenderer);
     const frames = await page.evaluate(async ({ state, template, height, runs, frameCount }) => {
@@ -113,9 +172,10 @@ try {
       return { duration, rounds, frameP95Ms: perFrame[Math.ceil(perFrame.length * .95) - 1] };
     }, { state, template, height, runs, frameCount });
     await page.close();
-    const result = { template, ...frames, medianFrameBatchMs: median(frames.rounds) };
+    Object.assign(result, frames, { medianFrameBatchMs: median(frames.rounds) });
     result.captureFps = frameCount * 1000 / result.medianFrameBatchMs;
     console.log(JSON.stringify(result));
+    }
 
     // Complete export through the actual UI. A short fixture covers initialization,
     // composition, WebCodecs, MP4 finalization and OPFS, without a test-only encoder.
@@ -141,18 +201,20 @@ try {
       await editor.getByRole('tab', { name: '备份', exact: true }).click();
       await editor.getByLabel('分辨率', { exact: true }).selectOption(String(height));
       await editor.getByLabel('帧率', { exact: true }).selectOption(String(fps));
-      result.fullExportRounds = []; result.decodedVideoRounds = []; result.videoComparisons = [];
+      result.fullExportRounds = []; result.decodedVideoRounds = []; result.videoComparisons = []; result.memoryRounds = [];
       const modes = compareVideo ? Array.from({ length: videoRuns }, (_, i) => i % 2 ? [false, true] : [true, false]).flat() : Array(videoRuns).fill(nativeVideo);
       for (const [run, forceNative] of modes.entries()) {
         await editor.evaluate(value => { window.__benchmarkNativeVideo = value; window.__benchmarkVideoDecode = false; }, forceNative);
+        const sampling = process.env.BENCH_MEMORY === '0' ? null : await memorySampler(browser, editor);
         const started = performance.now();
         await editor.getByRole('button', { name: run ? '重新导出' : '导出视频', exact: true }).click();
         await editor.getByRole('button', { name: '取消导出', exact: true }).waitFor();
-        await editor.getByRole('button', { name: '重新导出', exact: true }).waitFor({ timeout: 600000 });
+        await editor.getByRole('button', { name: '重新导出', exact: true }).waitFor({ timeout: 1800000 });
         result.fullExportRounds.push(performance.now() - started);
+        if (sampling) result.memoryRounds.push(await sampling());
         result.decodedVideoRounds.push(await editor.evaluate(() => window.__benchmarkVideoDecode));
         result.videoComparisons.push({ native: forceNative, decoded: result.decodedVideoRounds.at(-1), ms: result.fullExportRounds.at(-1) });
-        console.log(JSON.stringify({ template, run, ...result.videoComparisons.at(-1) }));
+        console.log(JSON.stringify({ template, run, ...result.videoComparisons.at(-1), memory: { ...result.memoryRounds.at(-1), series: undefined } }));
       }
       result.fullExportMs = median(result.fullExportRounds);
       if (compareVideo) {
