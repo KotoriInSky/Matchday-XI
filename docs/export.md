@@ -14,7 +14,13 @@
 
 视频复用透明 Canvas，并共享同一帧内相同的计算样式，减少样式复制和整帧搬运。Canvas 捕获按输出时间采样，原生截图保留绘制等待。MP4 预留头部元数据空间，分块写出；批量卡片逐张写入 ZIP，浏览器和本地服务都无需先保留全部 PNG。下载链接释放后删除对应临时文件；其他标签页仍在使用的文件会保留，异常关闭留下的文件在下次导出时回收。临时存储不可用时仍可下载，但大文件会占用更多内存。
 
+视频帧按显示尺寸的 3 倍嵌入缩小后的立绘（卡片 PNG 仍用原图），data URL 只做必要转义，与上一帧完全相同的画面直接复用；项目包含上传字体时，只嵌入舞台显示的字符的子集（HarfBuzz 子集器，按需加载）。Chrome 开启实验性 HTML-in-Canvas（`chrome://flags/#canvas-draw-element`）时，无背景视频的项目在通过五点像素校验后改由浏览器原生绘制，否则自动回到 SVG 路径。测量与画面差异见[浏览器导出性能记录](browser-export-performance.md)。
+
 捕获只读取文档样式、行内样式和动画实际使用的属性，并保留字体与语言所需的默认值；每帧重新收集属性及计算值，兼容动态规则、伪元素、遮罩和 Web Animations。遇到无法读取的样式表或 `all` 声明时，回退完整属性捕获。内部保留完整属性参考路径，供像素对照测试使用。
+
+视频捕获会保留绝对定位图层的计算布局框，跳过当前帧完全透明或内容全部不可见的图层内容，减少样式读取、SVG 序列化和解码。普通文档流中的占位、恢复可见的子元素及伪元素、被其他图层引用的 SVG 资源继续完整捕获；可见性和资源引用逐帧更新。卡片 PNG 和完整视频帧参考捕获仍沿用完整路径。
+
+classic 背景视频优先复用 Mediabunny 1.61.4 的 `CanvasSink.canvasesAtTimestamps()`，由库负责解码、按时间选帧及循环时的重新取帧，使用单个池化 Canvas。PNG 直接交给现有捕获器，沿用原有 CSS 构图、遮罩和染色。season2627 的完整导出测试未显示稳定收益，默认保留原生取帧；其 Mediabunny 适配可单独验证。缺少完整色彩元数据、HDR、编解码器不支持或准备失败时，也保留原生捕获。PNG／SVG 中转目前仍存在。完成、失败或取消时释放输入与迭代器。
 
 ## GitHub Actions 手动导出
 
@@ -30,7 +36,11 @@
 
 ## 本地备用
 
-本地项目安装 Chrome／Chromium 与 FFmpeg 后，在视频导出中选择「本地渲染服务」。下载保留 30 分钟。卡片仍默认由浏览器生成；需要 Chromium 截图方式时使用脚本：
+本地项目安装 Chrome／Chromium 与 FFmpeg 后，在视频导出中选择「本地渲染服务」。下载保留 30 分钟。
+
+本地 4K 视频直接将 Canvas 原始 RGBA 帧流式送入 FFmpeg，逐帧等待编码器背压，省去中间 PNG／base64 编解码；较低分辨率保留现有 PNG 传输。支持自动探测 NVENC，驱动或构建不兼容时回退 CPU；FFmpeg 路径及选择可通过服务端 `FFMPEG_PATH`、`FFMPEG_ENCODER` 配置。画面与 PNG 参考路径的对照、性能结果和复现方式见[本地导出性能记录](local-export-performance.md)。
+
+卡片仍默认由浏览器生成；需要 Chromium 截图方式时使用脚本：
 
 ```powershell
 $env:PROJECT_FILE = 'exports/project.json'
@@ -48,9 +58,15 @@ npm run render:project
 ## 验证
 
 - `npm run test:browser-export`：PNG 实际尺寸、透明边界、两套模板、选定组合 ZIP、取消、真实 H.264 MP4，禁止调用本地 API。
+- `npm run test:browser-video-frames`：24／60 fps H.264 素材按 30 fps 取帧，与原生视频画面对照，覆盖循环、构图、色彩信息缺失／解码不支持回退及活动导出取消。
+- `npm run test:export-reuse`：未变化的视频帧复用像素，变化的帧重新解码。
+- `npm run test:export-font-subset`：上传 TTF／WOFF2 字体子集化后两套模板逐像素一致；可用 `FONT_CJK` 指定中文字体（默认 `C:/Windows/Fonts/simhei.ttf`）。
 - `npm run test:export-resources`：两套动画的固定时间点像素、Canvas 复用、离线帧调度，以及画面捕获耗时；可用 `EXPORT_BASELINE=1` 保存优化前的对照数据。
 - `npm run test:export-storage`：临时文件与内存回退、MP4 所需的随机写入、增量 ZIP、取消、下载生命周期和跨任务文件回收。
 - `npm run test:export-styles`：精简与完整样式捕获逐像素对照，覆盖动态行内样式、规则增删、伪元素、动画、简写属性和回退。
+- `npm run test:export-visibility`：不可见图层与完整捕获逐像素对照，覆盖动画首尾和往返采样、文档流占位、子元素／伪元素恢复可见，以及 SVG 跨图层引用。
+- `npm run test:export-backface`：与原生预览对照卡片正反面的可见性，覆盖翻转角度、侧面临界点、倒退定位及两套模板片尾的全部 11 张立绘。文件解码通过不能替代这项画面检查。
+- `npm run bench:browser-export`：对生产构建进行浏览器导出基准测试，按两套模板采样画面，并从实际界面完整导出 MP4；仅提供静态文件，验证零本地导出 API 请求。准备方式与参数见[浏览器导出性能记录](browser-export-performance.md)。
 - `npm run test:export-upload`：二进制上传、Range 读取、大小限制、上传中断和任务槽位回收，无需启动页面。
 - `npm run test:export-upload-client`：创建任务返回前取消、上传取消／失败清理和旧 JSON 客户端兼容；`npm run test:export-media` 验证网页实际上传、背景循环及 H.264 MP4。
 - `npm run bench:export-upload`：隔离进程比较旧 JSON／base64 与二进制上传，记录服务端 RSS、JS 堆和缓冲区峰值增量；默认输入 64 MiB，可用 `UPLOAD_BENCH_MIB` 调整。结果保存至 `test-results/export-upload-benchmark.json`，不代表浏览器、GPU、编码器或完整导出的内存峰值。
