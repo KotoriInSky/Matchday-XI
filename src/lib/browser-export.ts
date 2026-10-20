@@ -21,7 +21,7 @@ async function renderer(kind: 'cards' | 'export', signal: AbortSignal, width = 1
   const frame = document.createElement('iframe');
   frame.title = 'Export renderer'; frame.setAttribute('aria-hidden', 'true'); frame.tabIndex = -1;
   frame.style.cssText = `position:fixed;left:-20000px;top:0;width:${width}px;height:${height}px;border:0;pointer-events:none`;
-  const remove = () => frame.remove(); signal.addEventListener('abort', remove, { once: true });
+  const remove = () => { if (kind === 'export') frame.contentWindow?.exportRenderer?.dispose(); frame.remove(); }; signal.addEventListener('abort', remove, { once: true });
   frame.src = `${import.meta.env.BASE_URL}?render-${kind}`; document.body.append(frame);
   try {
     const deadline = Date.now() + 30000;
@@ -109,6 +109,9 @@ export async function browserVideo(options: { state: LineupState; lang: string; 
     const duration = await abortable(api.init(state, options.lang, video || null), signal);
     if (!(duration > 0 && duration < 600)) throw new Error('duration');
     const frames = Math.ceil(duration * fps);
+    // Enable the decoder adapter where complete-export measurements showed a
+    // benefit. season2627 currently keeps its native media capture path.
+    if (state.anim.template === 'classic') await abortable(api.prepareVideo(fps, frames), signal);
     const { Output, Mp4OutputFormat, StreamTarget, CanvasSource } = await import('mediabunny');
     file = await createExportFile(); signal.throwIfAborted();
     const target = new StreamTarget(file.stream, { chunked: true, chunkSize: 1024 * 1024 });

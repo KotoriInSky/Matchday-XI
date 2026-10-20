@@ -7,6 +7,11 @@ Package source: https://www.npmjs.com/package/mediabunny/v/1.61.4
 
 Mediabunny is dynamically loaded for browser MP4 encoding and muxing.
 The Matchday XI source remains MIT licensed; Mediabunny retains MPL-2.0.
+harfbuzzjs 1.6.3 (HarfBuzz subsetter) and wawoff2 2.0.1 (Google WOFF2, Brotli)
+License: MIT / HarfBuzz "Old MIT"; texts: FONT-SUBSET-LICENSES.txt
+Unmodified packages: https://www.npmjs.com/package/harfbuzzjs/v/1.6.3, https://www.npmjs.com/package/wawoff2/v/2.0.1
+Loaded only when a browser export embeds an uploaded font, to reduce it to the displayed characters.
+
 Built-in fonts / 内置字体
 Unmodified WOFF2 fonts are bundled under SIL Open Font License 1.1.
 Original copyright and licence: fonts/<family>/OFL.txt

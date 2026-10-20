@@ -122,6 +122,7 @@ FIFA 会籍搜索在本机完成，旗帜随网站提供，选中的图片随项
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) | 合并 Tailwind 类名 | MIT |
 | [fflate](https://github.com/101arrowz/fflate) | 打包卡片 ZIP | MIT |
 | [Mediabunny](https://github.com/Vanilagy/mediabunny) | 浏览器视频编码与 MP4 封装 | MPL-2.0 |
+| [harfbuzzjs](https://github.com/harfbuzz/harfbuzzjs) · [wawoff2](https://github.com/fontello/wawoff2) | 浏览器导出中上传字体的子集化 | MIT |
 | [Playwright](https://github.com/microsoft/playwright) | 浏览器测试与本地渲染 | Apache-2.0 |
 | [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) | Node.js、React 与 React DOM 的类型定义 | MIT |
 | [Chromium](https://www.chromium.org/) | 本地与 Actions 渲染 | BSD 类许可证及组件各自许可 |

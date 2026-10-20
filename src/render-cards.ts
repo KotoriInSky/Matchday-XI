@@ -42,7 +42,7 @@ export function mountCardRenderer() {
   window.cardRenderer = {
     async init(input, lang) {
       state = normalize(input); language = lang;
-      capture = createBrowserCapture(state);
+      capture = createBrowserCapture(state, { lightEncoding: true });
       const fonts = await Promise.all((['display', 'body', 'number'] as const).map(role => registerFont(role, state.customFonts[role])));
       if (fonts.some(ok => !ok)) throw new Error('Custom font could not be loaded');
     },

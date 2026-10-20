@@ -470,10 +470,11 @@ export class Stage {
   private curT() {
     return this.clock ? Number(this.clock.currentTime || 0) / 1000 : this.total;
   }
-  seek = (t: number) => {
+  /** External decoders can sample the animation clock without seeking native media. */
+  seek = (t: number, syncMedia = true) => {
     t = clamp(t, 0, this.total);
     this.anims.forEach((a) => { a.currentTime = t * 1000; });
-    this.syncVideo(true);
+    if (syncMedia) this.syncVideo(true);
     this.emit();
   };
   play = () => {

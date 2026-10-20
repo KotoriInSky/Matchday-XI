@@ -15,6 +15,8 @@ Licences below were checked against the installed package metadata on 2026-10-13
 | tailwind-merge | MIT | [dcastil/tailwind-merge](https://github.com/dcastil/tailwind-merge) |
 | fflate | MIT | [101arrowz/fflate](https://github.com/101arrowz/fflate) |
 | Mediabunny | MPL-2.0 | [Vanilagy/mediabunny](https://github.com/Vanilagy/mediabunny) |
+| harfbuzzjs (HarfBuzz subsetter) | MIT; HarfBuzz "Old MIT" | [harfbuzz/harfbuzzjs](https://github.com/harfbuzz/harfbuzzjs) |
+| wawoff2 (Google WOFF2, Brotli) | MIT | [fontello/wawoff2](https://github.com/fontello/wawoff2) |
 | Playwright | Apache-2.0 | [microsoft/playwright](https://github.com/microsoft/playwright) |
 | Vite | MIT | [vitejs/vite](https://github.com/vitejs/vite) |
 | Tailwind CSS | MIT | [tailwindlabs/tailwindcss](https://github.com/tailwindlabs/tailwindcss) |
@@ -25,6 +27,8 @@ Licences below were checked against the installed package metadata on 2026-10-13
 The browser build dynamically includes unmodified Mediabunny. Its MPL-2.0 licence
 and source information are also distributed in `public/MEDIABUNNY-LICENSE.txt`
 and `public/DEPENDENCIES.txt`.
+
+Browser video export lazily loads unmodified harfbuzzjs and wawoff2 when a project embeds an uploaded font, and subsets that font to the characters shown. The subset exists only inside the frame being rendered; it is not saved or distributed as a font file. Their licence texts, including HarfBuzz and Brotli, are in `public/FONT-SUBSET-LICENSES.txt`.
 
 Built-in fonts are unmodified WOFF2 assets sourced from Google Fonts and served from this website. Each family uses SIL Open Font License 1.1; its original copyright and licence are distributed beside its CSS in `public/fonts/<family>/OFL.txt`. Font software remains under that licence, separately from this project's MIT licence. See [font sources](docs/font-sources.md) and the [asset manifest](public/fonts/manifest.json) for provenance and hashes. The editor and local renderer do not request Google Fonts at runtime.
 

@@ -124,6 +124,7 @@ Thanks to the following open-source projects:
 | [tailwind-merge](https://github.com/dcastil/tailwind-merge) | Tailwind class merging | MIT |
 | [fflate](https://github.com/101arrowz/fflate) | Card ZIP archives | MIT |
 | [Mediabunny](https://github.com/Vanilagy/mediabunny) | Browser video encoding and MP4 muxing | MPL-2.0 |
+| [harfbuzzjs](https://github.com/harfbuzz/harfbuzzjs) · [wawoff2](https://github.com/fontello/wawoff2) | Font subsetting for uploaded fonts in browser export | MIT |
 | [Playwright](https://github.com/microsoft/playwright) | Browser tests and local rendering | Apache-2.0 |
 | [DefinitelyTyped](https://github.com/DefinitelyTyped/DefinitelyTyped) | Node.js, React and React DOM types | MIT |
 | [Chromium](https://www.chromium.org/) | Local and Actions rendering | BSD-style and component licences |
