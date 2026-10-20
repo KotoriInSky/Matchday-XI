@@ -155,6 +155,7 @@ export function mountExportRenderer() {
       return total;
     },
     async prepareVideo(fps, frames) {
+      if (decoded) return true; // Already prepared for this timeline.
       const video = videoElement;
       if (!video || !('VideoDecoder' in window) || !(video.duration > 0 && Number.isFinite(video.duration))) return false;
       const duration = video.duration;

@@ -109,6 +109,17 @@ npm run bench:browser-export
 - **上传字体子集化**：项目包含上传字体时，用 [harfbuzzjs](https://github.com/harfbuzz/harfbuzzjs) 1.6.3 的 HarfBuzz 子集器（MIT／HarfBuzz Old MIT）把字体缩到舞台显示的字符，保留全部 OpenType 特性；WOFF2 先经 [wawoff2](https://github.com/fontello/wawoff2) 2.0.1（Google WOFF2、Brotli，MIT）解包。首帧以舞台全文、大小写变体、ASCII 与常用标点为覆盖集，之后出现新字符时扩大并重新子集化；任何失败嵌入原字体。内置字体本身是 unicode-range 拆分的小 WOFF2，不做子集化。两者只在需要时懒加载（WASM 约 270 KB gzip，解码器约 131 KB gzip）。
 - **HTML-in-Canvas 快速路径（实验）**：浏览器提供 [WICG HTML-in-Canvas](https://github.com/WICG/html-in-canvas) 的 `drawElementImage()`／`requestPaint()` 时，导出舞台挂到 `drawable` Canvas 下，由浏览器原生绘制，跳过序列化与 SVG 解码。初始化时在时间轴 15%／35%／55%／75%／95% 五点与 SVG 捕获对照，平均差 < 2、16×16 块最差均值 < 48、差值 > 64 的像素 < 1% 才启用，否则重建舞台回到 SVG；任一帧 2 秒内未收到绘制（例如标签页转入后台）即永久回到 SVG。快照不执行 `backface-visibility` 剔除，绘制前把背向的面临时设为透明，绘制后恢复。背景视频项目不启用（解码帧只注入 SVG 副本）。Chrome 155 需 `chrome://flags/#canvas-draw-element` 或 `--enable-blink-features=CanvasDrawElement`；默认用户走 SVG 路径。
 
+### 背景视频：两套模板都改用 Mediabunny 解码
+
+解码帧改为异步编码并预取后，重新交替对照（两秒 720p／30 fps BT.709 测试视频、固定夹具，每条路径 3 次，顺序为原生／库、库／原生、原生／库，结果 `video-both.json`）：
+
+| 模板 | 原生中位数 | Mediabunny 中位数 |
+| --- | --- | --- |
+| classic | 37.3 秒（36.2～38.7） | 28.8 秒（27.4～39.8） |
+| season2627 | 30.5 秒（29.8～30.6） | 27.8 秒（26.0～28.0） |
+
+season2627 三次解码路径均快于三次原生路径，因此两套模板都默认调用 `prepareVideo()`；它在已准备好时直接返回，避免重复调用拆掉解码器。上一轮 season2627 未显示收益的结论由此更新。
+
 ### 已否决
 
 - **Blob URL 加载 SVG**：含 foreignObject 的 SVG 经 Blob URL 加载会污染 Canvas，且不可撤销，“先试后回退”也不可行。

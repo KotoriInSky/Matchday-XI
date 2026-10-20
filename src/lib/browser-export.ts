@@ -109,9 +109,9 @@ export async function browserVideo(options: { state: LineupState; lang: string; 
     const duration = await abortable(api.init(state, options.lang, video || null), signal);
     if (!(duration > 0 && duration < 600)) throw new Error('duration');
     const frames = Math.ceil(duration * fps);
-    // Enable the decoder adapter where complete-export measurements showed a
-    // benefit. season2627 currently keeps its native media capture path.
-    if (state.anim.template === 'classic') await abortable(api.prepareVideo(fps, frames), signal);
+    // Decoded frames are encoded off the main thread and prefetched, so both
+    // templates use the decoder; unsupported media keeps native capture.
+    await abortable(api.prepareVideo(fps, frames), signal);
     const { Output, Mp4OutputFormat, StreamTarget, CanvasSource } = await import('mediabunny');
     file = await createExportFile(); signal.throwIfAborted();
     const target = new StreamTarget(file.stream, { chunked: true, chunkSize: 1024 * 1024 });
