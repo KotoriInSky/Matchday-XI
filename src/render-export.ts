@@ -1,7 +1,7 @@
 import { Stage } from './engine/stage';
 import { normalize } from './engine/state';
 import { registerFont } from './engine/fonts';
-import { createBrowserCapture } from './lib/browser-capture';
+import { COMPACT_QUALITY, createBrowserCapture } from './lib/browser-capture';
 import { elementCaptureSupported, mountElementCapture } from './lib/element-capture';
 import type { Input, WrappedCanvas } from 'mediabunny';
 
@@ -62,12 +62,16 @@ export function mountExportRenderer() {
   let preparation: AbortController | undefined;
   type Decoded = { frames: AsyncIterator<WrappedCanvas | null>; first: boolean; timestamp: number; image: string; upcoming?: Promise<{ timestamp: number; image: string } | null> };
   let decoded: Decoded | undefined;
-  // PNG via toBlob encodes off the main thread; requesting the next source
+  // toBlob encodes off the main thread; requesting the next source
   // frame right away overlaps its decode and encode with this frame's capture.
-  const pngURL = async (canvas: HTMLCanvasElement | OffscreenCanvas) => {
+  // Browser export embeds opaque video frames as JPEG (WebP with alpha), which
+  // bounds renderer memory as in browser-capture; the local renderer keeps PNG.
+  const compact = window.top !== window;
+  let frameType = 'image/png', frameQuality: number | undefined;
+  const frameURL = async (canvas: HTMLCanvasElement | OffscreenCanvas) => {
     const blob = canvas instanceof HTMLCanvasElement
-      ? await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'))
-      : await canvas.convertToBlob({ type: 'image/png' });
+      ? await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, frameType, frameQuality))
+      : await canvas.convertToBlob({ type: frameType, quality: frameQuality });
     if (!blob) throw new Error('videoFrame');
     return new Promise<string>((resolve, reject) => {
       const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob);
@@ -79,8 +83,8 @@ export function mountExportRenderer() {
       const frame = (await state.frames.next()).value;
       if (!frame) return null;
       // The library identifies repeated source frames when output FPS is
-      // higher. Retain the current image instead of encoding the same PNG.
-      return frame.timestamp === timestamp ? { timestamp, image } : { timestamp: frame.timestamp, image: await pngURL(frame.canvas) };
+      // higher. Retain the current image instead of encoding it again.
+      return frame.timestamp === timestamp ? { timestamp, image } : { timestamp: frame.timestamp, image: await frameURL(frame.canvas) };
     })();
     upcoming.catch(() => {}); // Awaited by the next frame(); never unhandled.
     state.upcoming = upcoming;
@@ -102,7 +106,9 @@ export function mountExportRenderer() {
       const state = normalize(input);
       capture = createBrowserCapture(state, { lightEncoding: true }, () => decoded?.image);
       // Video frames embed photos near their on-screen size; see browser-capture.
-      frameCapture = createBrowserCapture(state, { pruneInvisible: true, imageHeadroom: 3, lightEncoding: true, reuseUnchanged: true, subsetFonts: true }, () => decoded?.image);
+      // Browser export (this page inside the editor's iframe) also embeds them as
+      // WebP; the local renderer keeps lossless pixels.
+      frameCapture = createBrowserCapture(state, { pruneInvisible: true, imageHeadroom: 3, compactImages: compact, lightEncoding: true, reuseUnchanged: true, subsetFonts: true }, () => decoded?.image);
       await Promise.all([registerFont('display', state.customFonts.display), registerFont('body', state.customFonts.body), registerFont('number', state.customFonts.number)]);
       stage = new Stage(root, { getState: () => state, getLang: () => lang, onEdit() {}, onPlayerClick() {}, onNotice() {} });
       if (video) { stage.setVideo(video); stage.refresh(); }
@@ -180,10 +186,11 @@ export function mountExportRenderer() {
         const iterator = sink.canvasesAtTimestamps(timestamps());
         const first = await iterator.next(); controller.signal.throwIfAborted();
         if (!first.value) throw new Error('videoFrame');
-        const image = (first.value.canvas as HTMLCanvasElement).toDataURL();
+        if (compact) [frameType, frameQuality] = await track.canBeTransparent() ? ['image/webp', COMPACT_QUALITY] : ['image/jpeg', .92];
+        const image = (first.value.canvas as HTMLCanvasElement).toDataURL(frameType, frameQuality);
         decoded = { frames: iterator, first: true, timestamp: first.value.timestamp, image };
-        // Feed the PNG directly to capture, keeping the video's original CSS
-        // box. A live <img> would make the browser decode every PNG once more.
+        // Feed the encoded frame directly to capture, keeping the video's original CSS
+        // box. A live <img> would make the browser decode every frame once more.
         video.removeAttribute('src'); video.load();
         return true;
       } catch (error) {

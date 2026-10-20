@@ -2,6 +2,8 @@ import type { LineupState } from '@/engine/types';
 import { CUSTOM_FAMILY } from '@/engine/constants';
 import { subsetFont } from './font-subset';
 
+// WebP quality for compact video-frame images.
+export const COMPACT_QUALITY = .9;
 const dataURL = (blob: Blob) => new Promise<string>((resolve, reject) => {
   const reader = new FileReader(); reader.onload = () => resolve(String(reader.result)); reader.onerror = reject; reader.readAsDataURL(blob);
 });
@@ -37,8 +39,12 @@ export function backFacing(node: Element, css: CSSStyleDeclaration) {
  * displays. Built-in faces are already small unicode-range WOFF2 subsets.
  * `reuseUnchanged` skips decoding when a frame serializes exactly like the
  * previous one into the same target; callers must not draw on that target.
+ * `compactImages` (with `imageHeadroom`) embeds raster images as lossy WebP.
+ * Chromium keeps memory for every foreignObject SVG image it decodes, about
+ * 0.2 MB plus most of the data URL, for the life of the renderer process, so
+ * smaller frames both decode faster and retain less.
  */
-export function createBrowserCapture(state: LineupState, { allProperties = false, pruneInvisible = false, imageHeadroom = 0, lightEncoding = false, subsetFonts: subsetRequested = false, reuseUnchanged = false } = {}, videoFrame?: () => string | undefined) {
+export function createBrowserCapture(state: LineupState, { allProperties = false, pruneInvisible = false, imageHeadroom = 0, lightEncoding = false, subsetFonts: subsetRequested = false, reuseUnchanged = false, compactImages = false } = {}, videoFrame?: () => string | undefined) {
   const subsetFonts = subsetRequested && Object.values(state.customFonts).some(Boolean);
   const assets = new Map<string, Promise<string>>();
   const embed = (url: string) => {
@@ -61,8 +67,10 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     // and fill never sample more than max(box / natural) source pixels per pixel.
     const box = node.getBoundingClientRect();
     const need = Math.max(box.width / w, box.height / h, 1 / 64) * imageHeadroom;
-    const scale = 2 ** (Math.ceil(Math.log2(need) * 4) / 4);
-    if (scale >= .75) return url; // Little to gain; keep the original pixels.
+    // Lossless PNG keeps the resample only when it shrinks the image enough.
+    // Lossy WebP is far smaller even at full size, so it also replaces originals.
+    const scale = Math.min(1, 2 ** (Math.ceil(Math.log2(need) * 4) / 4));
+    if (scale >= .75 && !compactImages) return url; // Little to gain; keep the original pixels.
     let scales = resampled.get(src);
     if (!scales) resampled.set(src, scales = new Map());
     if (!scales.has(scale)) scales.set(scale, resampling = resampling.then(async (): Promise<string> => {
@@ -74,9 +82,12 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
       try {
         const context = canvas.getContext('2d')!; context.imageSmoothingQuality = 'high';
         context.drawImage(node, 0, 0, width, height);
-        const blob = await new Promise<Blob | null>(resolve => canvas.toBlob(resolve, 'image/png'));
+        // Browsers without a WebP encoder (Safari) return PNG instead.
+        const blob = await new Promise<Blob | null>(resolve => compactImages ? canvas.toBlob(resolve, 'image/webp', COMPACT_QUALITY) : canvas.toBlob(resolve, 'image/png'));
         if (!blob) throw new Error('png');
-        return await dataURL(blob);
+        if (blob.type !== 'image/webp' && scale >= .75) return url;
+        const result = await dataURL(blob);
+        return result.length < url.length ? result : url;
       } finally { canvas.width = canvas.height = 1; }
     }).catch(() => url)); // A failure keeps the original and the queue running.
     return scales.get(scale)!;
