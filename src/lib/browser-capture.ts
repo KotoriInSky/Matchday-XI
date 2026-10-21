@@ -39,12 +39,13 @@ export function backFacing(node: Element, css: CSSStyleDeclaration) {
  * displays. Built-in faces are already small unicode-range WOFF2 subsets.
  * `reuseUnchanged` skips decoding when a frame serializes exactly like the
  * previous one into the same target; callers must not draw on that target.
+ * `compactStyles` declares values shared by most elements once per frame.
  * `compactImages` (with `imageHeadroom`) embeds raster images as lossy WebP.
  * Chromium keeps memory for every foreignObject SVG image it decodes, about
  * 0.2 MB plus most of the data URL, for the life of the renderer process, so
  * smaller frames both decode faster and retain less.
  */
-export function createBrowserCapture(state: LineupState, { allProperties = false, pruneInvisible = false, imageHeadroom = 0, lightEncoding = false, subsetFonts: subsetRequested = false, reuseUnchanged = false, compactImages = false } = {}, videoFrame?: () => string | undefined) {
+export function createBrowserCapture(state: LineupState, { allProperties = false, pruneInvisible = false, imageHeadroom = 0, lightEncoding = false, subsetFonts: subsetRequested = false, reuseUnchanged = false, compactImages = false, compactStyles = false } = {}, videoFrame?: () => string | undefined) {
   const subsetFonts = subsetRequested && Object.values(state.customFonts).some(Boolean);
   const assets = new Map<string, Promise<string>>();
   const embed = (url: string) => {
@@ -232,11 +233,14 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     filtered = { size: used.size, available: available.length, list };
     return list;
   };
-  const styleText = (source: CSSStyleDeclaration) => {
+  const styleValues = (source: CSSStyleDeclaration) => properties.map(key => source.getPropertyValue(key));
+  // Declarations whose value differs from `base` (all of them without one).
+  const declarations = (values: string[], base?: (string | undefined)[]) => {
     let css = '';
-    for (const key of properties) css += `${key}:${source.getPropertyValue(key)};`;
-    return css + 'animation:none!important;transition:none!important;';
+    for (let i = 0; i < values.length; i++) if (base?.[i] !== values[i]) css += `${properties[i]}:${values[i]};`;
+    return css;
   };
+  const FROZEN = 'animation:none!important;transition:none!important;';
   const invisibleBox = (node: Element, css: CSSStyleDeclaration) => {
     // Export artwork has fixed-size, absolutely positioned layers. Keep their
     // computed layout boxes, but avoid serializing contents that cannot paint.
@@ -371,16 +375,79 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     properties = captureProperties(root);
     let sequence = 0;
     let shown = ''; // Text and generated content in this frame, for font subsets.
-    const pseudoRules: string[] = [];
+    const styleRules: { id: string; pseudo: string; values: string[] }[] = [];
     const sharedStyles = new Map<string, string>();
     const applyStyle = (copy: Element, css: CSSStyleDeclaration, pseudo = '') => {
-      const text = styleText(css), key = pseudo + text;
+      const values = styleValues(css), key = pseudo + values.join('\0');
       let id = sharedStyles.get(key);
       if (!id) {
         id = `capture-${sequence++}`; sharedStyles.set(key, id);
-        pseudoRules.push(`.${id}${pseudo}{${text}}`);
+        styleRules.push({ id, pseudo, values });
       }
       copy.classList.add(id);
+      if (compactStyles && !pseudo) copy.classList.add('capture-base');
+    };
+    // compactStyles: values shared by most element rules are declared once on
+    // .capture-base, which precedes the rules and has the same specificity, so
+    // every element still receives exactly the same declarations.
+    // compactStyles: Google Fonts declares one variable file once per weight.
+    // When every weight this frame requests from a family is one of those
+    // declared weights, a single face spanning them resolves each request to
+    // the same weight axis value, so the file is embedded once.
+    const mergeFaces = (css: string) => {
+      if (!compactStyles || !properties.includes('font-family') || !properties.includes('font-weight')) return css;
+      const familyAt = properties.indexOf('font-family'), weightAt = properties.indexOf('font-weight');
+      const name = (family: string) => family.replace(/["']/g, '').trim().toLowerCase();
+      const requested = new Map<string, Set<string>>();
+      for (const rule of styleRules) for (const family of rule.values[familyAt].split(',')) {
+        const key = name(family);
+        if (!requested.has(key)) requested.set(key, new Set());
+        requested.get(key)!.add(rule.values[weightAt]);
+      }
+      const groups = new Map<string, { weights: string[]; rule: string }[]>();
+      const faces = css.match(/@font-face\s*\{[^}]*\}/g) || [];
+      for (const rule of faces) {
+        const descriptor = (key: string) => new RegExp(`(?:^|[{;\\s])${key}:\\s*([^;}]+)`).exec(rule)?.[1].trim() || '';
+        const weight = descriptor('font-weight');
+        // Only single numeric weights; ranges and keywords keep their rules.
+        if (!/^\d+$/.test(weight)) continue;
+        // Rules identical except for the weight: same family, file (embedded
+        // data URLs contain ';', so compare the whole text) and descriptors.
+        const key = name(descriptor('font-family')) + '\0' + rule.replace(/font-weight:\s*\d+/, '');
+        if (!groups.has(key)) groups.set(key, []);
+        groups.get(key)!.push({ weights: [weight], rule });
+      }
+      for (const [key, list] of groups) {
+        if (list.length < 2) continue;
+        const weights = list.map(entry => entry.weights[0]);
+        const asked = requested.get(key.split('\0')[0]);
+        if (!asked || [...asked].some(weight => !weights.includes(weight))) continue;
+        const numbers = weights.map(Number), merged = list[0].rule.replace(/font-weight:\s*\d+/, `font-weight: ${Math.min(...numbers)} ${Math.max(...numbers)}`);
+        css = css.replace(list[0].rule, merged);
+        for (const entry of list.slice(1)) css = css.replace(entry.rule, '');
+      }
+      return css;
+    };
+    const ruleText = () => {
+      let base: (string | undefined)[] | undefined, text = '';
+      if (compactStyles) {
+        base = properties.map((_, i) => {
+          const counts = new Map<string, number>();
+          let best: string | undefined, most = 1;
+          for (const rule of styleRules) if (!rule.pseudo) {
+            const n = (counts.get(rule.values[i]) || 0) + 1; counts.set(rule.values[i], n);
+            if (n > most) { most = n; best = rule.values[i]; }
+          }
+          return best;
+        });
+        text += `.capture-base{${properties.map((key, i) => base![i] === undefined ? '' : `${key}:${base![i]};`).join('')}${FROZEN}}\n`;
+      }
+      for (const rule of styleRules) {
+        text += rule.pseudo || !base
+          ? `.${rule.id}${rule.pseudo}{${declarations(rule.values)}${FROZEN}}\n`
+          : `.${rule.id}{${declarations(rule.values, base)}}\n`;
+      }
+      return text;
     };
     const clone = async (node: Node): Promise<Node> => {
       if (!(node instanceof Element)) {
@@ -439,7 +506,7 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     if (!fonts || signature !== fontSignature || extend) { fonts = fontCSS(); fontSignature = signature; }
     copy.style.cssText += `;position:relative;left:0;top:0;margin:0;width:${width}px;height:${height}px;overflow:hidden;`;
     copy.setAttribute('xmlns', 'http://www.w3.org/1999/xhtml');
-    const style = document.createElement('style'); style.textContent = await fonts + '\n' + pseudoRules.join('\n'); copy.prepend(style);
+    const style = document.createElement('style'); style.textContent = mergeFaces(await fonts) + '\n' + ruleText(); copy.prepend(style);
     const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}"><foreignObject width="100%" height="100%">${serializer.serializeToString(copy)}</foreignObject></svg>`;
     // Object URLs would avoid the data URL, but Chromium taints the canvas for
     // foreignObject SVG loaded that way. Only '%', '#' and whitespace controls

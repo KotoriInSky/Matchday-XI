@@ -108,7 +108,7 @@ export function mountExportRenderer() {
       // Video frames embed photos near their on-screen size; see browser-capture.
       // Browser export (this page inside the editor's iframe) also embeds them as
       // WebP; the local renderer keeps lossless pixels.
-      frameCapture = createBrowserCapture(state, { pruneInvisible: true, imageHeadroom: 3, compactImages: compact, lightEncoding: true, reuseUnchanged: true, subsetFonts: true }, () => decoded?.image);
+      frameCapture = createBrowserCapture(state, { pruneInvisible: true, imageHeadroom: 3, compactImages: compact, compactStyles: true, lightEncoding: true, reuseUnchanged: true, subsetFonts: true }, () => decoded?.image);
       await Promise.all([registerFont('display', state.customFonts.display), registerFont('body', state.customFonts.body), registerFont('number', state.customFonts.number)]);
       stage = new Stage(root, { getState: () => state, getLang: () => lang, onEdit() {}, onPlayerClick() {}, onNotice() {} });
       if (video) { stage.setVideo(video); stage.refresh(); }

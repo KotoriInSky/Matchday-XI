@@ -15,8 +15,10 @@ const browser = await chromium.launch({ channel: 'chrome' });
 try {
   for (const template of ['classic', 'season2627']) {
     const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
+    // Two captures per frame accumulate renderer memory; fail instead of waiting on a dead page.
+    const crashed = new Promise((_, reject) => page.once('crash', () => reject(new Error(`${template}: the page crashed`))));
     await page.goto(base + '?render-export'); await page.waitForFunction(() => window.exportRenderer);
-    const result = await page.evaluate(async ({ state, template, base, fps }) => {
+    const result = await Promise.race([crashed, page.evaluate(async ({ state, template, base, fps }) => {
       const api = window.exportRenderer;
       const input = { ...state, anim: { ...state.anim, template, intro: true, manager: true, style: 'lines' } };
       const duration = await api.init(input, 'zh-Hans', null);
@@ -36,6 +38,10 @@ try {
       try {
         for (let i = 0; i < frames; i++) {
           await api.frame(i / fps, false);
+          // The first decode of a new frame can rasterize slightly differently
+          // (cold image caches, mean < 1/255). A warm-up reference capture puts
+          // both sides on the same path, so differences come from content.
+          await reference(document.getElementById('root'), 1280, 720, expected);
           counting = true; await api.captureInto(product); counting = false;
           await reference(document.getElementById('root'), 1280, 720, expected);
           const a = pixels(product), b = pixels(expected);
@@ -46,7 +52,7 @@ try {
       } finally { XMLSerializer.prototype.serializeToString = serialize; HTMLImageElement.prototype.decode = decode; }
       // decoded < serialized: frames that serialized identically and reused pixels.
       return { frames, serialized, decoded, mismatches: mismatches.slice(0, 10), mismatchCount: mismatches.length };
-    }, { state, template, base, fps });
+    }, { state, template, base, fps })]);
     console.log(JSON.stringify({ template, ...result, skipped: result.frames - result.serialized }));
     assert.equal(result.mismatchCount, 0, `${template}: frames ${result.mismatches.join(', ')} differ from a capture without reuse`);
     // classic keeps ambient loops (beams, holo shimmer) running, so no frame repeats.
