@@ -49,7 +49,8 @@
     "test:export-resources": "node tests/export-resources.mjs",
     "test:export-storage": "node tests/export-storage.mjs",
     "test:header-theme": "node tests/header-theme.mjs",
-    "test:export-skip": "node tests/export-skip.mjs"
+    "test:export-skip": "node tests/export-skip.mjs",
+    "test:export-tab": "node tests/export-tab.mjs"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.1",

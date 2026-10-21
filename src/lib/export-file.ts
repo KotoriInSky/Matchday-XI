@@ -40,7 +40,7 @@ export async function createExportFile() {
     const entries = directory as FileSystemDirectoryHandle & AsyncIterable<[string, FileSystemHandle]>;
     for await (const [entry, info] of entries) {
       // Chromium may expose a live writer's .crswap file in this directory.
-      if (info.kind !== 'file' || !/^export-[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/i.test(entry)) continue;
+      if (info.kind !== 'file' || !exportName.test(entry)) continue;
       await navigator.locks.request(lockName(entry), { ifAvailable: true }, async lock => {
         if (lock) await directory!.removeEntry(entry).catch(() => {});
       });
@@ -109,6 +109,48 @@ export async function createExportFile() {
       transferred = true; parts = []; pending.delete(cleanup); downloads.set(url, cleanup);
       return url;
     },
+    /**
+     * Ends the output and keeps it for another same-origin page: the file name
+     * while this page holds the file's lock, or the bytes without OPFS. Call
+     * `letGo()` once the adopting page has requested the lock.
+     */
+    async handOff(): Promise<{ name: string } | { blob: Blob }> {
+      if (transferred) throw new Error('Export output was already finalized');
+      await close();
+      transferred = true; pending.delete(cleanup);
+      if (handle) return { name };
+      const blob = flatten(); parts = [];
+      return { blob };
+    },
+    letGo() { if (transferred) release?.(); },
     async dispose() { if (!transferred) await cleanup(); },
   };
+}
+
+const exportName = /^export-[\da-f]{8}-(?:[\da-f]{4}-){3}[\da-f]{12}$/i;
+
+/**
+ * Takes over a file another page handed off. `requested` runs once this page
+ * is queued for the file's lock, so the other page can let go without the file
+ * ever being unleased (and reclaimed as an orphan).
+ */
+export async function adoptExportFile(name: string, type: string, requested: () => void) {
+  if (!exportName.test(name)) throw new Error('Invalid export file');
+  const leased = lease(name);
+  requested();
+  const release = await leased;
+  try {
+    const directory = await (await navigator.storage.getDirectory()).getDirectoryHandle('matchday-xi-exports');
+    const file = await (await directory.getFileHandle(name)).getFile();
+    const url = URL.createObjectURL(file.slice(0, file.size, type));
+    downloads.set(url, async () => {
+      try { await directory.removeEntry(name).catch(() => {}); } finally { release(); }
+    });
+    return url;
+  } catch (error) { release(); throw error; }
+}
+
+/** A download URL for bytes another page handed off without OPFS. */
+export function adoptExportBlob(blob: Blob, type: string) {
+  return URL.createObjectURL(blob.slice(0, blob.size, type));
 }

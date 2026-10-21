@@ -91,7 +91,26 @@ export async function browserCards(options: { state: LineupState; lang: string; 
   }
 }
 
-export async function browserVideo(options: { state: LineupState; lang: string; height: number; fps: number; signal: AbortSignal; onProgress(value: number, status: string): void }) {
+// Timers are throttled in background tabs (to once a minute after five minutes);
+// a message-channel task is not, so an export tab keeps rendering when hidden.
+const yieldTask = () => new Promise<void>(resolve => {
+  const { port1, port2 } = new MessageChannel();
+  port1.onmessage = () => { port1.close(); resolve(); };
+  port2.postMessage(null);
+});
+
+type VideoOptions = { state: LineupState; lang: string; height: number; fps: number; signal: AbortSignal; onProgress(value: number, status: string): void;
+  /** Background video URL; defaults to the editor stage's. */
+  video?: string | null };
+type HandOff = {
+  /** Return the finished file for another page instead of a download URL. */
+  handOff: true;
+  /** Receives the function that releases the file's lock to the adopting page. */
+  onHandOff(letGo: () => void): void;
+};
+export function browserVideo(options: VideoOptions): Promise<string>;
+export function browserVideo(options: VideoOptions & HandOff): Promise<{ name: string } | { blob: Blob }>;
+export async function browserVideo(options: VideoOptions & Partial<HandOff>): Promise<string | { name: string } | { blob: Blob }> {
   if (occupied) throw new Error('busy'); occupied = true;
   let view: Awaited<ReturnType<typeof renderer>> | undefined;
   let output: import('mediabunny').Output | undefined;
@@ -102,7 +121,7 @@ export async function browserVideo(options: { state: LineupState; lang: string; 
     signal.throwIfAborted();
     options.onProgress(0, 'preparing');
     if (!await browserVideoSupported(height, fps)) throw new Error('unsupported');
-    const video = state.bg.mode === 'video' ? getStage()?.video : null;
+    const video = state.bg.mode === 'video' ? options.video !== undefined ? options.video : getStage()?.video : null;
     if (state.bg.mode === 'video' && !video) throw new Error('videoMissing');
     view = await renderer('export', signal, width, height);
     const api = view.win.exportRenderer;
@@ -128,12 +147,16 @@ export async function browserVideo(options: { state: LineupState; lang: string; 
       await abortable(source.add(i / fps, 1 / fps, { keyFrame: i % (fps * 2) === 0 }), signal);
       const progress = Math.floor((i + 1) / frames * 99);
       if (progress !== reported) { reported = progress; options.onProgress(progress, 'rendering'); }
-      if (performance.now() - yieldedAt >= 50) {
-        await new Promise(resolve => setTimeout(resolve, 0)); yieldedAt = performance.now();
-      }
+      if (performance.now() - yieldedAt >= 50) { await yieldTask(); yieldedAt = performance.now(); }
     }
     signal.throwIfAborted(); options.onProgress(99, 'encoding');
     await abortable(output.finalize(), signal); signal.throwIfAborted();
+    if (options.handOff) {
+      const handed = await file.handOff();
+      options.onHandOff?.(() => file?.letGo());
+      options.onProgress(100, 'complete');
+      return handed;
+    }
     const url = await file.finish('video/mp4');
     if (signal.aborted) { await releaseDownload(url); signal.throwIfAborted(); }
     options.onProgress(100, 'complete');

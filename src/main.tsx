@@ -5,7 +5,10 @@ import App from './App';
 import { store } from './lib/store';
 import './index.css';
 
-if (new URLSearchParams(location.search).has('render-cards')) {
+const params = new URLSearchParams(location.search);
+if (params.get('export-video')) {
+  void import('./lib/export-tab').then(({ mountExportTab }) => mountExportTab(params.get('export-video')!));
+} else if (new URLSearchParams(location.search).has('render-cards')) {
   void import('./render-cards').then(({ mountCardRenderer }) => mountCardRenderer());
 } else if (new URLSearchParams(location.search).has('render-export')) {
   void import('./render-export').then(({ mountExportRenderer }) => mountExportRenderer());

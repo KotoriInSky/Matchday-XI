@@ -3,6 +3,7 @@ import { Download, Video } from 'lucide-react';
 import { useI18n } from '@/i18n';
 import { exportEndpoint, exportVideo } from '@/lib/video-export';
 import { browserVideo, browserVideoSupported, releaseDownload } from '@/lib/browser-export';
+import { browserVideoInTab, exportTabSupported, openExportTab } from '@/lib/export-tab';
 import { store } from '@/lib/store';
 import { Button } from '../ui/button';
 import { Field, Select } from '../ui/form';
@@ -37,16 +38,24 @@ export function VideoExport() {
   }, [height, fps, method]);
   useEffect(() => store.onChange(() => setRevision((value) => value + 1)), []);
   const start = async () => {
+    // Browser export runs in its own tab (and process), opened within this click.
+    const tab = method === 'browser' && exportTabSupported() ? openExportTab() : null;
     const ctrl = new AbortController(); controller.current = ctrl;
     setBusy(true); setProgress(0); setStatus('preparing'); setError('');
     timing.start();
     const exported = { revision, height, fps, time: Date.now() };
     try {
-      const url = await (method === 'browser' ? browserVideo : exportVideo)({ state: structuredClone(store.state), lang, height: Number(height), fps: Number(fps), signal: ctrl.signal, onProgress: (value, phase) => { if (mounted.current) { setProgress(value); setStatus(phase); timing.update(value, phase); } } });
+      const options = { state: structuredClone(store.state), lang, height: Number(height), fps: Number(fps), signal: ctrl.signal, onProgress: (value: number, phase: string) => { if (mounted.current) { setProgress(value); setStatus(phase); timing.update(value, phase); } } };
+      // A tab that never starts (e.g. a blocked pop-up) falls back to this page.
+      const url = tab ? await browserVideoInTab({ tab, ...options }).catch(error => {
+        if (error instanceof Error && error.message === 'tab' && !ctrl.signal.aborted) return browserVideo(options);
+        throw error;
+      }) : await (method === 'browser' ? browserVideo : exportVideo)(options);
       if (mounted.current) { releaseDownload(download.current); download.current = url; setResult(url); setReceipt({ ...exported, time: Date.now() }); }
       else releaseDownload(url);
     } catch (e) {
-      if (mounted.current && !ctrl.signal.aborted) setError(e instanceof Error && e.message === 'busy' ? text('已有导出任务，请稍后重试。', 'An export is already running. Try again shortly.') : e instanceof Error && e.message === 'videoMissing' ? text('请重新选择背景视频后导出。', 'Reload the background video before exporting.') : method === 'browser' ? text('导出失败。请降低分辨率或帧率，或使用本地 / Actions 导出。', 'Export failed. Try a lower resolution or frame rate, or use local / Actions export.') : text('导出失败。请检查本地服务与 Chrome，然后重试。', 'Export failed. Check the local service and Chrome, then retry.'));
+      // Cancelling in the export tab ends the export like the button here.
+      if (mounted.current && !ctrl.signal.aborted && !(e instanceof DOMException && e.name === 'AbortError')) setError(e instanceof Error && e.message === 'busy' ? text('已有导出任务，请稍后重试。', 'An export is already running. Try again shortly.') : e instanceof Error && e.message === 'videoMissing' ? text('请重新选择背景视频后导出。', 'Reload the background video before exporting.') : method === 'browser' ? text('导出失败。请降低分辨率或帧率，或使用本地 / Actions 导出。', 'Export failed. Try a lower resolution or frame rate, or use local / Actions export.') : text('导出失败。请检查本地服务与 Chrome，然后重试。', 'Export failed. Check the local service and Chrome, then retry.'));
     } finally { if (mounted.current) setBusy(false); }
   };
   return <Section title={text('视频导出', 'Video export')}>
@@ -57,7 +66,7 @@ export function VideoExport() {
     </Grid>
     <p className="text-xs text-muted-foreground">MP4 · H.264 · {text('无音轨', 'No audio track')}</p>
     {available === false && <p className="text-sm">{method === 'browser' ? text('当前浏览器不支持此规格的 H.264 编码。请降低规格、使用新版 Chrome / Edge，或选择本地 / Actions 导出。', 'This browser cannot encode H.264 at these settings. Lower the settings, use current Chrome / Edge, or choose local / Actions export.') : text('请运行本地项目，再选择本地渲染服务。', 'Run and open the local project to use the local renderer.')}</p>}
-    {method === 'browser' && <p className="text-xs text-muted-foreground">{text('导出期间请保持此页面在前台；素材不上传。', 'Keep this page in the foreground during export. Assets stay on this device.')}</p>}
+    {method === 'browser' && <p className="text-xs text-muted-foreground">{exportTabSupported() ? text('导出在新标签页中进行，完成后自动关闭并释放内存；素材不上传。', 'Export runs in a new tab that closes itself when done, freeing its memory. Assets stay on this device.') : text('导出期间请保持此页面在前台；素材不上传。', 'Keep this page in the foreground during export. Assets stay on this device.')}</p>}
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     {busy ? <div className="flex flex-col gap-3" role="status"><span className="text-sm">{status === 'preparing' ? text('准备素材', 'Preparing assets') : status === 'encoding' || status === 'finishing' ? text('生成 MP4', 'Encoding MP4') : text('渲染画面', 'Rendering frames')} · {progress}%</span><progress className="w-full accent-primary" max={100} value={progress} /><ExportTiming timing={timing.timing} phase={status} /><Button variant="outline" onClick={() => controller.current?.abort()}>{text('取消导出', 'Cancel export')}</Button></div> : <Button disabled={!available} onClick={start}><Video />{result ? text('重新导出', 'Export again') : text('导出视频', 'Export video')}</Button>}
     {result && receipt && <div className="text-xs text-muted-foreground" data-export-receipt><p>{text('上次导出', 'Last export')} · {new Date(receipt.time).toLocaleString(lang)} · {Number(receipt.height) * 16 / 9} × {receipt.height} · {receipt.fps} fps</p>{receipt.revision !== revision && <p>{text('项目已修改，下载文件仍为上次导出的版本。', 'The project has changed. The download contains the previous export.')}</p>}</div>}
