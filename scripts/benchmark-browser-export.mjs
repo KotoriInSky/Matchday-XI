@@ -89,7 +89,9 @@ async function memorySampler(browser, page, intervalMs = 1000) {
       await new Promise(resolve => setTimeout(resolve, Math.max(0, intervalMs - (Date.now() - started))));
     }
   })();
-  return async () => {
+  return async ({ settleMs = 0 } = {}) => {
+    // One more sample after the export has settled (e.g. its tab has closed).
+    if (settleMs) { await new Promise(resolve => setTimeout(resolve, settleMs)); }
     stopped = true; await loop; shell?.stdin.end(); shell?.kill();
     await pageCdp.detach().catch(() => {}); await cdp.detach().catch(() => {});
     const peak = key => Math.max(0, ...samples.map(key));
@@ -100,6 +102,8 @@ async function memorySampler(browser, page, intervalMs = 1000) {
       peakTotalPrivateMiB: +(peak(s => s.total) / MiB).toFixed(1),
       peakPrivateMiBByType: Object.fromEntries(types.map(type => [type, +(peak(s => s.byType[type] || 0) / MiB).toFixed(1)])),
       startTotalPrivateMiB: +((samples[0]?.total || 0) / MiB).toFixed(1),
+      endTotalPrivateMiB: +((samples.at(-1)?.total || 0) / MiB).toFixed(1),
+      endRendererMiB: +((samples.at(-1)?.byType.renderer || 0) / MiB).toFixed(1),
       // [seconds, renderer, GPU, JS heap] in MiB, to tell growth from a plateau.
       series: samples.map(s => [Math.round((s.t - samples[0].t) / 1000), ...[s.byType.renderer || 0, s.byType.GPU || 0, s.heap].map(v => Math.round(v / MiB))]),
     };
@@ -109,6 +113,10 @@ try {
   // BENCH_CHROME_ARGS, e.g. '--enable-blink-features=CanvasDrawElement' for HTML-in-Canvas.
   browser = await chromium.launch({ channel: 'chrome', args: process.env.BENCH_CHROME_ARGS?.split(' ').filter(Boolean) });
   const context = await browser.newContext();
+  // The renderer iframe runs inside the export tab, not the editor, so hooks
+  // report through a binding that every page and frame can call.
+  const shared = { nativeVideo: false, videoDecode: false, profile: null };
+  await context.exposeBinding('__bench', (source, key, value) => { if (value !== undefined) shared[key] = value; return shared[key]; });
   // The retained full capture provides a reference within the exact same build.
   // Instrument only the benchmark browser; no test switches enter the product.
   {
@@ -124,7 +132,9 @@ try {
           if (profile) {
             // Per export: frame() and captureInto() time, SVG decode time inside
             // capture, and the loop's wall time; the remainder is source.add() and yields.
-            const p = window.parent.__benchProfile = { frameMs: 0, captureMs: 0, decodeMs: 0, perFrame: [], start: 0, end: 0 };
+            const p = { frameMs: 0, captureMs: 0, decodeMs: 0, perFrame: [], start: 0, end: 0 };
+            const dispose = api.dispose.bind(api);
+            api.dispose = () => { void window.__bench('profile', p); dispose(); };
             const decode = HTMLImageElement.prototype.decode;
             HTMLImageElement.prototype.decode = async function () {
               if (!this.src.startsWith('data:image/svg+xml')) return decode.call(this);
@@ -139,8 +149,8 @@ try {
           }
           const prepare = api.prepareVideo.bind(api);
           api.prepareVideo = async (...args) => {
-            const used = nativeVideo || window.parent.__benchmarkNativeVideo ? false : await prepare(...args);
-            window.parent.__benchmarkVideoDecode = used;
+            const used = nativeVideo || await window.__bench('nativeVideo') ? false : await prepare(...args);
+            await window.__bench('videoDecode', used);
             return used;
           };
           const forceVideo = background && (compareVideo || !nativeVideo);
@@ -221,16 +231,16 @@ try {
       result.fullExportRounds = []; result.decodedVideoRounds = []; result.videoComparisons = []; result.memoryRounds = [];
       const modes = compareVideo ? Array.from({ length: videoRuns }, (_, i) => i % 2 ? [false, true] : [true, false]).flat() : Array(videoRuns).fill(nativeVideo);
       for (const [run, forceNative] of modes.entries()) {
-        await editor.evaluate(value => { window.__benchmarkNativeVideo = value; window.__benchmarkVideoDecode = false; }, forceNative);
+        Object.assign(shared, { nativeVideo: forceNative, videoDecode: false, profile: null });
         const sampling = process.env.BENCH_MEMORY === '0' ? null : await memorySampler(browser, editor);
         const started = performance.now();
         await editor.getByRole('button', { name: run ? '重新导出' : '导出视频', exact: true }).click();
         await editor.getByRole('button', { name: '取消导出', exact: true }).waitFor();
         await editor.getByRole('button', { name: '重新导出', exact: true }).waitFor({ timeout: 1800000 });
         result.fullExportRounds.push(performance.now() - started);
-        if (sampling) result.memoryRounds.push(await sampling());
+        if (sampling) result.memoryRounds.push(await sampling({ settleMs: 5000 }));
         if (profile) {
-          const p = await editor.evaluate(() => window.__benchProfile);
+          const p = shared.profile || { perFrame: [], start: 0, end: 0, frameMs: 0, captureMs: 0, decodeMs: 0 };
           const sorted = [...p.perFrame].sort((a, b) => a - b), q = f => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * f))];
           // Capture time of the first and last seconds versus the rest shows opening stalls.
           const second = p.perFrame.length ? Math.round(p.perFrame.length / ((p.end - p.start) / 1000)) : 0;
@@ -239,7 +249,7 @@ try {
             slowestSecondsMs: Object.entries(p.perFrame.reduce((acc, ms, i) => { const s = Math.floor(i / fps); acc[s] = (acc[s] || 0) + ms; return acc; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([s, ms]) => [+s, ms]), framesPerSecondOfLoop: second });
           console.log(JSON.stringify({ template, run, profile: result.profiles.at(-1) }));
         }
-        result.decodedVideoRounds.push(await editor.evaluate(() => window.__benchmarkVideoDecode));
+        result.decodedVideoRounds.push(shared.videoDecode);
         result.videoComparisons.push({ native: forceNative, decoded: result.decodedVideoRounds.at(-1), ms: result.fullExportRounds.at(-1) });
         console.log(JSON.stringify({ template, run, ...result.videoComparisons.at(-1), memory: { ...result.memoryRounds.at(-1), series: undefined } }));
       }

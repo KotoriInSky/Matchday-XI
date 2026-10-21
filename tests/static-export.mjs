@@ -7,7 +7,8 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 
 // A file server with no Vite middleware and no export API, like GitHub Pages.
-const root = resolve('dist'), prefix = process.env.TEST_BASE || '/matchday-xi/';
+// TEST_DIST serves another production build directory.
+const root = resolve(process.env.TEST_DIST || 'dist'), prefix = process.env.TEST_BASE || '/matchday-xi/';
 let apiRequests = 0;
 const server = createServer(async (req, res) => {
   const path = new URL(req.url, 'http://localhost').pathname;
