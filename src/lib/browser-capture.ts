@@ -290,13 +290,85 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     }
     return embedded.join('\n');
   };
+  // With reuseUnchanged, a frame is known to be unchanged before serializing it
+  // when the document has no mutations, every animation that can change a value
+  // has the same computed progress, and the fonts and supplied video frame are
+  // the same. Serializing an unchanged frame costs as much as a changed one.
+  // Per animation at the last captured frame: [timing, contribution], where the
+  // contribution is 'hidden' for a paint-only effect on an unpainted element.
+  type FrameState = { signature: string; parts: Map<Animation, [string, string]> };
+  let observer: MutationObserver | undefined, lastState: FrameState | undefined, lastVideo: string | undefined;
+  // Keyframe segments whose two ends set every animated property to the same
+  // values: output is constant while progress stays inside them (holds, clocks).
+  // Paint-only effects on an element that does not paint (opacity 0 or
+  // display none on it or an ancestor) change neither its pixels nor the layout
+  // of anything else.
+  type Segments = { list: { offset: number; flat: boolean }[] | null; paintOnly: boolean };
+  const PAINT_ONLY = new Set(['opacity', 'transform', 'translate', 'rotate', 'scale', 'filter', 'clipPath', 'visibility', 'color', 'backgroundColor', 'backgroundPosition', 'boxShadow']);
+  const segmentCache = new WeakMap<AnimationEffect, Segments>();
+  const segments = (effect: AnimationEffect): Segments => {
+    if (segmentCache.has(effect)) return segmentCache.get(effect)!;
+    const result: Segments = { list: null, paintOnly: false };
+    if (effect instanceof KeyframeEffect) {
+      const frames = effect.getKeyframes().map(({ offset, computedOffset, easing, composite, ...values }) => ({ offset: Number(computedOffset), values }));
+      const all = new Set(frames.flatMap(frame => Object.keys(frame.values)));
+      const complete = (values: Record<string, unknown>) => [...all].every(key => key in values);
+      result.paintOnly = [...all].every(key => PAINT_ONLY.has(key));
+      if (frames.length > 1) result.list = frames.slice(0, -1).map((frame, i) => ({
+        offset: frame.offset,
+        flat: complete(frame.values) && complete(frames[i + 1].values) && JSON.stringify(frame.values) === JSON.stringify(frames[i + 1].values),
+      }));
+    }
+    segmentCache.set(effect, result);
+    return result;
+  };
+  const animationState = (root: HTMLElement, signature: string): { state: FrameState; same: boolean } => {
+    let same = !!observer;
+    if (!observer) {
+      observer = new MutationObserver(() => {});
+      observer.observe(document.documentElement, { subtree: true, attributes: true, childList: true, characterData: true });
+    }
+    if (observer.takeRecords().length) same = false;
+    // A native <video> paints new frames without changing the document.
+    if (root.querySelector('video') && !videoFrame?.()) same = false;
+    const last = lastState?.signature === signature ? lastState : undefined;
+    if (!last) same = false;
+    const parts = new Map<Animation, [string, string]>();
+    for (const animation of document.getAnimations()) {
+      const effect = animation.effect;
+      if (!effect) continue;
+      const { list, paintOnly } = segments(effect);
+      const { progress, currentIteration } = effect.getComputedTiming();
+      let timing = String(progress);
+      if (progress != null && list) {
+        let i = list.length - 1;
+        while (i > 0 && progress < list[i].offset) i--;
+        if (list[i].flat) timing = 'hold' + i;
+      }
+      timing += ',' + currentIteration;
+      // An unchanged timing contributes as before. Only a changed one needs to
+      // know whether its element paints, which costs a style query.
+      const before = last?.parts.get(animation);
+      const target = effect instanceof KeyframeEffect ? effect.target : null;
+      const contribution = before?.[0] === timing ? before[1]
+        : paintOnly && target && !target.checkVisibility({ opacityProperty: true }) ? 'hidden' : timing;
+      parts.set(animation, [timing, contribution]);
+      if (before?.[1] !== contribution) same = false;
+    }
+    if (last && last.parts.size !== parts.size) same = false;
+    return { state: { signature, parts }, same };
+  };
   return async (root: HTMLElement, width: number, height: number, target?: HTMLCanvasElement) => {
     root.getBoundingClientRect(); await document.fonts.ready;
-    resourceReferences.clear(); unknownReferences = resourcesIndexed = false;
-    properties = captureProperties(root);
     const faces: string[] = [];
     document.fonts.forEach(face => { if (face.status === 'loaded') faces.push(`${face.family}:${face.weight}:${face.unicodeRange}`); });
     const signature = faces.join('|');
+    const check = reuseUnchanged ? animationState(root, signature) : undefined, state = check?.state, video = videoFrame?.();
+    if (check?.same && video === lastVideo && target && previous?.target === target
+      && target.width === width && target.height === height) { lastState = state; return target; }
+    lastState = undefined;
+    resourceReferences.clear(); unknownReferences = resourcesIndexed = false;
+    properties = captureProperties(root);
     let sequence = 0;
     let shown = ''; // Text and generated content in this frame, for font subsets.
     const pseudoRules: string[] = [];
@@ -375,7 +447,7 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
     // '=' of the embedded base64 assets.
     // Identical markup rasterizes to identical pixels, which the target holds.
     if (reuseUnchanged && target && previous?.target === target && previous.svg === svg
-      && target.width === width && target.height === height) return target;
+      && target.width === width && target.height === height) { lastState = state; lastVideo = video; return target; }
     previous = undefined;
     const body = lightEncoding ? svg.replace(/[%#\t\n\r]/g, encodeURIComponent) : encodeURIComponent(svg);
     try {
@@ -386,7 +458,7 @@ export function createBrowserCapture(state: LineupState, { allProperties = false
       const context = canvas.getContext('2d')!;
       context.clearRect(0, 0, width, height);
       context.drawImage(image, 0, 0);
-      if (reuseUnchanged && target) previous = { svg, target };
+      if (reuseUnchanged && target) { previous = { svg, target }; lastState = state; lastVideo = video; }
       return canvas;
     } finally { image.removeAttribute('src'); }
   };
