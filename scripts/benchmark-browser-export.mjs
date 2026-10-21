@@ -23,6 +23,7 @@ const captureOptions = process.env.BENCH_CAPTURE ? JSON.parse(process.env.BENCH_
 const nativeVideo = process.env.BENCH_NATIVE_VIDEO === '1';
 const compareVideo = process.env.BENCH_COMPARE_VIDEO === '1';
 const background = process.env.BENCH_BACKGROUND;
+const profile = process.env.BENCH_PROFILE === '1';
 assert.ok([720, 1080, 1440, 2160].includes(height) && [30, 60].includes(fps));
 assert.ok(Number.isInteger(runs) && runs > 0 && runs <= 20);
 assert.ok(Number.isInteger(videoRuns) && videoRuns > 0 && videoRuns <= 20);
@@ -114,12 +115,28 @@ try {
     const file = (await readdir(resolve(root, 'assets'))).find(name => /^browser-capture-.*\.js$/.test(name));
     assert.ok(file, 'Build the project before running the benchmark');
     const captureURL = reference ? base + 'assets/' + file : null;
-    await context.addInitScript(({ captureURL, captureOptions, nativeVideo, compareVideo, background, fps }) => {
+    await context.addInitScript(({ captureURL, captureOptions, nativeVideo, compareVideo, background, fps, profile }) => {
       let renderer;
       Object.defineProperty(window, 'exportRenderer', {
         configurable: true, get: () => renderer,
         set(api) {
           renderer = api;
+          if (profile) {
+            // Per export: frame() and captureInto() time, SVG decode time inside
+            // capture, and the loop's wall time; the remainder is source.add() and yields.
+            const p = window.parent.__benchProfile = { frameMs: 0, captureMs: 0, decodeMs: 0, perFrame: [], start: 0, end: 0 };
+            const decode = HTMLImageElement.prototype.decode;
+            HTMLImageElement.prototype.decode = async function () {
+              if (!this.src.startsWith('data:image/svg+xml')) return decode.call(this);
+              const t = performance.now(); try { return await decode.call(this); } finally { p.decodeMs += performance.now() - t; }
+            };
+            const frame = api.frame.bind(api), captureInto = api.captureInto.bind(api);
+            api.frame = async (...args) => { const t = performance.now(); p.start ||= t; try { return await frame(...args); } finally { p.frameMs += performance.now() - t; } };
+            api.captureInto = async (...args) => {
+              const t = performance.now();
+              try { return await captureInto(...args); } finally { const d = performance.now() - t; p.captureMs += d; p.perFrame.push(Math.round(d)); p.end = performance.now(); }
+            };
+          }
           const prepare = api.prepareVideo.bind(api);
           api.prepareVideo = async (...args) => {
             const used = nativeVideo || window.parent.__benchmarkNativeVideo ? false : await prepare(...args);
@@ -144,7 +161,7 @@ try {
           if (captureURL) api.captureInto = canvas => capture(document.getElementById('root'), canvas.width, canvas.height, canvas);
         },
       });
-    }, { captureURL, captureOptions, nativeVideo, compareVideo, background, fps });
+    }, { captureURL, captureOptions, nativeVideo, compareVideo, background, fps, profile });
   }
   const report = { label, reference, captureOptions, chromeArgs: process.env.BENCH_CHROME_ARGS || null, nativeVideo, compareVideo, background: background || null, date: new Date().toISOString(), platform: `${platform()} ${release()}`, cpu: cpus()[0]?.model, browser: browser.version(), height, fps, frameCount, runs, videoRuns, fullExportScenario: { style: fullStyle, intro: false, manager: false }, results: [] };
   for (const template of (process.env.BENCH_TEMPLATES || 'classic,season2627').split(',')) {
@@ -212,6 +229,16 @@ try {
         await editor.getByRole('button', { name: '重新导出', exact: true }).waitFor({ timeout: 1800000 });
         result.fullExportRounds.push(performance.now() - started);
         if (sampling) result.memoryRounds.push(await sampling());
+        if (profile) {
+          const p = await editor.evaluate(() => window.__benchProfile);
+          const sorted = [...p.perFrame].sort((a, b) => a - b), q = f => sorted[Math.min(sorted.length - 1, Math.floor(sorted.length * f))];
+          // Capture time of the first and last seconds versus the rest shows opening stalls.
+          const second = p.perFrame.length ? Math.round(p.perFrame.length / ((p.end - p.start) / 1000)) : 0;
+          (result.profiles ||= []).push({ frames: p.perFrame.length, loopMs: Math.round(p.end - p.start), frameMs: Math.round(p.frameMs), captureMs: Math.round(p.captureMs), decodeMs: Math.round(p.decodeMs),
+            otherMs: Math.round(p.end - p.start - p.frameMs - p.captureMs), captureP50: q(.5), captureP95: q(.95), captureMax: sorted.at(-1),
+            slowestSecondsMs: Object.entries(p.perFrame.reduce((acc, ms, i) => { const s = Math.floor(i / fps); acc[s] = (acc[s] || 0) + ms; return acc; }, {})).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([s, ms]) => [+s, ms]), framesPerSecondOfLoop: second });
+          console.log(JSON.stringify({ template, run, profile: result.profiles.at(-1) }));
+        }
         result.decodedVideoRounds.push(await editor.evaluate(() => window.__benchmarkVideoDecode));
         result.videoComparisons.push({ native: forceNative, decoded: result.decodedVideoRounds.at(-1), ms: result.fullExportRounds.at(-1) });
         console.log(JSON.stringify({ template, run, ...result.videoComparisons.at(-1), memory: { ...result.memoryRounds.at(-1), series: undefined } }));
